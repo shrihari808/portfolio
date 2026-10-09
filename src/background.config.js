@@ -31,6 +31,6 @@
 // -----------------------------------------------------------------------------
 // 3. Matrix & Laser Family (Raw WebGL Shaders)
 // -----------------------------------------------------------------------------
- export const ACTIVE_BACKGROUND = 'matrix-junction';     // Cyber laser matrix junction grid with crosshair pulses
-// export const ACTIVE_BACKGROUND = 'atmospheric-blade';   // Volumetric laser blade scan beam with atmospheric haze
+// export const ACTIVE_BACKGROUND = 'matrix-junction';     // Cyber laser matrix junction grid with crosshair pulses
+ export const ACTIVE_BACKGROUND = 'atmospheric-blade';   // Volumetric laser blade scan beam with atmospheric haze
 // export const ACTIVE_BACKGROUND = 'vanishing-array';     // Depth-projected laser perspective array with pulsing rails
