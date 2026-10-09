@@ -1,0 +1,28 @@
+{
+  "name": "shrihari-portfolio",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Personal engineering portfolio showcasing full-stack systems, distributed architecture, and Three.js / WebGL experiences.",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview"
+  },
+  "keywords": [
+    "portfolio",
+    "threejs",
+    "webgl",
+    "kage",
+    "full-stack",
+    "systems-architect"
+  ],
+  "author": "Shrihari",
+  "license": "MIT",
+  "devDependencies": {
+    "vite": "^6.0.0"
+  },
+  "dependencies": {
+    "three": "^0.170.0"
+  }
+}
