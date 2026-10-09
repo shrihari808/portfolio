@@ -23,7 +23,7 @@
 // 2. Structure Flow Family (Three.js 3D GPU Fields)
 // -----------------------------------------------------------------------------
 // export const ACTIVE_BACKGROUND = 'structure-flow';      // 3D undulating wave plane topology mesh with camera drift
-// export const ACTIVE_BACKGROUND = 'emerald-horizon';     // Vast receding perspective horizon wireframe terrain
+ export const ACTIVE_BACKGROUND = 'emerald-horizon';     // Vast receding perspective horizon wireframe terrain
 // export const ACTIVE_BACKGROUND = 'orbital-sphere';      // 3D rotating spherical point-cloud lattice & concentric rings
 // export const ACTIVE_BACKGROUND = 'dot-matrix';          // Undulating 3D wave dot matrix plane with interfering ripples
 // export const ACTIVE_BACKGROUND = 'flux-vortex';         // Dynamic gravitational particle vortex with accretion funnel
@@ -32,5 +32,5 @@
 // 3. Matrix & Laser Family (Raw WebGL Shaders)
 // -----------------------------------------------------------------------------
 // export const ACTIVE_BACKGROUND = 'matrix-junction';     // Cyber laser matrix junction grid with crosshair pulses
- export const ACTIVE_BACKGROUND = 'atmospheric-blade';   // Volumetric laser blade scan beam with atmospheric haze
+// export const ACTIVE_BACKGROUND = 'atmospheric-blade';   // Volumetric laser blade scan beam with atmospheric haze
 // export const ACTIVE_BACKGROUND = 'vanishing-array';     // Depth-projected laser perspective array with pulsing rails
