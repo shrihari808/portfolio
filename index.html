@@ -668,37 +668,42 @@
       .exp-card, .work-card { width: clamp(340px, 80vw, 560px); }
     }
 
-    /* Mobile Viewport (< 769px): Fluid Horizontal Snap Touch Track & Clean Card Height */
+    /* Mobile Viewport (< 769px): Fancy.design Pinned Vertical Card Deck Stacking */
     @media (max-width: 768px) {
       .desktop-hint { display: none; }
       .mobile-hint { display: inline; }
 
       #experience.exp-pinned-section,
       #works.works-pinned-section {
-        padding: clamp(40px, 6vh, 64px) 0;
+        padding: 0 !important;
         position: relative;
       }
 
       .exp-pinned-inner,
       .works-pinned-inner {
-        height: auto !important;
-        min-height: 0 !important;
-        padding-top: 0 !important;
-        padding-bottom: 0 !important;
-        display: block !important;
-        overflow: visible !important;
+        height: 100vh !important;
+        min-height: 100dvh !important;
+        display: flex !important;
+        flex-direction: column !important;
+        justify-content: flex-start !important;
+        padding-top: clamp(68px, 8.5vh, 84px) !important;
+        padding-bottom: 20px !important;
+        box-sizing: border-box !important;
+        overflow: hidden !important;
       }
 
       .exp-pinned-header,
       .works-pinned-header {
-        margin-bottom: 16px;
-        flex-direction: column;
-        align-items: flex-start;
-        gap: 12px;
+        margin-bottom: clamp(10px, 1.8vh, 16px) !important;
+        flex-direction: column !important;
+        align-items: flex-start !important;
+        gap: 10px !important;
+        flex-shrink: 0 !important;
       }
 
       .exp-scroll-indicator {
         width: 100%;
+        display: flex;
         justify-content: space-between;
         align-items: center;
       }
@@ -710,53 +715,46 @@
 
       .exp-horizontal-viewport,
       .works-horizontal-viewport {
-        width: calc(100% + 40px) !important;
-        margin-left: -20px !important;
-        margin-right: -20px !important;
-        padding: 6px 20px 20px 20px !important;
-        overflow-x: auto !important;
-        overflow-y: hidden !important;
-        -webkit-overflow-scrolling: touch !important;
-        scroll-snap-type: x mandatory !important;
-        scroll-behavior: smooth !important;
-        overscroll-behavior-x: contain !important;
-        scrollbar-width: none !important;
-        -ms-overflow-style: none !important;
+        width: 100% !important;
+        flex: 1 1 auto !important;
+        position: relative !important;
+        overflow: hidden !important;
+        margin: 0 !important;
+        padding: 0 !important;
         box-sizing: border-box !important;
-      }
-
-      .exp-horizontal-viewport::-webkit-scrollbar,
-      .works-horizontal-viewport::-webkit-scrollbar {
-        display: none !important;
       }
 
       .exp-horizontal-track,
       .works-horizontal-track {
-        display: flex !important;
-        flex-direction: row !important;
-        gap: 16px !important;
-        width: max-content !important;
-        padding-right: 20px !important;
+        position: relative !important;
+        width: 100% !important;
+        height: 100% !important;
+        display: grid !important;
+        grid-template-columns: 1fr !important;
+        grid-template-rows: 1fr !important;
+        padding: 0 !important;
+        gap: 0 !important;
         transform: none !important;
-        align-items: stretch !important;
-        will-change: scroll-position;
       }
 
-      /* Complete Fix: Cards fit content naturally with no artificial clipping or internal scrollbar */
+      /* Card Deck Stacking: Cards occupy the exact same grid-area and stack vertically via GSAP */
       .exp-card,
       .work-card {
-        width: min(84vw, 360px) !important;
-        max-width: 86vw !important;
-        flex-shrink: 0 !important;
-        scroll-snap-align: start !important;
-        scroll-snap-stop: normal !important;
-        height: auto !important;
+        grid-area: 1 / 1 !important;
+        width: 100% !important;
+        max-width: 100% !important;
+        height: 100% !important;
+        max-height: calc(100vh - clamp(170px, 23vh, 205px)) !important;
         min-height: 0 !important;
-        max-height: none !important;
-        overflow: visible !important;
-        overflow-y: visible !important;
-        padding: 22px 18px !important;
+        overflow-y: auto !important;
+        scrollbar-width: thin;
+        padding: clamp(18px, 2.5vw, 24px) clamp(16px, 2.2vw, 22px) !important;
         box-sizing: border-box !important;
+        border-radius: 16px !important;
+        box-shadow: 0 -10px 32px rgba(0, 0, 0, 0.75) !important;
+        transform-origin: 50% 100% !important;
+        will-change: transform, opacity !important;
+        background: #0B0F1C !important;
       }
 
       .exp-header {
@@ -866,7 +864,7 @@
 
           <div class="exp-scroll-indicator">
             <span class="exp-scroll-hint desktop-hint">Scroll down to navigate roles ↓</span>
-            <span class="exp-scroll-hint mobile-hint">Swipe cards horizontally →</span>
+            <span class="exp-scroll-hint mobile-hint">Scroll down to stack roles ↓</span>
             <div class="exp-pin-progress">
               <div class="exp-pin-progress-bar" id="expProgressBar"></div>
             </div>
@@ -1012,7 +1010,7 @@
 
           <div class="exp-scroll-indicator">
             <span class="exp-scroll-hint desktop-hint">Scroll down to explore deployments ↓</span>
-            <span class="exp-scroll-hint mobile-hint">Swipe cards horizontally →</span>
+            <span class="exp-scroll-hint mobile-hint">Scroll down to stack deployments ↓</span>
             <div class="exp-pin-progress">
               <div class="exp-pin-progress-bar" id="worksProgressBar"></div>
             </div>

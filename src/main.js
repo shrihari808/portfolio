@@ -1,7 +1,8 @@
 /**
  * src/main.js
  * Application entry point for Shrihari Engineering Portfolio
- * Orchestrates GSAP pinning for desktop, fluid touch swipe for mobile,
+ * Orchestrates GSAP horizontal scroll on desktop (>= 769px),
+ * vertical card deck stacking on mobile (< 769px) inspired by fancy.design,
  * and Three.js background lifecycle.
  */
 import { loadActiveBackground } from './background-loader.js';
@@ -28,41 +29,89 @@ import { loadActiveBackground } from './background-loader.js';
     }
   }
 
-  // --- Mobile Touch Carousel Progress Synchronization ---
-  function setupMobileTrackProgress(viewportSelector, progressBarId) {
-    const viewport = document.querySelector(viewportSelector);
+  // --- Helper: Mobile Vertical Card Deck Stacking Timeline (Fancy.design style) ---
+  function createMobileStackTimeline(sectionId, trackId, progressBarId) {
+    const section = document.getElementById(sectionId);
+    const track = document.getElementById(trackId);
     const progressBar = document.getElementById(progressBarId);
-    if (!viewport || !progressBar) return;
 
-    const onScroll = () => {
-      // Only active on mobile/tablet viewports (< 769px)
-      if (window.innerWidth > 768) return;
-      const maxScroll = viewport.scrollWidth - viewport.clientWidth;
-      if (maxScroll <= 0) {
-        progressBar.style.width = '0%';
-        return;
+    if (!section || !track) return null;
+    const cards = Array.from(track.children);
+    if (cards.length <= 1) return null;
+
+    const totalSteps = cards.length - 1;
+    const scrollDistance = () => totalSteps * window.innerHeight * 0.85;
+
+    // Initial state: Card 0 sits in place, remaining cards are poised below viewport
+    gsap.set(cards[0], { yPercent: 0, scale: 1, opacity: 1, zIndex: 1 });
+    for (let i = 1; i < cards.length; i++) {
+      gsap.set(cards[i], { yPercent: 112, scale: 1, opacity: 1, zIndex: i + 1 });
+    }
+
+    const tl = gsap.timeline({
+      scrollTrigger: {
+        trigger: section,
+        start: 'top top',
+        end: () => `+=${scrollDistance()}`,
+        pin: true,
+        scrub: 0.35,
+        invalidateOnRefresh: true,
+        onUpdate: (self) => {
+          if (progressBar) {
+            const pct = Math.min(100, Math.max(0, Math.round(self.progress * 100)));
+            progressBar.style.width = `${pct}%`;
+          }
+        }
       }
-      const pct = Math.min(100, Math.max(0, Math.round((viewport.scrollLeft / maxScroll) * 100)));
-      progressBar.style.width = `${pct}%`;
-    };
+    });
 
-    viewport.addEventListener('scroll', onScroll, { passive: true });
-    // Initial sync
-    onScroll();
+    // Animate each card sliding up over the previous cards in sequential steps
+    for (let i = 1; i < cards.length; i++) {
+      const stepStartTime = i - 1;
+
+      // Card i slides smoothly up from the bottom over the stack
+      tl.to(cards[i], {
+        yPercent: 0,
+        duration: 1,
+        ease: 'none'
+      }, stepStartTime);
+
+      // Previous cards slightly scale down and tuck underneath (tactile deck effect)
+      for (let j = 0; j < i; j++) {
+        const depth = i - j;
+        const targetScale = Math.max(0.78, 1 - depth * 0.05);
+        const targetY = depth * 8;
+        const targetOpacity = Math.max(0.5, 1 - depth * 0.18);
+
+        tl.to(cards[j], {
+          scale: targetScale,
+          y: targetY,
+          opacity: targetOpacity,
+          duration: 1,
+          ease: 'none'
+        }, stepStartTime);
+      }
+    }
+
+    return () => {
+      tl.kill();
+      cards.forEach(card => {
+        gsap.set(card, { clearProps: 'all' });
+      });
+      if (progressBar) progressBar.style.width = '0%';
+    };
   }
 
-  setupMobileTrackProgress('.exp-horizontal-viewport', 'expProgressBar');
-  setupMobileTrackProgress('.works-horizontal-viewport', 'worksProgressBar');
-
-  // --- GSAP Orchestration & Horizontal Pinned Scroll ---
+  // --- GSAP Orchestration: Desktop Horizontal Scroll & Mobile Card Stacking ---
   if (typeof gsap !== 'undefined' && typeof ScrollTrigger !== 'undefined' && !prefersReducedMotion) {
     gsap.registerPlugin(ScrollTrigger);
 
-    // Only enable pinning on desktop/laptop screens (>= 769px)
-    // Mobile (< 769px) uses native fluid touch snap scrolling
     ScrollTrigger.matchMedia({
+      // =========================================================================
+      // 1. Desktop Breakpoint (>= 769px): Pinned Horizontal Smooth Scrubbing
+      // =========================================================================
       "(min-width: 769px)": function() {
-        // 1. Pinned horizontal scroll for Experience section
+        // Experience section horizontal scroll
         const expSection = document.getElementById('experience');
         const expTrack = document.getElementById('expHorizontalTrack');
         const expProgressBar = document.getElementById('expProgressBar');
@@ -99,7 +148,7 @@ import { loadActiveBackground } from './background-loader.js';
           });
         }
 
-        // 2. Pinned horizontal scroll for Projects & Research section
+        // Works section horizontal scroll
         const worksSection = document.getElementById('works');
         const worksTrack = document.getElementById('worksHorizontalTrack');
         const worksProgressBar = document.getElementById('worksProgressBar');
@@ -142,13 +191,22 @@ import { loadActiveBackground } from './background-loader.js';
         };
       },
 
+      // =========================================================================
+      // 2. Mobile Breakpoint (< 769px): Fancy.design Vertical Card Deck Stacking
+      // =========================================================================
       "(max-width: 768px)": function() {
-        // Ensure no lingering GSAP inline transforms affect native touch scroll on mobile
-        gsap.set(['#expHorizontalTrack', '#worksHorizontalTrack'], { clearProps: 'transform' });
+        const cleanupExp = createMobileStackTimeline('experience', 'expHorizontalTrack', 'expProgressBar');
+        const cleanupWorks = createMobileStackTimeline('works', 'worksHorizontalTrack', 'worksProgressBar');
+
+        return () => {
+          if (cleanupExp) cleanupExp();
+          if (cleanupWorks) cleanupWorks();
+          gsap.set(['#expHorizontalTrack', '#worksHorizontalTrack'], { clearProps: 'all' });
+        };
       }
     });
 
-    // Seamless Anchor Navigation: Fixes anchor scroll jumping past pinned sections
+    // Seamless Anchor Navigation: Fixes anchor scroll jumping across pinned sections
     document.querySelectorAll('a[href^="#"]').forEach((anchor) => {
       anchor.addEventListener('click', (e) => {
         const href = anchor.getAttribute('href');
@@ -160,7 +218,7 @@ import { loadActiveBackground } from './background-loader.js';
 
         const triggers = ScrollTrigger.getAll();
         const st = triggers.find((t) => t.trigger === target);
-        if (st && window.innerWidth >= 769) {
+        if (st) {
           window.scrollTo({
             top: st.start,
             behavior: 'smooth'
