@@ -668,10 +668,19 @@
       .exp-card, .work-card { width: clamp(340px, 80vw, 560px); }
     }
 
-    /* Mobile Viewport (< 769px): Fancy.design Pinned Vertical Card Deck Stacking */
+    /* Mobile Viewport (< 769px): Full-Screen Fancy.design Vertical Card Deck Stacking */
     @media (max-width: 768px) {
-      .desktop-hint { display: none; }
-      .mobile-hint { display: inline; }
+      .desktop-hint { display: none !important; }
+      .mobile-hint { display: none !important; }
+
+      .nav {
+        height: 52px !important;
+        padding: 0 16px !important;
+      }
+
+      .page-container {
+        padding: 0 14px !important;
+      }
 
       #experience.exp-pinned-section,
       #works.works-pinned-section {
@@ -683,40 +692,64 @@
       .works-pinned-inner {
         height: 100vh !important;
         min-height: 100dvh !important;
+        max-height: 100dvh !important;
         display: flex !important;
         flex-direction: column !important;
         justify-content: flex-start !important;
-        padding-top: clamp(68px, 8.5vh, 84px) !important;
-        padding-bottom: 20px !important;
+        padding-top: 58px !important;
+        padding-bottom: 12px !important;
+        padding-left: 0 !important;
+        padding-right: 0 !important;
         box-sizing: border-box !important;
         overflow: hidden !important;
       }
 
+      /* Compact, sleek header bar directly above the full-screen card */
       .exp-pinned-header,
       .works-pinned-header {
-        margin-bottom: clamp(10px, 1.8vh, 16px) !important;
-        flex-direction: column !important;
-        align-items: flex-start !important;
-        gap: 10px !important;
+        display: flex !important;
+        flex-direction: row !important;
+        justify-content: space-between !important;
+        align-items: center !important;
+        margin-bottom: 8px !important;
+        padding: 0 4px !important;
         flex-shrink: 0 !important;
       }
 
+      .sec-tag {
+        font-size: 10px !important;
+        margin-bottom: 2px !important;
+        display: block !important;
+      }
+
+      .sec-title {
+        font-size: 16px !important;
+        font-weight: 600 !important;
+        line-height: 1.2 !important;
+      }
+
+      .sec-desc {
+        display: none !important; /* Hide redundant subtitle to give maximum viewport to cards */
+      }
+
       .exp-scroll-indicator {
-        width: 100%;
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
+        width: auto !important;
+        display: flex !important;
+        align-items: center !important;
+        gap: 8px !important;
       }
 
       .exp-pin-progress {
-        width: 90px;
-        flex-shrink: 0;
+        width: 70px !important;
+        height: 3px !important;
+        flex-shrink: 0 !important;
       }
 
       .exp-horizontal-viewport,
       .works-horizontal-viewport {
         width: 100% !important;
         flex: 1 1 auto !important;
+        height: 100% !important;
         position: relative !important;
         overflow: hidden !important;
         margin: 0 !important;
@@ -737,34 +770,164 @@
         transform: none !important;
       }
 
-      /* Card Deck Stacking: Cards occupy the exact same grid-area and stack vertically via GSAP */
+      /* Card Deck Stacking: Full-screen cards without ANY internal scrolling */
       .exp-card,
       .work-card {
         grid-area: 1 / 1 !important;
         width: 100% !important;
         max-width: 100% !important;
         height: 100% !important;
-        max-height: calc(100vh - clamp(170px, 23vh, 205px)) !important;
+        max-height: 100% !important;
         min-height: 0 !important;
-        overflow-y: auto !important;
-        scrollbar-width: thin;
-        padding: clamp(18px, 2.5vw, 24px) clamp(16px, 2.2vw, 22px) !important;
+        overflow: hidden !important;
+        overflow-y: hidden !important;
+        scrollbar-width: none !important;
+        display: flex !important;
+        flex-direction: column !important;
+        justify-content: space-between !important;
+        padding: clamp(14px, 2.2vh, 20px) clamp(16px, 4vw, 20px) !important;
         box-sizing: border-box !important;
-        border-radius: 16px !important;
-        box-shadow: 0 -10px 32px rgba(0, 0, 0, 0.75) !important;
+        border-radius: 20px !important;
+        box-shadow: 0 -10px 32px rgba(0, 0, 0, 0.8) !important;
+        border: 1px solid var(--border-focus) !important;
         transform-origin: 50% 100% !important;
         will-change: transform, opacity !important;
         background: #0B0F1C !important;
       }
+      .exp-card::-webkit-scrollbar,
+      .work-card::-webkit-scrollbar {
+        display: none !important;
+      }
 
+      /* Experience Card Mobile Internal Typography & Rhythm */
+      .exp-card-top-tag {
+        margin-bottom: 6px !important;
+      }
+      .exp-num-badge {
+        font-size: 10.5px !important;
+      }
+      .exp-badge-current {
+        font-size: 9.5px !important;
+        padding: 2px 7px !important;
+      }
       .exp-header {
         flex-direction: column !important;
         align-items: flex-start !important;
-        gap: 8px !important;
+        gap: 3px !important;
+        margin-bottom: 8px !important;
+        padding-bottom: 8px !important;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.08) !important;
       }
-
+      .exp-role {
+        font-size: clamp(15.5px, 4.2vw, 17.5px) !important;
+        font-weight: 600 !important;
+        line-height: 1.25 !important;
+      }
+      .exp-company {
+        font-size: clamp(15.5px, 4.2vw, 17.5px) !important;
+      }
       .exp-meta {
         text-align: left !important;
+        font-size: 11.5px !important;
+        display: flex !important;
+        align-items: center !important;
+        gap: 8px !important;
+      }
+      .exp-meta .location {
+        display: inline !important;
+        margin-top: 0 !important;
+      }
+      .exp-points {
+        display: flex !important;
+        flex-direction: column !important;
+        gap: 8px !important;
+        margin: 0 !important;
+        padding: 0 !important;
+      }
+      .exp-points li {
+        font-size: clamp(12px, 3.1vw, 13.5px) !important;
+        line-height: 1.48 !important;
+        color: #CBD5E1 !important;
+        padding-left: 14px !important;
+      }
+      .exp-points li::before {
+        font-size: 15px !important;
+        line-height: 1.2 !important;
+      }
+      .exp-points strong {
+        color: #FFFFFF !important;
+      }
+      .exp-stack {
+        display: flex !important;
+        flex-wrap: wrap !important;
+        gap: 5px !important;
+        margin-top: 8px !important;
+        padding-top: 8px !important;
+        border-top: 1px solid rgba(255, 255, 255, 0.06) !important;
+      }
+
+      /* Works Card Mobile Internal Typography & Rhythm */
+      .work-meta-row {
+        margin-bottom: 6px !important;
+      }
+      .work-tag {
+        font-size: 10.5px !important;
+      }
+      .work-date {
+        font-size: 11px !important;
+      }
+      .work-card h3 {
+        font-size: clamp(15.5px, 4.2vw, 17.5px) !important;
+        font-weight: 600 !important;
+        margin-bottom: 6px !important;
+        line-height: 1.25 !important;
+      }
+      .work-desc {
+        display: none !important; /* Hide redundant paragraph on mobile so detailed bullet points have full focus */
+      }
+      .work-bullets {
+        display: flex !important;
+        flex-direction: column !important;
+        gap: 8px !important;
+        margin: 0 0 8px 0 !important;
+        padding: 0 !important;
+      }
+      .work-bullets li {
+        font-size: clamp(12px, 3.1vw, 13.5px) !important;
+        line-height: 1.48 !important;
+        color: #CBD5E1 !important;
+        padding-left: 14px !important;
+      }
+      .work-bullets li::before {
+        font-size: 14px !important;
+      }
+      .work-footer {
+        display: flex !important;
+        flex-direction: column !important;
+        gap: 8px !important;
+        margin-top: auto !important;
+        padding-top: 8px !important;
+        border-top: 1px solid rgba(255, 255, 255, 0.06) !important;
+      }
+      .work-links {
+        display: flex !important;
+        gap: 8px !important;
+        flex-wrap: wrap !important;
+      }
+      .work-link-btn {
+        font-size: 11px !important;
+        padding: 5px 12px !important;
+        border-radius: 14px !important;
+      }
+      .work-stack {
+        display: flex !important;
+        flex-wrap: wrap !important;
+        gap: 5px !important;
+      }
+      .work-pill {
+        font-size: 10px !important;
+        padding: 3px 8px !important;
+        border-radius: 6px !important;
       }
     }
 
