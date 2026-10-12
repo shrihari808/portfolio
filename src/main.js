@@ -48,72 +48,88 @@ import { loadActiveBackground } from './background-loader.js';
     }
   });
 
-  // --- GSAP Masked Staggered Word Reveals ---
-  if (typeof gsap !== 'undefined' && !prefersReducedMotion) {
-    if (typeof ScrollTrigger !== 'undefined') {
-      gsap.registerPlugin(ScrollTrigger);
+  // --- GSAP Orchestration & Horizontal Pinned Scroll ---
+  if (typeof gsap !== 'undefined' && typeof ScrollTrigger !== 'undefined' && !prefersReducedMotion) {
+    gsap.registerPlugin(ScrollTrigger);
+
+    const expSection = document.getElementById('experience');
+    const expTrack = document.getElementById('expHorizontalTrack');
+    const expProgressBar = document.getElementById('expProgressBar');
+
+    if (expSection && expTrack) {
+      const getDistance = () => {
+        const trackWidth = expTrack.scrollWidth;
+        const viewportWidth = expSection.clientWidth;
+        // Total distance needed for the last card to scroll fully into view
+        return Math.max(0, trackWidth - viewportWidth);
+      };
+
+      const expTimeline = gsap.timeline({
+        scrollTrigger: {
+          trigger: expSection,
+          start: 'top top',
+          end: () => `+=${getDistance() + 250}`,
+          pin: true,
+          scrub: 0.8,
+          anticipatePin: 1,
+          invalidateOnRefresh: true,
+          onUpdate: (self) => {
+            if (expProgressBar) {
+              const pct = Math.min(100, Math.max(0, Math.round(self.progress * 100)));
+              expProgressBar.style.width = `${pct}%`;
+            }
+          }
+        }
+      });
+
+      expTimeline.to(expTrack, {
+        x: () => -getDistance(),
+        ease: 'none'
+      });
     }
 
-    const revealElements = document.querySelectorAll('.masked-reveal');
-    revealElements.forEach(el => {
-      const html = el.innerHTML;
-      const fragments = html.split(/(<br\s*\/?>|\s+)/);
-      el.innerHTML = '';
+      // 2. Pinned horizontal scroll for Projects & Research section
+      const worksSection = document.getElementById('works');
+      const worksTrack = document.getElementById('worksHorizontalTrack');
+      const worksProgressBar = document.getElementById('worksProgressBar');
 
-      fragments.forEach(frag => {
-        if (/<br/i.test(frag)) {
-          el.appendChild(document.createElement('br'));
-        } else if (frag.trim() !== '') {
-          const wrapper = document.createElement('span');
-          wrapper.style.cssText = 'overflow: hidden; display: inline-block; vertical-align: bottom;';
+      if (worksSection && worksTrack) {
+        const getWorksDistance = () => {
+          const trackWidth = worksTrack.scrollWidth;
+          const viewportWidth = worksSection.clientWidth;
+          return Math.max(0, trackWidth - viewportWidth);
+        };
 
-          const inner = document.createElement('span');
-          inner.className = 'reveal-word';
-          inner.innerHTML = frag;
+        const worksTimeline = gsap.timeline({
+          scrollTrigger: {
+            trigger: worksSection,
+            start: 'top top',
+            end: () => `+=${getWorksDistance() + 250}`,
+            pin: true,
+            scrub: 0.8,
+            anticipatePin: 1,
+            invalidateOnRefresh: true,
+            onUpdate: (self) => {
+              if (worksProgressBar) {
+                const pct = Math.min(100, Math.max(0, Math.round(self.progress * 100)));
+                worksProgressBar.style.width = `${pct}%`;
+              }
+            }
+          }
+        });
 
-          wrapper.appendChild(inner);
-          el.appendChild(wrapper);
-        } else {
-          el.appendChild(document.createTextNode(frag));
-        }
-      });
-
-      gsap.to(el.querySelectorAll('.reveal-word'), {
-        y: '0%',
-        duration: 1.1,
-        ease: 'power4.out',
-        stagger: 0.035,
-        scrollTrigger: {
-          trigger: el,
-          start: 'top 88%',
-        }
-      });
-    });
-
-    // Stagger reveal for architecture cards
-    gsap.from('.arch-card', {
-      opacity: 0,
-      y: 28,
-      duration: 0.9,
-      stagger: 0.12,
-      ease: 'power3.out',
-      scrollTrigger: {
-        trigger: '.arch-grid',
-        start: 'top 85%',
+        worksTimeline.to(worksTrack, {
+          x: () => -getWorksDistance(),
+          ease: 'none'
+        });
       }
-    });
 
-    // Stagger reveal for works cards
-    gsap.from('.work-card', {
-      opacity: 0,
-      y: 32,
-      duration: 1.0,
-      stagger: 0.15,
-      ease: 'power3.out',
-      scrollTrigger: {
-        trigger: '.works-grid',
-        start: 'top 85%',
-      }
+    // Refresh ScrollTrigger calculations after all resources settle
+    window.addEventListener('load', () => {
+      ScrollTrigger.refresh();
     });
+    setTimeout(() => {
+      ScrollTrigger.refresh();
+    }, 300);
   }
 })();
