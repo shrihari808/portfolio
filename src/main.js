@@ -29,74 +29,84 @@ import { loadActiveBackground } from './background-loader.js';
     }
   }
 
-  // --- Helper: Mobile Vertical Card Deck Stacking Timeline (Fancy.design style) ---
-  function createMobileStackTimeline(sectionId, trackId, progressBarId) {
-    const section = document.getElementById(sectionId);
+  // --- React Bits <ScrollStack /> Architecture Adapted for Mobile Web ---
+  // Uses native CSS position: sticky + RAF cover-based depth scaling.
+  // Completely eliminates GSAP pin-spacer toggling and scrub lag on touch devices.
+  function initScrollStack(trackId, progressBarId, options = {}) {
     const track = document.getElementById(trackId);
     const progressBar = document.getElementById(progressBarId);
+    if (!track) return null;
 
-    if (!section || !track) return null;
     const cards = Array.from(track.children);
     if (cards.length <= 1) return null;
 
-    const totalSteps = cards.length - 1;
-    const scrollDistance = () => totalSteps * window.innerHeight * 0.85;
+    const itemScale = options.itemScale ?? 0.05;
+    const baseScale = options.baseScale ?? 0.85;
+    const dimAmount = options.dimAmount ?? 0.18;
+    const itemStackDistance = options.itemStackDistance ?? 8;
 
-    // Initial state: Card 0 sits in place, remaining cards are poised below viewport
-    gsap.set(cards[0], { yPercent: 0, scale: 1, opacity: 1, zIndex: 1 });
-    for (let i = 1; i < cards.length; i++) {
-      gsap.set(cards[i], { yPercent: 112, scale: 1, opacity: 1, zIndex: i + 1 });
-    }
-
-    const tl = gsap.timeline({
-      scrollTrigger: {
-        trigger: section,
-        start: 'top top',
-        end: () => `+=${scrollDistance()}`,
-        pin: true,
-        scrub: 0.35,
-        invalidateOnRefresh: true,
-        onUpdate: (self) => {
-          if (progressBar) {
-            const pct = Math.min(100, Math.max(0, Math.round(self.progress * 100)));
-            progressBar.style.width = `${pct}%`;
-          }
-        }
-      }
+    // Assign ascending z-index so subsequent cards slide on top of previous cards
+    cards.forEach((card, i) => {
+      card.style.zIndex = `${i + 1}`;
     });
 
-    // Animate each card sliding up over the previous cards in sequential steps
-    for (let i = 1; i < cards.length; i++) {
-      const stepStartTime = i - 1;
+    let frame = 0;
 
-      // Card i slides smoothly up from the bottom over the stack
-      tl.to(cards[i], {
-        yPercent: 0,
-        duration: 1,
-        ease: 'none'
-      }, stepStartTime);
+    const update = () => {
+      frame = 0;
+      const computedTop = parseFloat(window.getComputedStyle(cards[0]).top) || 100;
+      const heights = cards.map(c => c.offsetHeight);
+      const tops = cards.map(c => c.getBoundingClientRect().top);
 
-      // Previous cards slightly scale down and tuck underneath (tactile deck effect)
-      for (let j = 0; j < i; j++) {
-        const depth = i - j;
-        const targetScale = Math.max(0.78, 1 - depth * 0.05);
-        const targetY = depth * 8;
-        const targetOpacity = Math.max(0.5, 1 - depth * 0.18);
+      const depths = cards.map(() => 0);
+      let totalCover = 0;
 
-        tl.to(cards[j], {
-          scale: targetScale,
-          y: targetY,
-          opacity: targetOpacity,
-          duration: 1,
-          ease: 'none'
-        }, stepStartTime);
+      for (let j = 1; j < cards.length; j++) {
+        const pinBefore = computedTop + (j - 1) * itemStackDistance;
+        const start = pinBefore + heights[j - 1];
+        const span = Math.max(1, start - pinBefore - itemStackDistance);
+        const cover = Math.min(1, Math.max(0, (start - tops[j]) / span));
+        for (let i = 0; i < j; i++) {
+          depths[i] += cover;
+        }
+        totalCover += cover;
       }
-    }
+
+      cards.forEach((card, i) => {
+        const depth = depths[i];
+        const scale = Math.max(baseScale, 1 - depth * itemScale);
+        const yOffset = depth * itemStackDistance;
+        const transform = depth < 0.0005 ? '' : `scale(${scale.toFixed(4)}) translateY(${yOffset.toFixed(1)}px)`;
+        card.style.transform = transform;
+
+        // Depth dimming (React Bits shade concept)
+        const dim = Math.min(0.35, 1 - Math.pow(1 - dimAmount, depth));
+        card.style.filter = dim > 0.005 ? `brightness(${((1 - dim) * 100).toFixed(1)}%)` : '';
+      });
+
+      if (progressBar && cards.length > 1) {
+        const maxCover = cards.length - 1;
+        const pct = Math.min(100, Math.max(0, Math.round((totalCover / maxCover) * 100)));
+        progressBar.style.width = `${pct}%`;
+      }
+    };
+
+    const schedule = () => {
+      if (!frame) frame = requestAnimationFrame(update);
+    };
+
+    window.addEventListener('scroll', schedule, { passive: true });
+    window.addEventListener('resize', schedule, { passive: true });
+    schedule();
 
     return () => {
-      tl.kill();
+      window.removeEventListener('scroll', schedule);
+      window.removeEventListener('resize', schedule);
+      if (frame) cancelAnimationFrame(frame);
       cards.forEach(card => {
-        gsap.set(card, { clearProps: 'all' });
+        card.style.transform = '';
+        card.style.filter = '';
+        card.style.zIndex = '';
       });
       if (progressBar) progressBar.style.width = '0%';
     };
@@ -192,11 +202,19 @@ import { loadActiveBackground } from './background-loader.js';
       },
 
       // =========================================================================
-      // 2. Mobile Breakpoint (< 769px): Fancy.design Vertical Card Deck Stacking
+      // 2. Mobile Breakpoint (< 769px): React Bits ScrollStack Native Sticky Deck
       // =========================================================================
       "(max-width: 768px)": function() {
-        const cleanupExp = createMobileStackTimeline('experience', 'expHorizontalTrack', 'expProgressBar');
-        const cleanupWorks = createMobileStackTimeline('works', 'worksHorizontalTrack', 'worksProgressBar');
+        const cleanupExp = initScrollStack('expHorizontalTrack', 'expProgressBar', {
+          itemScale: 0.05,
+          baseScale: 0.85,
+          itemStackDistance: 8
+        });
+        const cleanupWorks = initScrollStack('worksHorizontalTrack', 'worksProgressBar', {
+          itemScale: 0.045,
+          baseScale: 0.86,
+          itemStackDistance: 8
+        });
 
         return () => {
           if (cleanupExp) cleanupExp();

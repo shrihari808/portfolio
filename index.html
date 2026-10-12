@@ -668,10 +668,14 @@
       .exp-card, .work-card { width: clamp(340px, 80vw, 560px); }
     }
 
-    /* Mobile Viewport (< 769px): Calibrated Card Deck Stacking (Fancy.design parity) */
+    /* Mobile Viewport (< 769px): React Bits Native Sticky <ScrollStack /> Architecture */
     @media (max-width: 768px) {
       .desktop-hint { display: none !important; }
       .mobile-hint { display: none !important; }
+
+      body {
+        overflow-x: clip !important;
+      }
 
       .nav {
         height: 52px !important;
@@ -680,40 +684,46 @@
 
       .page-container {
         padding: 0 14px !important;
+        overflow: visible !important;
       }
 
       #experience.exp-pinned-section,
       #works.works-pinned-section {
         padding: 0 !important;
-        position: relative;
+        position: relative !important;
+        overflow: visible !important;
       }
 
       .exp-pinned-inner,
       .works-pinned-inner {
-        height: 100vh !important;
-        min-height: 100dvh !important;
-        max-height: 100dvh !important;
-        display: flex !important;
-        flex-direction: column !important;
-        justify-content: center !important;
+        height: auto !important;
+        min-height: 0 !important;
+        max-height: none !important;
+        display: block !important;
         padding-top: 54px !important;
-        padding-bottom: 14px !important;
+        padding-bottom: 40px !important;
         padding-left: 0 !important;
         padding-right: 0 !important;
         box-sizing: border-box !important;
-        overflow: hidden !important;
+        overflow: visible !important;
       }
 
-      /* Sleek, compact section header bar aligned with card deck */
+      /* Sticky Section Header Bar: Stays pinned below nav while cards stack */
       .exp-pinned-header,
       .works-pinned-header {
+        position: sticky !important;
+        top: 52px !important;
+        z-index: 20 !important;
+        background: rgba(7, 9, 20, 0.94) !important;
+        backdrop-filter: blur(16px) !important;
+        -webkit-backdrop-filter: blur(16px) !important;
+        padding: 10px 4px !important;
+        margin-bottom: 14px !important;
         display: flex !important;
         flex-direction: row !important;
         justify-content: space-between !important;
         align-items: center !important;
-        margin-bottom: 12px !important;
-        padding: 0 4px !important;
-        flex-shrink: 0 !important;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.08) !important;
       }
 
       .sec-tag {
@@ -748,10 +758,9 @@
       .exp-horizontal-viewport,
       .works-horizontal-viewport {
         width: 100% !important;
-        flex: 0 0 auto !important;
         height: auto !important;
         position: relative !important;
-        overflow: hidden !important;
+        overflow: visible !important;
         margin: 0 !important;
         padding: 0 !important;
         box-sizing: border-box !important;
@@ -759,27 +768,28 @@
 
       .exp-horizontal-track,
       .works-horizontal-track {
+        display: flex !important;
+        flex-direction: column !important;
         position: relative !important;
         width: 100% !important;
         height: auto !important;
-        min-height: clamp(480px, 66vh, 560px) !important;
-        display: grid !important;
-        grid-template-columns: 1fr !important;
-        grid-template-rows: 1fr !important;
         padding: 0 !important;
         gap: 0 !important;
         transform: none !important;
+        overflow: visible !important;
       }
 
-      /* Card Deck Stacking: Content-proportional uniform deck height with ZERO internal scroll */
+      /* React Bits Sticky Card: Native compositor sticky pinning with ZERO pin-spacer jitter */
       .exp-card,
       .work-card {
-        grid-area: 1 / 1 !important;
+        position: sticky !important;
+        top: clamp(100px, 14vh, 114px) !important;
         width: 100% !important;
         max-width: 100% !important;
-        height: 100% !important;
-        min-height: clamp(480px, 66vh, 560px) !important;
-        max-height: calc(100dvh - 125px) !important;
+        height: auto !important;
+        min-height: clamp(470px, 64vh, 550px) !important;
+        max-height: calc(100dvh - 130px) !important;
+        margin-bottom: clamp(140px, 24vh, 200px) !important;
         overflow: hidden !important;
         overflow-y: hidden !important;
         scrollbar-width: none !important;
@@ -789,12 +799,19 @@
         padding: clamp(18px, 2.6vh, 24px) clamp(16px, 4vw, 22px) !important;
         box-sizing: border-box !important;
         border-radius: 20px !important;
-        box-shadow: 0 -10px 32px rgba(0, 0, 0, 0.8) !important;
+        box-shadow: 0 -12px 36px rgba(0, 0, 0, 0.85) !important;
         border: 1px solid var(--border-focus) !important;
-        transform-origin: 50% 100% !important;
-        will-change: transform, opacity !important;
+        transform-origin: 50% 12% !important;
+        will-change: transform, filter;
         background: #0B0F1C !important;
+        transition: filter 0.15s ease;
       }
+
+      .exp-card:last-child,
+      .work-card:last-child {
+        margin-bottom: 40px !important;
+      }
+
       .exp-card::-webkit-scrollbar,
       .work-card::-webkit-scrollbar {
         display: none !important;
