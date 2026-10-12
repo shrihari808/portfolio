@@ -1,6 +1,8 @@
 /**
  * src/main.js
  * Application entry point for Shrihari Engineering Portfolio
+ * Orchestrates GSAP pinning for desktop, fluid touch swipe for mobile,
+ * and Three.js background lifecycle.
  */
 import { loadActiveBackground } from './background-loader.js';
 
@@ -26,11 +28,38 @@ import { loadActiveBackground } from './background-loader.js';
     }
   }
 
+  // --- Mobile Touch Carousel Progress Synchronization ---
+  function setupMobileTrackProgress(viewportSelector, progressBarId) {
+    const viewport = document.querySelector(viewportSelector);
+    const progressBar = document.getElementById(progressBarId);
+    if (!viewport || !progressBar) return;
+
+    const onScroll = () => {
+      // Only active on mobile/tablet viewports (< 769px)
+      if (window.innerWidth > 768) return;
+      const maxScroll = viewport.scrollWidth - viewport.clientWidth;
+      if (maxScroll <= 0) {
+        progressBar.style.width = '0%';
+        return;
+      }
+      const pct = Math.min(100, Math.max(0, Math.round((viewport.scrollLeft / maxScroll) * 100)));
+      progressBar.style.width = `${pct}%`;
+    };
+
+    viewport.addEventListener('scroll', onScroll, { passive: true });
+    // Initial sync
+    onScroll();
+  }
+
+  setupMobileTrackProgress('.exp-horizontal-viewport', 'expProgressBar');
+  setupMobileTrackProgress('.works-horizontal-viewport', 'worksProgressBar');
+
   // --- GSAP Orchestration & Horizontal Pinned Scroll ---
   if (typeof gsap !== 'undefined' && typeof ScrollTrigger !== 'undefined' && !prefersReducedMotion) {
     gsap.registerPlugin(ScrollTrigger);
 
-    // Only enable pinning on desktop/laptop screens; mobile uses fluid touch scroll
+    // Only enable pinning on desktop/laptop screens (>= 769px)
+    // Mobile (< 769px) uses native fluid touch snap scrolling
     ScrollTrigger.matchMedia({
       "(min-width: 769px)": function() {
         // 1. Pinned horizontal scroll for Experience section
@@ -106,6 +135,16 @@ import { loadActiveBackground } from './background-loader.js';
             ease: 'none'
           });
         }
+
+        // Cleanup when switching away from desktop breakpoint
+        return () => {
+          gsap.set(['#expHorizontalTrack', '#worksHorizontalTrack'], { clearProps: 'transform' });
+        };
+      },
+
+      "(max-width: 768px)": function() {
+        // Ensure no lingering GSAP inline transforms affect native touch scroll on mobile
+        gsap.set(['#expHorizontalTrack', '#worksHorizontalTrack'], { clearProps: 'transform' });
       }
     });
 
@@ -121,7 +160,7 @@ import { loadActiveBackground } from './background-loader.js';
 
         const triggers = ScrollTrigger.getAll();
         const st = triggers.find((t) => t.trigger === target);
-        if (st) {
+        if (st && window.innerWidth >= 769) {
           window.scrollTo({
             top: st.start,
             behavior: 'smooth'

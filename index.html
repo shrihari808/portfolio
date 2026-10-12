@@ -52,13 +52,18 @@
     #bg-layer {
       position: fixed; inset: 0; z-index: 0; pointer-events: none;
       background: radial-gradient(ellipse at 50% 25%, #0E1222 0%, #070914 100%);
+      transform: translate3d(0, 0, 0); -webkit-transform: translate3d(0, 0, 0);
+      backface-visibility: hidden; -webkit-backface-visibility: hidden;
     }
     #bg-container {
       position: fixed; inset: 0; width: 100%; height: 100%; z-index: 1; pointer-events: none;
+      transform: translate3d(0, 0, 0); -webkit-transform: translate3d(0, 0, 0);
+      backface-visibility: hidden; -webkit-backface-visibility: hidden;
     }
     #vignette {
       position: fixed; inset: 0; z-index: 2; pointer-events: none;
       background: radial-gradient(circle at center, transparent 35%, rgba(7, 9, 20, 0.85) 100%);
+      transform: translate3d(0, 0, 0); -webkit-transform: translate3d(0, 0, 0);
     }
 
     /* ============================================================= Header & Navigation */
@@ -274,6 +279,8 @@
       text-transform: uppercase;
       font-weight: 500;
     }
+    .mobile-hint { display: none; }
+    .desktop-hint { display: inline; }
     .exp-pin-progress {
       width: 140px;
       height: 3px;
@@ -661,11 +668,110 @@
       .exp-card, .work-card { width: clamp(340px, 80vw, 560px); }
     }
 
+    /* Mobile Viewport (< 769px): Fluid Horizontal Snap Touch Track & Clean Card Height */
+    @media (max-width: 768px) {
+      .desktop-hint { display: none; }
+      .mobile-hint { display: inline; }
+
+      #experience.exp-pinned-section,
+      #works.works-pinned-section {
+        padding: clamp(40px, 6vh, 64px) 0;
+        position: relative;
+      }
+
+      .exp-pinned-inner,
+      .works-pinned-inner {
+        height: auto !important;
+        min-height: 0 !important;
+        padding-top: 0 !important;
+        padding-bottom: 0 !important;
+        display: block !important;
+        overflow: visible !important;
+      }
+
+      .exp-pinned-header,
+      .works-pinned-header {
+        margin-bottom: 16px;
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 12px;
+      }
+
+      .exp-scroll-indicator {
+        width: 100%;
+        justify-content: space-between;
+        align-items: center;
+      }
+
+      .exp-pin-progress {
+        width: 90px;
+        flex-shrink: 0;
+      }
+
+      .exp-horizontal-viewport,
+      .works-horizontal-viewport {
+        width: calc(100% + 40px) !important;
+        margin-left: -20px !important;
+        margin-right: -20px !important;
+        padding: 6px 20px 20px 20px !important;
+        overflow-x: auto !important;
+        overflow-y: hidden !important;
+        -webkit-overflow-scrolling: touch !important;
+        scroll-snap-type: x mandatory !important;
+        scroll-behavior: smooth !important;
+        overscroll-behavior-x: contain !important;
+        scrollbar-width: none !important;
+        -ms-overflow-style: none !important;
+        box-sizing: border-box !important;
+      }
+
+      .exp-horizontal-viewport::-webkit-scrollbar,
+      .works-horizontal-viewport::-webkit-scrollbar {
+        display: none !important;
+      }
+
+      .exp-horizontal-track,
+      .works-horizontal-track {
+        display: flex !important;
+        flex-direction: row !important;
+        gap: 16px !important;
+        width: max-content !important;
+        padding-right: 20px !important;
+        transform: none !important;
+        align-items: stretch !important;
+        will-change: scroll-position;
+      }
+
+      /* Complete Fix: Cards fit content naturally with no artificial clipping or internal scrollbar */
+      .exp-card,
+      .work-card {
+        width: min(84vw, 360px) !important;
+        max-width: 86vw !important;
+        flex-shrink: 0 !important;
+        scroll-snap-align: start !important;
+        scroll-snap-stop: normal !important;
+        height: auto !important;
+        min-height: 0 !important;
+        max-height: none !important;
+        overflow: visible !important;
+        overflow-y: visible !important;
+        padding: 22px 18px !important;
+        box-sizing: border-box !important;
+      }
+
+      .exp-header {
+        flex-direction: column !important;
+        align-items: flex-start !important;
+        gap: 8px !important;
+      }
+
+      .exp-meta {
+        text-align: left !important;
+      }
+    }
+
     @media (max-width: 600px) {
       .telemetry-grid { grid-template-columns: 1fr; }
-      .exp-card, .work-card { width: calc(100vw - 48px); min-height: 360px; padding: 22px 18px; }
-      .exp-header { flex-direction: column; align-items: flex-start; }
-      .exp-meta { text-align: left; }
     }
 
     @media (prefers-reduced-motion: reduce) {
@@ -759,14 +865,15 @@
           </div>
 
           <div class="exp-scroll-indicator">
-            <span class="exp-scroll-hint">Scroll down to navigate roles ↓</span>
+            <span class="exp-scroll-hint desktop-hint">Scroll down to navigate roles ↓</span>
+            <span class="exp-scroll-hint mobile-hint">Swipe cards horizontally →</span>
             <div class="exp-pin-progress">
               <div class="exp-pin-progress-bar" id="expProgressBar"></div>
             </div>
           </div>
         </div>
 
-        <div class="exp-horizontal-viewport">
+        <div class="exp-horizontal-viewport" id="expHorizontalViewport">
           <div class="exp-horizontal-track" id="expHorizontalTrack">
             <!-- Card 1: Invendis -->
             <article class="exp-card">
@@ -904,14 +1011,15 @@
           </div>
 
           <div class="exp-scroll-indicator">
-            <span class="exp-scroll-hint">Scroll down to explore deployments ↓</span>
+            <span class="exp-scroll-hint desktop-hint">Scroll down to explore deployments ↓</span>
+            <span class="exp-scroll-hint mobile-hint">Swipe cards horizontally →</span>
             <div class="exp-pin-progress">
               <div class="exp-pin-progress-bar" id="worksProgressBar"></div>
             </div>
           </div>
         </div>
 
-        <div class="works-horizontal-viewport">
+        <div class="works-horizontal-viewport" id="worksHorizontalViewport">
           <div class="works-horizontal-track" id="worksHorizontalTrack">
             <!-- Project 1: FLint -->
             <article class="work-card">

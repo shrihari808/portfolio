@@ -1,6 +1,7 @@
 /**
  * src/backgrounds/structure-flow/orbital-sphere.js
  * 3D rotating spherical point-cloud lattice and concentric orbital rings in Three.js.
+ * Enhanced for mobile viewport stability, aspect ratio framing, and hardware acceleration.
  */
 import * as THREE from 'three';
 import { hexToRgb } from '../../core/color-utils.js';
@@ -13,6 +14,11 @@ export function initBackground(container, options = {}) {
   canvas.style.height = '100%';
   canvas.style.zIndex = '1';
   canvas.style.pointerEvents = 'none';
+  canvas.style.transform = 'translate3d(0, 0, 0)';
+  canvas.style.webkitTransform = 'translate3d(0, 0, 0)';
+  canvas.style.backfaceVisibility = 'hidden';
+  canvas.style.webkitBackfaceVisibility = 'hidden';
+  canvas.style.willChange = 'transform';
   container.appendChild(canvas);
 
   let currentAccent = options.accentColor || '#C490FF';
@@ -20,14 +26,42 @@ export function initBackground(container, options = {}) {
 
   const scene = new THREE.Scene();
   const camera = new THREE.PerspectiveCamera(55, window.innerWidth / window.innerHeight, 1, 1500);
-  camera.position.set(0, 0, 360);
 
-  const renderer = new THREE.WebGLRenderer({ canvas, alpha: true, antialias: true, powerPreference: 'high-performance' });
+  const renderer = new THREE.WebGLRenderer({
+    canvas,
+    alpha: true,
+    antialias: true,
+    powerPreference: 'high-performance'
+  });
   renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, 1.5));
   renderer.setSize(window.innerWidth, window.innerHeight);
 
   const group = new THREE.Group();
   scene.add(group);
+
+  // Responsive camera distance and group scale to prevent near-plane clipping
+  // and ensure rings and sphere fit comfortably inside narrow mobile portrait screens.
+  function updateResponsiveFraming() {
+    const width = window.innerWidth;
+    const height = window.innerHeight;
+    const aspect = width / height;
+
+    if (aspect < 0.65) {
+      // Mobile portrait (e.g. 375x667, 390x844)
+      camera.position.z = 580;
+      group.scale.set(0.72, 0.72, 0.72);
+    } else if (aspect < 1.0) {
+      // Tablet portrait / square viewports
+      camera.position.z = 480;
+      group.scale.set(0.85, 0.85, 0.85);
+    } else {
+      // Desktop & wide landscape
+      camera.position.z = 360;
+      group.scale.set(1.0, 1.0, 1.0);
+    }
+  }
+
+  updateResponsiveFraming();
 
   // 1. Spherical point cloud
   const SPHERE_POINTS = 800;
@@ -99,15 +133,38 @@ export function initBackground(container, options = {}) {
     targetMouseY = (e.clientY - window.innerHeight / 2) * 0.001;
   }
 
+  let lastWidth = window.innerWidth;
+  let lastHeight = window.innerHeight;
+
   function onResize() {
-    camera.aspect = window.innerWidth / window.innerHeight;
+    const newWidth = window.innerWidth;
+    const newHeight = window.innerHeight;
+
+    // Mobile URL bar retracting/expanding fires resize events with only ~50-100px height delta.
+    // Calling renderer.setSize on every scroll pixel reallocates WebGL framebuffers and causes severe visual glitches.
+    const widthChanged = Math.abs(newWidth - lastWidth) > 2;
+    const heightSignificant = Math.abs(newHeight - lastHeight) > 140;
+
+    camera.aspect = newWidth / newHeight;
+    updateResponsiveFraming();
     camera.updateProjectionMatrix();
-    renderer.setSize(window.innerWidth, window.innerHeight);
-    renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, 1.5));
+
+    if (widthChanged || heightSignificant) {
+      lastWidth = newWidth;
+      lastHeight = newHeight;
+      renderer.setSize(newWidth, newHeight);
+      renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, 1.5));
+    }
   }
 
   window.addEventListener('resize', onResize);
-  window.addEventListener('mousemove', onMouseMove);
+
+  // Only listen to mouse movements on devices that support hover pointer to prevent
+  // touch scrolls from firing synthetic jumpy mouse coordinates:
+  const canHover = window.matchMedia('(hover: hover) and (pointer: fine)').matches;
+  if (canHover) {
+    window.addEventListener('mousemove', onMouseMove);
+  }
 
   let animId = null;
 
@@ -121,8 +178,10 @@ export function initBackground(container, options = {}) {
     ring1.rotation.z += 0.002;
     ring2.rotation.z -= 0.0025;
 
-    camera.position.x = mouseX * 80;
-    camera.position.y = -mouseY * 80;
+    if (canHover) {
+      camera.position.x = mouseX * 60;
+      camera.position.y = -mouseY * 60;
+    }
     camera.lookAt(0, 0, 0);
 
     renderer.render(scene, camera);
@@ -147,7 +206,9 @@ export function initBackground(container, options = {}) {
     destroy() {
       if (animId) cancelAnimationFrame(animId);
       window.removeEventListener('resize', onResize);
-      window.removeEventListener('mousemove', onMouseMove);
+      if (canHover) {
+        window.removeEventListener('mousemove', onMouseMove);
+      }
       sphereGeo.dispose();
       pointsMat.dispose();
       ringGeo.dispose();
