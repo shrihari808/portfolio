@@ -22,7 +22,8 @@ export function initBackground(container, options = {}) {
   let animId = null;
   let particles = [];
 
-  const COUNT = width < 768 ? 80 : 160;
+  // Tripled particle density: 1,200 on desktop, 540 on mobile
+  const COUNT = width < 768 ? 540 : 1200;
   const pointer = { x: -1000, y: -1000 };
 
   function resize() {
@@ -37,37 +38,60 @@ export function initBackground(container, options = {}) {
   function initParticles() {
     particles = [];
     for (let i = 0; i < COUNT; i++) {
+      const layer = Math.random();
+      let size, alpha, speedMult, trailLength;
+
+      if (layer < 0.5) {
+        // Deep cosmic micro-dust (50%)
+        size = Math.random() * 0.7 + 0.4;
+        alpha = Math.random() * 0.28 + 0.12;
+        speedMult = 0.55 + Math.random() * 0.35;
+        trailLength = 8;
+      } else if (layer < 0.85) {
+        // Mid-plane particulate (35%)
+        size = Math.random() * 1.1 + 0.8;
+        alpha = Math.random() * 0.4 + 0.28;
+        speedMult = 0.85 + Math.random() * 0.45;
+        trailLength = 14;
+      } else {
+        // Foreground luminous nodes (15%)
+        size = Math.random() * 1.4 + 1.6;
+        alpha = Math.random() * 0.35 + 0.65;
+        speedMult = 1.15 + Math.random() * 0.55;
+        trailLength = 22;
+      }
+
       particles.push({
         x: Math.random() * width,
         y: Math.random() * height,
-        vx: (Math.random() - 0.2) * 0.6,
-        vy: (Math.random() - 0.5) * 0.4,
-        size: Math.random() * 1.8 + 0.6,
-        alpha: Math.random() * 0.5 + 0.2,
-        decay: Math.random() * 0.005 + 0.002,
+        vx: (Math.random() - 0.18) * 0.65 * speedMult,
+        vy: (Math.random() - 0.5) * 0.38 * speedMult,
+        size,
+        alpha,
+        trailLength,
         history: []
       });
     }
   }
 
   function animate() {
-    // Semi-transparent clear creates sleek trailing drift
-    ctx.fillStyle = 'rgba(7, 9, 20, 0.22)';
+    // Slower alpha clear (0.14) creates expansive, luminous comet tails
+    ctx.fillStyle = 'rgba(7, 9, 20, 0.14)';
     ctx.fillRect(0, 0, width, height);
 
     particles.forEach(p => {
-      // Store history for comet trail
+      // Store history for elongated comet trail
       p.history.push({ x: p.x, y: p.y });
-      if (p.history.length > 5) p.history.shift();
+      if (p.history.length > p.trailLength) p.history.shift();
 
       p.x += p.vx;
       p.y += p.vy;
 
-      // Wrap around bounds
-      if (p.x < 0) p.x = width;
-      if (p.x > width) p.x = 0;
-      if (p.y < 0) p.y = height;
-      if (p.y > height) p.y = 0;
+      // Wrap around bounds (clear history on wrap to avoid streak artifacts)
+      if (p.x < 0) { p.x = width; p.history = []; }
+      if (p.x > width) { p.x = 0; p.history = []; }
+      if (p.y < 0) { p.y = height; p.history = []; }
+      if (p.y > height) { p.y = 0; p.history = []; }
 
       // Pointer deflection
       const dx = p.x - pointer.x;
@@ -79,10 +103,10 @@ export function initBackground(container, options = {}) {
         p.y += (dy / (d || 1)) * force;
       }
 
-      // Draw trail
+      // Draw elongated luminous trail
       if (p.history.length > 1) {
-        ctx.strokeStyle = `rgba(${rgb.r}, ${rgb.g}, ${rgb.b}, ${p.alpha * 0.35})`;
-        ctx.lineWidth = p.size * 0.8;
+        ctx.strokeStyle = `rgba(${rgb.r}, ${rgb.g}, ${rgb.b}, ${p.alpha * 0.38})`;
+        ctx.lineWidth = p.size * 0.85;
         ctx.beginPath();
         ctx.moveTo(p.history[0].x, p.history[0].y);
         for (let i = 1; i < p.history.length; i++) {
@@ -96,6 +120,14 @@ export function initBackground(container, options = {}) {
       ctx.beginPath();
       ctx.arc(p.x, p.y, p.size, 0, Math.PI * 2);
       ctx.fill();
+
+      // Soft glow halo for foreground nodes
+      if (p.size > 1.8) {
+        ctx.fillStyle = `rgba(${rgb.r}, ${rgb.g}, ${rgb.b}, ${p.alpha * 0.22})`;
+        ctx.beginPath();
+        ctx.arc(p.x, p.y, p.size * 2.4, 0, Math.PI * 2);
+        ctx.fill();
+      }
     });
 
     animId = requestAnimationFrame(animate);

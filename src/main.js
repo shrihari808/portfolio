@@ -8,8 +8,8 @@ import { loadActiveBackground } from './background-loader.js';
   'use strict';
 
   // --- Palette & Theme State ---
-  const palettes = ['#E6C879', '#7FC4FF', '#52c41a'];
-  const themeNames = ['', 'cyan', 'green'];
+  const palettes = ['#E6C879', '#B37FEB'];
+  const themeNames = ['', 'purple'];
   let palIdx = 0;
   let currentAccent = palettes[palIdx];
 

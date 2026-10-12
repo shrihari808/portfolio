@@ -29,13 +29,9 @@
       --sans: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", sans-serif;
     }
 
-    [data-theme="cyan"] {
-      --accent: #7FC4FF;
-      --accent-glow: rgba(127, 196, 255, 0.35);
-    }
-    [data-theme="green"] {
-      --accent: #52c41a;
-      --accent-glow: rgba(82, 196, 26, 0.35);
+    [data-theme="purple"] {
+      --accent: #B37FEB;          /* Neon Purple */
+      --accent-glow: rgba(179, 127, 235, 0.38);
     }
 
     *, *::before, *::after { box-sizing: border-box; }
@@ -406,7 +402,7 @@
       <div class="theme-pill" id="engineBadge" title="Configured in src/background.config.js">
         <span id="engineBadgeText">⚡ Constellation</span>
       </div>
-      <button class="theme-pill" id="paletteToggleBtn" title="Cycle Accent Palette">
+      <button class="theme-pill" id="paletteToggleBtn" title="Switch Accent Palette (Gold ↔ Neon Purple)">
         <span>● Palette</span>
       </button>
       <a href="https://github.com/shrihari808" target="_blank" rel="noopener" class="btn-cta">
