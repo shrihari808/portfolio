@@ -6,6 +6,8 @@
  * and Three.js background lifecycle.
  */
 import { loadActiveBackground } from './background-loader.js';
+import { initAllSpecularButtons } from './specular-button.js';
+import { initAllBorderGlowCards } from './border-glow.js';
 
 (async function initApp() {
   'use strict';
@@ -28,6 +30,10 @@ import { loadActiveBackground } from './background-loader.js';
       console.error('[Background] Failed to load active background:', err);
     }
   }
+
+  // --- React Bits: SpecularButton & BorderGlow Initialization ---
+  initAllSpecularButtons();
+  initAllBorderGlowCards();
 
   // --- React Bits <ScrollStack /> Architecture Adapted for Mobile Web ---
   // Uses native CSS position: sticky + RAF cover-based depth scaling.

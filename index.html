@@ -91,47 +91,134 @@
 
     .nav-actions {
       display: flex; align-items: center; gap: 10px;
+    /* ============================================================= React Bits: SpecularButton */
+    .specular-button {
+      --sb-radius: 18px;
+      --sb-tint: #ffffff;
+      --sb-tint-opacity: 0.04;
+      --sb-blur: 0px;
+      --sb-text-color: #f5f5f5;
+
+      position: relative;
+      isolation: isolate;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.5em;
+      margin: 0;
+      border: 0;
+      border-radius: var(--sb-radius);
+      font: inherit;
+      font-weight: 500;
+      line-height: 1;
+      letter-spacing: 0.01em;
+      color: var(--sb-text-color);
+      background: color-mix(in srgb, var(--sb-tint) calc(var(--sb-tint-opacity) * 100%), transparent);
+      box-shadow: 0 10px 24px -14px rgba(0, 0, 0, 0.45);
+      -webkit-backdrop-filter: blur(var(--sb-blur));
+      backdrop-filter: blur(var(--sb-blur));
+      cursor: pointer;
+      outline: none;
+      -webkit-tap-highlight-color: transparent;
+      transition: transform 0.25s cubic-bezier(0.2, 0.8, 0.2, 1);
+      text-decoration: none;
+      box-sizing: border-box;
     }
-    .theme-pill {
-      display: inline-flex; align-items: center; gap: 6px;
-      padding: 6px 14px; border-radius: 20px;
-      background: rgba(255, 255, 255, 0.05);
-      border: 1px solid var(--border-focus);
-      font-size: 11px; font-family: var(--mono); color: #E2E8F0;
-      cursor: pointer; text-decoration: none; transition: all 0.2s;
-      white-space: nowrap; font-weight: 500;
+
+    .specular-button:active {
+      transform: scale(0.97);
     }
-    .theme-pill:hover {
-      border-color: var(--accent); color: var(--accent);
-      background: var(--accent-glow-subtle);
+
+    .specular-button:focus-visible {
+      outline: 2px solid color-mix(in srgb, var(--sb-text-color) 55%, transparent);
+      outline-offset: 3px;
     }
-    .btn-cta {
-      display: inline-flex; align-items: center; gap: 8px;
-      padding: 7px 18px; border-radius: 20px;
-      background: var(--accent-glow-subtle);
-      border: 1px solid var(--accent);
-      color: var(--accent); text-decoration: none;
-      font-size: 11px; font-weight: 600; letter-spacing: 0.12em; text-transform: uppercase;
-      transition: all 0.25s ease;
+
+    .specular-button:disabled {
+      opacity: 0.5;
+      cursor: default;
+    }
+
+    .specular-button:disabled:active {
+      transform: none;
+    }
+
+    .specular-button--sm {
+      padding: 7px 16px;
+      font-size: 0.825rem;
+    }
+
+    .specular-button--md {
+      padding: 9px 20px;
+      font-size: 0.925rem;
+    }
+
+    .specular-button--lg {
+      padding: 16px 36px;
+      font-size: 1.1rem;
+    }
+
+    .specular-button__light {
+      position: absolute;
+      inset: -24px;
+      z-index: 1;
+      display: block;
+      width: calc(100% + 48px);
+      height: calc(100% + 48px);
+      pointer-events: none;
+    }
+
+    .specular-button__label {
+      position: relative;
+      z-index: 2;
+      display: inline-flex;
+      align-items: center;
+      gap: inherit;
+    }
+
+    /* Portfolio Button Adapters for SpecularButton */
+    .specular-button.btn-cta {
+      --sb-radius: 999px;
+      font-family: var(--mono);
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
       white-space: nowrap;
+      border: 1px solid rgba(0, 245, 255, 0.35);
     }
-    .btn-cta:hover {
-      background: var(--accent); color: var(--bg);
-      box-shadow: 0 0 16px var(--accent-glow);
-    }
-    .btn-secondary {
-      display: inline-flex; align-items: center; gap: 8px;
-      padding: 7px 18px; border-radius: 20px;
-      background: rgba(255, 255, 255, 0.05);
-      border: 1px solid rgba(255, 255, 255, 0.22);
-      color: #F8FAFC; text-decoration: none;
-      font-size: 11px; font-weight: 500; letter-spacing: 0.12em; text-transform: uppercase;
-      transition: all 0.25s ease;
+
+    .specular-button.btn-secondary {
+      --sb-radius: 999px;
+      font-family: var(--mono);
+      font-size: 11px;
+      font-weight: 500;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
       white-space: nowrap;
+      border: 1px solid rgba(255, 255, 255, 0.2);
     }
-    .btn-secondary:hover {
-      border-color: var(--accent); color: var(--accent);
-      background: var(--accent-glow-subtle);
+
+    .specular-button.theme-pill {
+      --sb-radius: 999px;
+      font-family: var(--mono);
+      font-size: 11px;
+      font-weight: 500;
+      white-space: nowrap;
+      border: 1px solid rgba(192, 132, 252, 0.32);
+    }
+
+    .specular-button.work-link-btn {
+      --sb-radius: 8px;
+      font-family: var(--mono);
+      font-size: 11.5px;
+      font-weight: 500;
+      white-space: nowrap;
+      border: 1px solid rgba(255, 255, 255, 0.18);
+    }
+
+    .specular-button.work-link-btn.primary {
+      border: 1px solid rgba(0, 245, 255, 0.38);
     }
 
     /* ============================================================= Layout & Sections */
@@ -310,6 +397,167 @@
       will-change: transform;
       align-items: stretch;
       padding-bottom: 6px;
+    }
+
+    /* ============================================================= React Bits: BorderGlow */
+    .border-glow-card {
+      --edge-proximity: 0;
+      --cursor-angle: 45deg;
+      --edge-sensitivity: 25;
+      --color-sensitivity: calc(var(--edge-sensitivity) + 20);
+      --border-radius: 20px;
+      --glow-padding: 40px;
+      --cone-spread: 25;
+
+      position: relative;
+      border-radius: var(--border-radius);
+      isolation: isolate;
+      transform: translate3d(0, 0, 0.01px);
+      border: 1px solid rgb(255 255 255 / 14%);
+      background: var(--card-bg, #0B0F1C);
+      overflow: visible;
+      box-shadow:
+        rgba(0, 0, 0, 0.1) 0px 1px 2px,
+        rgba(0, 0, 0, 0.1) 0px 2px 4px,
+        rgba(0, 0, 0, 0.1) 0px 4px 8px,
+        rgba(0, 0, 0, 0.15) 0px 8px 16px,
+        rgba(0, 0, 0, 0.25) 0px 16px 32px,
+        rgba(0, 0, 0, 0.45) 0px 32px 64px;
+    }
+
+    .border-glow-card::before,
+    .border-glow-card::after,
+    .border-glow-card > .edge-light {
+      content: "";
+      position: absolute;
+      inset: 0;
+      border-radius: inherit;
+      transition: opacity 0.25s ease-out;
+      z-index: -1;
+    }
+
+    .border-glow-card:not(:hover):not(.sweep-active)::before,
+    .border-glow-card:not(:hover):not(.sweep-active)::after,
+    .border-glow-card:not(:hover):not(.sweep-active) > .edge-light {
+      opacity: 0;
+      transition: opacity 0.75s ease-in-out;
+    }
+
+    /* colored mesh-gradient border */
+    .border-glow-card::before {
+      border: 1px solid transparent;
+      background:
+        linear-gradient(var(--card-bg, #0B0F1C) 0 100%) padding-box,
+        linear-gradient(rgb(255 255 255 / 0%) 0% 100%) border-box,
+        var(--gradient-one, radial-gradient(at 80% 55%, hsla(268, 100%, 76%, 1) 0px, transparent 50%)) border-box,
+        var(--gradient-two, radial-gradient(at 69% 34%, hsla(349, 100%, 74%, 1) 0px, transparent 50%)) border-box,
+        var(--gradient-three, radial-gradient(at 8% 6%, hsla(136, 100%, 78%, 1) 0px, transparent 50%)) border-box,
+        var(--gradient-four, radial-gradient(at 41% 38%, hsla(192, 100%, 64%, 1) 0px, transparent 50%)) border-box,
+        var(--gradient-five, radial-gradient(at 86% 85%, hsla(186, 100%, 74%, 1) 0px, transparent 50%)) border-box,
+        var(--gradient-six, radial-gradient(at 82% 18%, hsla(52, 100%, 65%, 1) 0px, transparent 50%)) border-box,
+        var(--gradient-seven, radial-gradient(at 51% 4%, hsla(12, 100%, 72%, 1) 0px, transparent 50%)) border-box,
+        var(--gradient-base, linear-gradient(#c299ff 0 100%)) border-box;
+
+      opacity: calc((var(--edge-proximity) - var(--color-sensitivity)) / (100 - var(--color-sensitivity)));
+
+      mask-image:
+        conic-gradient(
+          from var(--cursor-angle) at center,
+          black calc(var(--cone-spread) * 1%),
+          transparent calc((var(--cone-spread) + 15) * 1%),
+          transparent calc((100 - var(--cone-spread) - 15) * 1%),
+          black calc((100 - var(--cone-spread)) * 1%)
+        );
+      -webkit-mask-image:
+        conic-gradient(
+          from var(--cursor-angle) at center,
+          black calc(var(--cone-spread) * 1%),
+          transparent calc((var(--cone-spread) + 15) * 1%),
+          transparent calc((100 - var(--cone-spread) - 15) * 1%),
+          black calc((100 - var(--cone-spread)) * 1%)
+        );
+    }
+
+    /* colored mesh-gradient background fill near edges */
+    .border-glow-card::after {
+      border: 1px solid transparent;
+      background:
+        var(--gradient-one, radial-gradient(at 80% 55%, hsla(268, 100%, 76%, 1) 0px, transparent 50%)) padding-box,
+        var(--gradient-two, radial-gradient(at 69% 34%, hsla(349, 100%, 74%, 1) 0px, transparent 50%)) padding-box,
+        var(--gradient-three, radial-gradient(at 8% 6%, hsla(136, 100%, 78%, 1) 0px, transparent 50%)) padding-box,
+        var(--gradient-four, radial-gradient(at 41% 38%, hsla(192, 100%, 64%, 1) 0px, transparent 50%)) padding-box,
+        var(--gradient-five, radial-gradient(at 86% 85%, hsla(186, 100%, 74%, 1) 0px, transparent 50%)) padding-box,
+        var(--gradient-six, radial-gradient(at 82% 18%, hsla(52, 100%, 65%, 1) 0px, transparent 50%)) padding-box,
+        var(--gradient-seven, radial-gradient(at 51% 4%, hsla(12, 100%, 72%, 1) 0px, transparent 50%)) padding-box,
+        var(--gradient-base, linear-gradient(#c299ff 0 100%)) padding-box;
+
+      mask-image:
+        linear-gradient(to bottom, black, black),
+        radial-gradient(ellipse at 50% 50%, black 40%, transparent 65%),
+        conic-gradient(from var(--cursor-angle) at center, transparent 5%, black 15%, black 85%, transparent 95%);
+      -webkit-mask-image:
+        linear-gradient(to bottom, black, black),
+        radial-gradient(ellipse at 50% 50%, black 40%, transparent 65%),
+        conic-gradient(from var(--cursor-angle) at center, transparent 5%, black 15%, black 85%, transparent 95%);
+
+      mask-composite: subtract, add;
+      -webkit-mask-composite: source-out, destination-over;
+      opacity: calc(var(--fill-opacity, 0.45) * (var(--edge-proximity) - var(--color-sensitivity)) / (100 - var(--color-sensitivity)));
+      mix-blend-mode: soft-light;
+    }
+
+    /* outer glow layer */
+    .border-glow-card > .edge-light {
+      position: absolute;
+      inset: calc(var(--glow-padding) * -1);
+      pointer-events: none;
+      border-radius: inherit;
+      z-index: 1;
+
+      mask-image:
+        conic-gradient(
+          from var(--cursor-angle) at center, black 2.5%, transparent 10%, transparent 90%, black 97.5%
+        );
+      -webkit-mask-image:
+        conic-gradient(
+          from var(--cursor-angle) at center, black 2.5%, transparent 10%, transparent 90%, black 97.5%
+        );
+
+      opacity: calc((var(--edge-proximity) - var(--edge-sensitivity)) / (100 - var(--edge-sensitivity)));
+      mix-blend-mode: plus-lighter;
+    }
+
+    .border-glow-card > .edge-light::before {
+      content: "";
+      position: absolute;
+      inset: var(--glow-padding);
+      border-radius: inherit;
+      box-shadow:
+        inset 0 0 0 1px var(--glow-color, hsl(188deg 95% 65% / 100%)),
+        inset 0 0 1px 0 var(--glow-color-60, hsl(188deg 95% 65% / 60%)),
+        inset 0 0 3px 0 var(--glow-color-50, hsl(188deg 95% 65% / 50%)),
+        inset 0 0 6px 0 var(--glow-color-40, hsl(188deg 95% 65% / 40%)),
+        inset 0 0 15px 0 var(--glow-color-30, hsl(188deg 95% 65% / 30%)),
+        inset 0 0 25px 2px var(--glow-color-20, hsl(188deg 95% 65% / 20%)),
+        inset 0 0 50px 2px var(--glow-color-10, hsl(188deg 95% 65% / 10%)),
+        0 0 1px 0 var(--glow-color-60, hsl(188deg 95% 65% / 60%)),
+        0 0 3px 0 var(--glow-color-50, hsl(188deg 95% 65% / 50%)),
+        0 0 6px 0 var(--glow-color-40, hsl(188deg 95% 65% / 40%)),
+        0 0 15px 0 var(--glow-color-30, hsl(188deg 95% 65% / 30%)),
+        0 0 25px 2px var(--glow-color-20, hsl(188deg 95% 65% / 20%)),
+        0 0 50px 2px var(--glow-color-10, hsl(188deg 95% 65% / 10%));
+    }
+
+    .border-glow-inner {
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      position: relative;
+      width: 100%;
+      height: 100%;
+      box-sizing: border-box;
+      overflow: visible;
+      z-index: 1;
     }
 
     /* Experience Card: Scaled for All Screen Heights */
@@ -790,8 +1038,7 @@
         min-height: clamp(470px, 64vh, 550px) !important;
         max-height: calc(100dvh - 130px) !important;
         margin-bottom: clamp(140px, 24vh, 200px) !important;
-        overflow: hidden !important;
-        overflow-y: hidden !important;
+        overflow: visible !important;
         scrollbar-width: none !important;
         display: flex !important;
         flex-direction: column !important;
@@ -805,6 +1052,15 @@
         will-change: transform, filter;
         background: #0B0F1C !important;
         transition: filter 0.15s ease;
+      }
+
+      .border-glow-inner {
+        height: 100% !important;
+        display: flex !important;
+        flex-direction: column !important;
+        justify-content: space-between !important;
+        overflow: visible !important;
+        touch-action: pan-y !important;
       }
 
       .exp-card:last-child,
@@ -982,8 +1238,9 @@
     </nav>
 
     <div class="nav-actions">
-      <a href="https://github.com/shrihari808" target="_blank" rel="noopener" class="btn-cta">
-        <span>GitHub ↗</span>
+      <a href="https://github.com/shrihari808" target="_blank" rel="noopener" class="specular-button specular-button--sm btn-cta" data-radius="999" data-tint="#00f5ff" data-tint-opacity="0.12" data-line-color="#00f5ff" data-base-color="#0b2b3a" data-glow="1.2">
+        <canvas class="specular-button__light" aria-hidden="true"></canvas>
+        <span class="specular-button__label">GitHub ↗</span>
       </a>
     </div>
   </header>
@@ -1007,9 +1264,18 @@
       </p>
 
       <div class="hero-actions">
-        <a href="#experience" class="btn-cta">Experience Track ↓</a>
-        <a href="#works" class="btn-secondary">Projects &amp; Research ↓</a>
-        <a href="#contact" class="theme-pill">Establish Connection →</a>
+        <a href="#experience" class="specular-button specular-button--md btn-cta" data-radius="999" data-tint="#00f5ff" data-tint-opacity="0.14" data-line-color="#00f5ff" data-base-color="#0b2b3a" data-glow="1.3">
+          <canvas class="specular-button__light" aria-hidden="true"></canvas>
+          <span class="specular-button__label">Experience Track ↓</span>
+        </a>
+        <a href="#works" class="specular-button specular-button--md btn-secondary" data-radius="999" data-tint="#ffffff" data-tint-opacity="0.05" data-line-color="#38bdf8" data-base-color="#1e293b" data-glow="1.0">
+          <canvas class="specular-button__light" aria-hidden="true"></canvas>
+          <span class="specular-button__label">Projects &amp; Research ↓</span>
+        </a>
+        <a href="#contact" class="specular-button specular-button--md theme-pill" data-radius="999" data-tint="#c084fc" data-tint-opacity="0.08" data-line-color="#c084fc" data-base-color="#2e1065" data-glow="1.1">
+          <canvas class="specular-button__light" aria-hidden="true"></canvas>
+          <span class="specular-button__label">Establish Connection →</span>
+        </a>
       </div>
 
       <!-- Telemetry Counters: Real Engineering Data from CV -->
@@ -1059,123 +1325,132 @@
         <div class="exp-horizontal-viewport" id="expHorizontalViewport">
           <div class="exp-horizontal-track" id="expHorizontalTrack">
             <!-- Card 1: Invendis -->
-            <article class="exp-card">
-              <div>
-                <div class="exp-card-top-tag">
-                  <span class="exp-num-badge">01 // ENTERPRISE BACKEND</span>
-                  <span class="exp-badge-current">Current Role</span>
-                </div>
-                <div class="exp-header">
-                  <div>
-                    <div class="exp-role">
-                      Software Development Engineer
-                      <span class="exp-company">@ Invendis</span>
+            <article class="border-glow-card exp-card" data-glow-color="188 95 65" data-border-radius="20" data-colors="#00f5ff,#38bdf8,#c084fc">
+              <span class="edge-light" aria-hidden="true"></span>
+              <div class="border-glow-inner">
+                <div>
+                  <div class="exp-card-top-tag">
+                    <span class="exp-num-badge">01 // ENTERPRISE BACKEND</span>
+                    <span class="exp-badge-current">Current Role</span>
+                  </div>
+                  <div class="exp-header">
+                    <div>
+                      <div class="exp-role">
+                        Software Development Engineer
+                        <span class="exp-company">@ Invendis</span>
+                      </div>
+                    </div>
+                    <div class="exp-meta">
+                      <span>Mar 2026 – Present</span>
+                      <span class="location">Bangalore, India</span>
                     </div>
                   </div>
-                  <div class="exp-meta">
-                    <span>Mar 2026 – Present</span>
-                    <span class="location">Bangalore, India</span>
-                  </div>
+
+                  <ul class="exp-points">
+                    <li>
+                      <strong>Reporting Engine Optimization:</strong> Architected and optimized a reporting engine API in <strong>.NET/C#</strong> across <strong>300+ MySQL tables/views</strong>, refactoring query pipelines to achieve a <strong>77% latency reduction</strong> (from 6.5s to 1.5s for 1,000+ record queries).
+                    </li>
+                    <li>
+                      <strong>Dynamic Schema Mapping:</strong> Engineered dynamic schema-mapping endpoints enabling customizable column aliasing and end-user report composition across <strong>100+ templates</strong> with strict multi-tenant isolation.
+                    </li>
+                  </ul>
                 </div>
 
-                <ul class="exp-points">
-                  <li>
-                    <strong>Reporting Engine Optimization:</strong> Architected and optimized a reporting engine API in <strong>.NET/C#</strong> across <strong>300+ MySQL tables/views</strong>, refactoring query pipelines to achieve a <strong>77% latency reduction</strong> (from 6.5s to 1.5s for 1,000+ record queries).
-                  </li>
-                  <li>
-                    <strong>Dynamic Schema Mapping:</strong> Engineered dynamic schema-mapping endpoints enabling customizable column aliasing and end-user report composition across <strong>100+ templates</strong> with strict multi-tenant isolation.
-                  </li>
-                </ul>
-              </div>
-
-              <div class="exp-stack">
-                <span class="work-pill">.NET Core</span>
-                <span class="work-pill">C#</span>
-                <span class="work-pill">MySQL</span>
-                <span class="work-pill">Query Optimization</span>
-                <span class="work-pill">Dynamic Schema Mapping</span>
-                <span class="work-pill">Multi-Tenant Architecture</span>
-                <span class="work-pill">REST APIs</span>
+                <div class="exp-stack">
+                  <span class="work-pill">.NET Core</span>
+                  <span class="work-pill">C#</span>
+                  <span class="work-pill">MySQL</span>
+                  <span class="work-pill">Query Optimization</span>
+                  <span class="work-pill">Dynamic Schema Mapping</span>
+                  <span class="work-pill">Multi-Tenant Architecture</span>
+                  <span class="work-pill">REST APIs</span>
+                </div>
               </div>
             </article>
 
             <!-- Card 2: Airrchip -->
-            <article class="exp-card">
-              <div>
-                <div class="exp-card-top-tag">
-                  <span class="exp-num-badge">02 // AI &amp; LLM SYSTEMS</span>
-                </div>
-                <div class="exp-header">
-                  <div>
-                    <div class="exp-role">
-                      AI Developer
-                      <span class="exp-company">@ Airrchip</span>
+            <article class="border-glow-card exp-card" data-glow-color="265 90 75" data-border-radius="20" data-colors="#a855f7,#c084fc,#00f5ff">
+              <span class="edge-light" aria-hidden="true"></span>
+              <div class="border-glow-inner">
+                <div>
+                  <div class="exp-card-top-tag">
+                    <span class="exp-num-badge">02 // AI &amp; LLM SYSTEMS</span>
+                  </div>
+                  <div class="exp-header">
+                    <div>
+                      <div class="exp-role">
+                        AI Developer
+                        <span class="exp-company">@ Airrchip</span>
+                      </div>
+                    </div>
+                    <div class="exp-meta">
+                      <span>Jul 2025 – Feb 2026</span>
+                      <span class="location">Hybrid</span>
                     </div>
                   </div>
-                  <div class="exp-meta">
-                    <span>Jul 2025 – Feb 2026</span>
-                    <span class="location">Hybrid</span>
-                  </div>
+
+                  <ul class="exp-points">
+                    <li>
+                      <strong>Enterprise RAG &amp; Streaming:</strong> Designed and deployed an enterprise RAG pipeline and real-time WebSocket layer delivering cited financial analytics from vector stores with low-latency query reranking.
+                    </li>
+                    <li>
+                      <strong>LLM Gateway &amp; Compute Optimization:</strong> Engineered an enterprise LLM Gateway with custom routing algorithms, usage analytics, RBAC, and Redis caching; slashed token and compute overhead by <strong>up to 80%</strong>.
+                    </li>
+                  </ul>
                 </div>
 
-                <ul class="exp-points">
-                  <li>
-                    <strong>Enterprise RAG &amp; Streaming:</strong> Designed and deployed an enterprise RAG pipeline and real-time WebSocket layer delivering cited financial analytics from vector stores with low-latency query reranking.
-                  </li>
-                  <li>
-                    <strong>LLM Gateway &amp; Compute Optimization:</strong> Engineered an enterprise LLM Gateway with custom routing algorithms, usage analytics, RBAC, and Redis caching; slashed token and compute overhead by <strong>up to 80%</strong>.
-                  </li>
-                </ul>
-              </div>
-
-              <div class="exp-stack">
-                <span class="work-pill">Python</span>
-                <span class="work-pill">FastAPI</span>
-                <span class="work-pill">Enterprise RAG</span>
-                <span class="work-pill">WebSockets</span>
-                <span class="work-pill">Vector DBs</span>
-                <span class="work-pill">LLM Gateway</span>
-                <span class="work-pill">Redis</span>
-                <span class="work-pill">RBAC</span>
+                <div class="exp-stack">
+                  <span class="work-pill">Python</span>
+                  <span class="work-pill">FastAPI</span>
+                  <span class="work-pill">Enterprise RAG</span>
+                  <span class="work-pill">WebSockets</span>
+                  <span class="work-pill">Vector DBs</span>
+                  <span class="work-pill">LLM Gateway</span>
+                  <span class="work-pill">Redis</span>
+                  <span class="work-pill">RBAC</span>
+                </div>
               </div>
             </article>
 
             <!-- Card 3: Medblocks -->
-            <article class="exp-card">
-              <div>
-                <div class="exp-card-top-tag">
-                  <span class="exp-num-badge">03 // DATA &amp; OBSERVABILITY</span>
-                </div>
-                <div class="exp-header">
-                  <div>
-                    <div class="exp-role">
-                      Data Engineering Intern
-                      <span class="exp-company">@ Medblocks</span>
+            <article class="border-glow-card exp-card" data-glow-color="195 90 65" data-border-radius="20" data-colors="#00f5ff,#38bdf8,#818cf8">
+              <span class="edge-light" aria-hidden="true"></span>
+              <div class="border-glow-inner">
+                <div>
+                  <div class="exp-card-top-tag">
+                    <span class="exp-num-badge">03 // DATA &amp; OBSERVABILITY</span>
+                  </div>
+                  <div class="exp-header">
+                    <div>
+                      <div class="exp-role">
+                        Data Engineering Intern
+                        <span class="exp-company">@ Medblocks</span>
+                      </div>
+                    </div>
+                    <div class="exp-meta">
+                      <span>Jan 2025 – Jun 2025</span>
+                      <span class="location">Bangalore, India</span>
                     </div>
                   </div>
-                  <div class="exp-meta">
-                    <span>Jan 2025 – Jun 2025</span>
-                    <span class="location">Bangalore, India</span>
-                  </div>
+
+                  <ul class="exp-points">
+                    <li>
+                      <strong>Clinical Documentation Automation:</strong> Engineered clinical documentation automation pipelines incorporating form auto-population, speech-to-text, and schema validation logic.
+                    </li>
+                    <li>
+                      <strong>Distributed Observability:</strong> Instrumented Grafana Tempo for distributed tracing across backend microservices to isolate query latency and optimize system throughput.
+                    </li>
+                  </ul>
                 </div>
 
-                <ul class="exp-points">
-                  <li>
-                    <strong>Clinical Documentation Automation:</strong> Engineered clinical documentation automation pipelines incorporating form auto-population, speech-to-text, and schema validation logic.
-                  </li>
-                  <li>
-                    <strong>Distributed Observability:</strong> Instrumented Grafana Tempo for distributed tracing across backend microservices to isolate query latency and optimize system throughput.
-                  </li>
-                </ul>
-              </div>
-
-              <div class="exp-stack">
-                <span class="work-pill">Python</span>
-                <span class="work-pill">Microservices</span>
-                <span class="work-pill">Grafana Tempo</span>
-                <span class="work-pill">Distributed Tracing</span>
-                <span class="work-pill">Speech-to-Text</span>
-                <span class="work-pill">Schema Validation</span>
+                <div class="exp-stack">
+                  <span class="work-pill">Python</span>
+                  <span class="work-pill">Microservices</span>
+                  <span class="work-pill">Grafana Tempo</span>
+                  <span class="work-pill">Distributed Tracing</span>
+                  <span class="work-pill">Speech-to-Text</span>
+                  <span class="work-pill">Schema Validation</span>
+                </div>
               </div>
             </article>
           </div>
@@ -1205,137 +1480,155 @@
         <div class="works-horizontal-viewport" id="worksHorizontalViewport">
           <div class="works-horizontal-track" id="worksHorizontalTrack">
             <!-- Project 1: FLint -->
-            <article class="work-card">
-              <div>
-                <div class="work-meta-row">
-                  <span class="work-tag">01 // PEER-TO-PEER · AUDIO CORE</span>
-                  <span class="work-date">Aug 2026</span>
+            <article class="border-glow-card work-card" data-glow-color="265 90 75" data-border-radius="20" data-colors="#a855f7,#c084fc,#00f5ff">
+              <span class="edge-light" aria-hidden="true"></span>
+              <div class="border-glow-inner">
+                <div>
+                  <div class="work-meta-row">
+                    <span class="work-tag">01 // PEER-TO-PEER · AUDIO CORE</span>
+                    <span class="work-date">Aug 2026</span>
+                  </div>
+                  <h3>FLint: P2P Version Control for DAWs</h3>
+                  <p class="work-desc">
+                    Hybrid VST3 audio plugin engineered in C++ and JUCE, communicating with an asynchronous Node.js sidecar service for robust inter-process communication.
+                  </p>
+                  <ul class="work-bullets">
+                    <li>Built hybrid VST3 audio plugin using C++ and JUCE with asynchronous Node.js sidecar IPC.</li>
+                    <li>Implemented decentralized peer-to-peer networking via distributed feeds and swarm discovery for low-latency project synchronization.</li>
+                  </ul>
                 </div>
-                <h3>FLint: P2P Version Control for DAWs</h3>
-                <p class="work-desc">
-                  Hybrid VST3 audio plugin engineered in C++ and JUCE, communicating with an asynchronous Node.js sidecar service for robust inter-process communication.
-                </p>
-                <ul class="work-bullets">
-                  <li>Built hybrid VST3 audio plugin using C++ and JUCE with asynchronous Node.js sidecar IPC.</li>
-                  <li>Implemented decentralized peer-to-peer networking via distributed feeds and swarm discovery for low-latency project synchronization.</li>
-                </ul>
-              </div>
-              <div class="work-footer">
-                <div class="work-links">
-                  <a href="https://github.com/shrihari808/FLint" target="_blank" rel="noopener" class="work-link-btn primary">
-                    GitHub Repository ↗
-                  </a>
-                </div>
-                <div class="work-stack">
-                  <span class="work-pill">C++</span>
-                  <span class="work-pill">JUCE</span>
-                  <span class="work-pill">Node.js</span>
-                  <span class="work-pill">VST3</span>
-                  <span class="work-pill">P2P Protocols</span>
-                  <span class="work-pill">Sidecar IPC</span>
+                <div class="work-footer">
+                  <div class="work-links">
+                    <a href="https://github.com/shrihari808/FLint" target="_blank" rel="noopener" class="specular-button specular-button--sm work-link-btn primary" data-radius="8" data-tint="#00f5ff" data-tint-opacity="0.1" data-line-color="#00f5ff">
+                      <canvas class="specular-button__light" aria-hidden="true"></canvas>
+                      <span class="specular-button__label">GitHub Repository ↗</span>
+                    </a>
+                  </div>
+                  <div class="work-stack">
+                    <span class="work-pill">C++</span>
+                    <span class="work-pill">JUCE</span>
+                    <span class="work-pill">Node.js</span>
+                    <span class="work-pill">VST3</span>
+                    <span class="work-pill">P2P Protocols</span>
+                    <span class="work-pill">Sidecar IPC</span>
+                  </div>
                 </div>
               </div>
             </article>
 
             <!-- Project 2: MarketMind -->
-            <article class="work-card">
-              <div>
-                <div class="work-meta-row">
-                  <span class="work-tag">02 // FINANCIAL AI · REAL-TIME RAG</span>
-                  <span class="work-date">Sep 2026</span>
+            <article class="border-glow-card work-card" data-glow-color="188 95 65" data-border-radius="20" data-colors="#00f5ff,#38bdf8,#818cf8">
+              <span class="edge-light" aria-hidden="true"></span>
+              <div class="border-glow-inner">
+                <div>
+                  <div class="work-meta-row">
+                    <span class="work-tag">02 // FINANCIAL AI · REAL-TIME RAG</span>
+                    <span class="work-date">Sep 2026</span>
+                  </div>
+                  <h3>MarketMind: Market Analytics RAG Engine</h3>
+                  <p class="work-desc">
+                    Lightweight multi-source RAG engine with dynamic time-decay reranking, strictly operating within a &lt;512MB RAM constraint on live market data.
+                  </p>
+                  <ul class="work-bullets">
+                    <li>Architected lightweight multi-source RAG engine with dynamic time-decay reranking under &lt;512MB RAM constraint.</li>
+                    <li>Built market intelligence platform with React, TypeScript, and Server-Sent Events (SSE) streaming for real-time deep research.</li>
+                  </ul>
                 </div>
-                <h3>MarketMind: Market Analytics RAG Engine</h3>
-                <p class="work-desc">
-                  Lightweight multi-source RAG engine with dynamic time-decay reranking, strictly operating within a &lt;512MB RAM constraint on live market data.
-                </p>
-                <ul class="work-bullets">
-                  <li>Architected lightweight multi-source RAG engine with dynamic time-decay reranking under &lt;512MB RAM constraint.</li>
-                  <li>Built market intelligence platform with React, TypeScript, and Server-Sent Events (SSE) streaming for real-time deep research.</li>
-                </ul>
-              </div>
-              <div class="work-footer">
-                <div class="work-links">
-                  <a href="https://market-mind-api.vercel.app" target="_blank" rel="noopener" class="work-link-btn primary">
-                    Live Platform ↗
-                  </a>
-                  <a href="https://github.com/shrihari808/MarketMind-API" target="_blank" rel="noopener" class="work-link-btn">
-                    API Source ↗
-                  </a>
-                </div>
-                <div class="work-stack">
-                  <span class="work-pill">FastAPI</span>
-                  <span class="work-pill">LanceDB</span>
-                  <span class="work-pill">React</span>
-                  <span class="work-pill">TypeScript</span>
-                  <span class="work-pill">SSE Streaming</span>
-                  <span class="work-pill">Vector Search</span>
+                <div class="work-footer">
+                  <div class="work-links">
+                    <a href="https://market-mind-api.vercel.app" target="_blank" rel="noopener" class="specular-button specular-button--sm work-link-btn primary" data-radius="8" data-tint="#00f5ff" data-tint-opacity="0.1" data-line-color="#00f5ff">
+                      <canvas class="specular-button__light" aria-hidden="true"></canvas>
+                      <span class="specular-button__label">Live Platform ↗</span>
+                    </a>
+                    <a href="https://github.com/shrihari808/MarketMind-API" target="_blank" rel="noopener" class="specular-button specular-button--sm work-link-btn" data-radius="8" data-tint="#ffffff" data-tint-opacity="0.04" data-line-color="#94a3b8">
+                      <canvas class="specular-button__light" aria-hidden="true"></canvas>
+                      <span class="specular-button__label">API Source ↗</span>
+                    </a>
+                  </div>
+                  <div class="work-stack">
+                    <span class="work-pill">FastAPI</span>
+                    <span class="work-pill">LanceDB</span>
+                    <span class="work-pill">React</span>
+                    <span class="work-pill">TypeScript</span>
+                    <span class="work-pill">SSE Streaming</span>
+                    <span class="work-pill">Vector Search</span>
+                  </div>
                 </div>
               </div>
             </article>
 
             <!-- Project 3: Packaged AutoML Engine -->
-            <article class="work-card">
-              <div>
-                <div class="work-meta-row">
-                  <span class="work-tag">03 // ML INFRASTRUCTURE · PYPI</span>
-                  <span class="work-date">Sep 2024</span>
+            <article class="border-glow-card work-card" data-glow-color="40 85 75" data-border-radius="20" data-colors="#38bdf8,#00f5ff,#f472b6">
+              <span class="edge-light" aria-hidden="true"></span>
+              <div class="border-glow-inner">
+                <div>
+                  <div class="work-meta-row">
+                    <span class="work-tag">03 // ML INFRASTRUCTURE · PYPI</span>
+                    <span class="work-date">Sep 2024</span>
+                  </div>
+                  <h3>Packaged AutoML Engine (curdrice-v2)</h3>
+                  <p class="work-desc">
+                    Automated model selection package benchmarking linear, tree, and gradient boosting estimators via cross-validation with an intuitive low-code API.
+                  </p>
+                  <ul class="work-bullets">
+                    <li>Engineered automated model selection package benchmarking linear, tree, and gradient boosting estimators via cross-validation.</li>
+                    <li>Shipped production-ready PyPI builds featuring dependency isolation, structured entry points, and low-code training API.</li>
+                  </ul>
                 </div>
-                <h3>Packaged AutoML Engine (curdrice-v2)</h3>
-                <p class="work-desc">
-                  Automated model selection package benchmarking linear, tree, and gradient boosting estimators via cross-validation with an intuitive low-code API.
-                </p>
-                <ul class="work-bullets">
-                  <li>Engineered automated model selection package benchmarking linear, tree, and gradient boosting estimators via cross-validation.</li>
-                  <li>Shipped production-ready PyPI builds featuring dependency isolation, structured entry points, and low-code training API.</li>
-                </ul>
-              </div>
-              <div class="work-footer">
-                <div class="work-links">
-                  <a href="https://pypi.org/project/curdrice-v2/" target="_blank" rel="noopener" class="work-link-btn primary">
-                    PyPI Release ↗
-                  </a>
-                  <a href="https://github.com/shrihari808/curdrice-auto-ml" target="_blank" rel="noopener" class="work-link-btn">
-                    GitHub ↗
-                  </a>
-                </div>
-                <div class="work-stack">
-                  <span class="work-pill">Python</span>
-                  <span class="work-pill">Scikit-Learn</span>
-                  <span class="work-pill">PyPI Package</span>
-                  <span class="work-pill">AutoML</span>
-                  <span class="work-pill">Cross-Validation</span>
+                <div class="work-footer">
+                  <div class="work-links">
+                    <a href="https://pypi.org/project/curdrice-v2/" target="_blank" rel="noopener" class="specular-button specular-button--sm work-link-btn primary" data-radius="8" data-tint="#00f5ff" data-tint-opacity="0.1" data-line-color="#00f5ff">
+                      <canvas class="specular-button__light" aria-hidden="true"></canvas>
+                      <span class="specular-button__label">PyPI Release ↗</span>
+                    </a>
+                    <a href="https://github.com/shrihari808/curdrice-auto-ml" target="_blank" rel="noopener" class="specular-button specular-button--sm work-link-btn" data-radius="8" data-tint="#ffffff" data-tint-opacity="0.04" data-line-color="#94a3b8">
+                      <canvas class="specular-button__light" aria-hidden="true"></canvas>
+                      <span class="specular-button__label">GitHub ↗</span>
+                    </a>
+                  </div>
+                  <div class="work-stack">
+                    <span class="work-pill">Python</span>
+                    <span class="work-pill">Scikit-Learn</span>
+                    <span class="work-pill">PyPI Package</span>
+                    <span class="work-pill">AutoML</span>
+                    <span class="work-pill">Cross-Validation</span>
+                  </div>
                 </div>
               </div>
             </article>
 
             <!-- Project 4: Research Publication -->
-            <article class="work-card">
-              <div>
-                <div class="work-meta-row">
-                  <span class="work-tag">04 // PEER-REVIEWED PUBLICATION</span>
-                  <span class="work-date">MDPI Sensors</span>
+            <article class="border-glow-card work-card" data-glow-color="265 90 75" data-border-radius="20" data-colors="#a855f7,#c084fc,#00f5ff">
+              <span class="edge-light" aria-hidden="true"></span>
+              <div class="border-glow-inner">
+                <div>
+                  <div class="work-meta-row">
+                    <span class="work-tag">04 // PEER-REVIEWED PUBLICATION</span>
+                    <span class="work-date">MDPI Sensors</span>
+                  </div>
+                  <h3>Regional Ground-Based IoT Solar Irradiance</h3>
+                  <p class="work-desc">
+                    Research publication evaluating solar irradiance across India and Serbia using deep sequence models trained on NASA POWER IoT telemetry.
+                  </p>
+                  <ul class="work-bullets">
+                    <li>Evaluated solar irradiance with deep sequence architectures (TCN-LSTMs, CNN-GRUs, GNNs) on NASA POWER IoT telemetry.</li>
+                    <li>Implemented Modified MissForest and Bidirectional RNN imputation algorithms outperforming classical baselines under sparse sensor data.</li>
+                  </ul>
                 </div>
-                <h3>Regional Ground-Based IoT Solar Irradiance</h3>
-                <p class="work-desc">
-                  Research publication evaluating solar irradiance across India and Serbia using deep sequence models trained on NASA POWER IoT telemetry.
-                </p>
-                <ul class="work-bullets">
-                  <li>Evaluated solar irradiance with deep sequence architectures (TCN-LSTMs, CNN-GRUs, GNNs) on NASA POWER IoT telemetry.</li>
-                  <li>Implemented Modified MissForest and Bidirectional RNN imputation algorithms outperforming classical baselines under sparse sensor data.</li>
-                </ul>
-              </div>
-              <div class="work-footer">
-                <div class="work-links">
-                  <a href="https://doi.org/10.3390/s26185781" target="_blank" rel="noopener" class="work-link-btn primary">
-                    MDPI Sensors Paper (DOI) ↗
-                  </a>
-                </div>
-                <div class="work-stack">
-                  <span class="work-pill">Deep Sequence Models</span>
-                  <span class="work-pill">GNNs</span>
-                  <span class="work-pill">TCN-LSTM</span>
-                  <span class="work-pill">NASA POWER IoT</span>
-                  <span class="work-pill">Bi-RNN Imputation</span>
+                <div class="work-footer">
+                  <div class="work-links">
+                    <a href="https://doi.org/10.3390/s26185781" target="_blank" rel="noopener" class="specular-button specular-button--sm work-link-btn primary" data-radius="8" data-tint="#00f5ff" data-tint-opacity="0.1" data-line-color="#00f5ff">
+                      <canvas class="specular-button__light" aria-hidden="true"></canvas>
+                      <span class="specular-button__label">MDPI Sensors Paper (DOI) ↗</span>
+                    </a>
+                  </div>
+                  <div class="work-stack">
+                    <span class="work-pill">Deep Sequence Models</span>
+                    <span class="work-pill">GNNs</span>
+                    <span class="work-pill">TCN-LSTM</span>
+                    <span class="work-pill">NASA POWER IoT</span>
+                    <span class="work-pill">Bi-RNN Imputation</span>
+                  </div>
                 </div>
               </div>
             </article>
@@ -1446,45 +1739,51 @@
 
       <div class="cred-grid">
         <!-- Card 1: Education -->
-        <article class="cred-card">
-          <div>
-            <div class="cred-tag">ACADEMIC FOUNDATION</div>
-            <h3 class="cred-institution">Vellore Institute of Technology</h3>
-            <p class="cred-degree">
-              B.Tech in Computer Science &amp; Engineering with Business Systems
-            </p>
-            <p style="font-size: 13.5px; color: var(--text-dim); line-height: 1.6; margin-bottom: 20px;">
-              Comprehensive curriculum spanning distributed computing, operating systems, advanced database engineering, and software architectures.
-            </p>
-          </div>
-          <div class="cred-meta-row">
-            <span>Sep 2021 – Jul 2025 · Vellore, India</span>
-            <span class="cred-score">CGPA: 8.05 / 10.0</span>
+        <article class="border-glow-card cred-card" data-glow-color="195 90 65" data-border-radius="16" data-colors="#38bdf8,#00f5ff,#818cf8">
+          <span class="edge-light" aria-hidden="true"></span>
+          <div class="border-glow-inner">
+            <div>
+              <div class="cred-tag">ACADEMIC FOUNDATION</div>
+              <h3 class="cred-institution">Vellore Institute of Technology</h3>
+              <p class="cred-degree">
+                B.Tech in Computer Science &amp; Engineering with Business Systems
+              </p>
+              <p style="font-size: 13.5px; color: var(--text-dim); line-height: 1.6; margin-bottom: 20px;">
+                Comprehensive curriculum spanning distributed computing, operating systems, advanced database engineering, and software architectures.
+              </p>
+            </div>
+            <div class="cred-meta-row">
+              <span>Sep 2021 – Jul 2025 · Vellore, India</span>
+              <span class="cred-score">CGPA: 8.05 / 10.0</span>
+            </div>
           </div>
         </article>
 
         <!-- Card 2: Certifications -->
-        <article class="cred-card">
-          <div>
-            <div class="cred-tag">PROFESSIONAL ACCREDITATIONS</div>
-            <div style="display: flex; flex-direction: column; gap: 10px;">
-              <div class="cert-item">
-                <span class="cert-name">Agentic AI &amp; Product Management</span>
-                <span class="cert-org">IIT-Patna</span>
-              </div>
-              <div class="cert-item">
-                <span class="cert-name">AWS Certified Cloud Practitioner</span>
-                <span class="cert-org">Amazon Web Services</span>
-              </div>
-              <div class="cert-item">
-                <span class="cert-name">Azure Administrator</span>
-                <span class="cert-org">Microsoft</span>
+        <article class="border-glow-card cred-card" data-glow-color="265 90 75" data-border-radius="16" data-colors="#a855f7,#c084fc,#00f5ff">
+          <span class="edge-light" aria-hidden="true"></span>
+          <div class="border-glow-inner">
+            <div>
+              <div class="cred-tag">PROFESSIONAL ACCREDITATIONS</div>
+              <div style="display: flex; flex-direction: column; gap: 10px;">
+                <div class="cert-item">
+                  <span class="cert-name">Agentic AI &amp; Product Management</span>
+                  <span class="cert-org">IIT-Patna</span>
+                </div>
+                <div class="cert-item">
+                  <span class="cert-name">AWS Certified Cloud Practitioner</span>
+                  <span class="cert-org">Amazon Web Services</span>
+                </div>
+                <div class="cert-item">
+                  <span class="cert-name">Azure Administrator</span>
+                  <span class="cert-org">Microsoft</span>
+                </div>
               </div>
             </div>
-          </div>
-          <div class="cred-meta-row">
-            <span>Verified Credentials</span>
-            <span class="cred-score">3 Certified Domains</span>
+            <div class="cred-meta-row">
+              <span>Verified Credentials</span>
+              <span class="cred-score">3 Certified Domains</span>
+            </div>
           </div>
         </article>
       </div>
@@ -1499,40 +1798,52 @@
       </div>
 
       <div class="contact-card-grid">
-        <a href="mailto:kshrihari0611@gmail.com" class="contact-channel-card">
-          <div class="contact-card-header">
-            <span class="contact-badge">DIRECT INBOX</span>
-            <span class="contact-arrow">↗</span>
+        <a href="mailto:kshrihari0611@gmail.com" class="border-glow-card contact-channel-card" data-glow-color="188 95 65" data-border-radius="16" data-colors="#00f5ff,#38bdf8,#c084fc">
+          <span class="edge-light" aria-hidden="true"></span>
+          <div class="border-glow-inner">
+            <div class="contact-card-header">
+              <span class="contact-badge">DIRECT INBOX</span>
+              <span class="contact-arrow">↗</span>
+            </div>
+            <div class="contact-card-title">kshrihari0611@gmail.com</div>
+            <p class="contact-card-sub">Primary communication socket for engineering roles, technical collaboration, and systems architecture discussions.</p>
           </div>
-          <div class="contact-card-title">kshrihari0611@gmail.com</div>
-          <p class="contact-card-sub">Primary communication socket for engineering roles, technical collaboration, and systems architecture discussions.</p>
         </a>
 
-        <a href="https://linkedin.com/in/kshrihari0611" target="_blank" rel="noopener" class="contact-channel-card">
-          <div class="contact-card-header">
-            <span class="contact-badge">PROFESSIONAL NETWORK</span>
-            <span class="contact-arrow">↗</span>
+        <a href="https://linkedin.com/in/kshrihari0611" target="_blank" rel="noopener" class="border-glow-card contact-channel-card" data-glow-color="205 95 70" data-border-radius="16" data-colors="#38bdf8,#00f5ff,#818cf8">
+          <span class="edge-light" aria-hidden="true"></span>
+          <div class="border-glow-inner">
+            <div class="contact-card-header">
+              <span class="contact-badge">PROFESSIONAL NETWORK</span>
+              <span class="contact-arrow">↗</span>
+            </div>
+            <div class="contact-card-title">LinkedIn Profile</div>
+            <p class="contact-card-sub">Connect on LinkedIn (kshrihari0611) for career history, background verification, and direct messaging.</p>
           </div>
-          <div class="contact-card-title">LinkedIn Profile</div>
-          <p class="contact-card-sub">Connect on LinkedIn (kshrihari0611) for career history, background verification, and direct messaging.</p>
         </a>
 
-        <a href="https://github.com/shrihari808" target="_blank" rel="noopener" class="contact-channel-card">
-          <div class="contact-card-header">
-            <span class="contact-badge">OPEN SOURCE CODE</span>
-            <span class="contact-arrow">↗</span>
+        <a href="https://github.com/shrihari808" target="_blank" rel="noopener" class="border-glow-card contact-channel-card" data-glow-color="265 90 75" data-border-radius="16" data-colors="#a855f7,#c084fc,#00f5ff">
+          <span class="edge-light" aria-hidden="true"></span>
+          <div class="border-glow-inner">
+            <div class="contact-card-header">
+              <span class="contact-badge">OPEN SOURCE CODE</span>
+              <span class="contact-arrow">↗</span>
+            </div>
+            <div class="contact-card-title">github.com/shrihari808</div>
+            <p class="contact-card-sub">Explore source repositories, C++/JUCE audio engines, PyPI packages, and distributed systems experiments.</p>
           </div>
-          <div class="contact-card-title">github.com/shrihari808</div>
-          <p class="contact-card-sub">Explore source repositories, C++/JUCE audio engines, PyPI packages, and distributed systems experiments.</p>
         </a>
 
-        <a href="https://leetcode.com/u/kshrihari0611/" target="_blank" rel="noopener" class="contact-channel-card">
-          <div class="contact-card-header">
-            <span class="contact-badge">ALGORITHMIC BENCHMARKS</span>
-            <span class="contact-arrow">↗</span>
+        <a href="https://leetcode.com/u/kshrihari0611/" target="_blank" rel="noopener" class="border-glow-card contact-channel-card" data-glow-color="40 85 75" data-border-radius="16" data-colors="#38bdf8,#00f5ff,#f472b6">
+          <span class="edge-light" aria-hidden="true"></span>
+          <div class="border-glow-inner">
+            <div class="contact-card-header">
+              <span class="contact-badge">ALGORITHMIC BENCHMARKS</span>
+              <span class="contact-arrow">↗</span>
+            </div>
+            <div class="contact-card-title">LeetCode Solutions</div>
+            <p class="contact-card-sub">Data structures, advanced algorithm problem solving, and computational graph benchmarks.</p>
           </div>
-          <div class="contact-card-title">LeetCode Solutions</div>
-          <p class="contact-card-sub">Data structures, advanced algorithm problem solving, and computational graph benchmarks.</p>
         </a>
       </div>
     </section>
