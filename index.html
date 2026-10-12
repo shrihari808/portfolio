@@ -5,14 +5,14 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
   <title>Shrihari Kulkarni — Systems Architect &amp; Software Development Engineer</title>
   <meta name="description" content="Portfolio of Shrihari Kulkarni: SDE at Invendis, AI Developer, and Systems Architect specializing in low-latency .NET/C# services, enterprise RAG pipelines, and high-throughput data systems.">
-  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%23070914'/%3E%3Ccircle cx='16' cy='16' r='6' fill='%23E6C879'/%3E%3Cpath d='M8 16h16M16 8v16' stroke='%23F2F4FB' stroke-width='1.5' stroke-linecap='round'/%3E%3C/svg%3E">
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%23070914'/%3E%3Ccircle cx='16' cy='16' r='6' fill='%23C490FF'/%3E%3Cpath d='M8 16h16M16 8v16' stroke='%23F2F4FB' stroke-width='1.5' stroke-linecap='round'/%3E%3C/svg%3E">
   
   <!-- GSAP & ScrollTrigger -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
   
   <style>
-    /* ============================================================= Design Tokens (High-Contrast & Legibility) */
+    /* ============================================================= Design Tokens (Electric Purple Palette) */
     :root {
       --bg: #070914;
       --bg-elevated: #0E1222;
@@ -24,17 +24,11 @@
       --text: #F8FAFC;            /* Ultra-crisp slate-50 (19.5:1 ratio) */
       --text-dim: #CBD5E1;        /* Slate-300: High-contrast legible body (13:1 ratio) */
       --text-muted: #94A3B8;      /* Slate-400: High-contrast metadata/subtitles (7.8:1 ratio) */
-      --accent: #F2D27A;          /* Luminous pale gold (13.5:1 ratio) */
-      --accent-glow: rgba(242, 210, 122, 0.4);
-      --accent-glow-subtle: rgba(242, 210, 122, 0.12);
-      --mono: 'JetBrains Mono', 'Fira Code', ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
-      --sans: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", sans-serif;
-    }
-
-    [data-theme="purple"] {
-      --accent: #C490FF;          /* Brightened Electric Violet (8.5:1 ratio) */
+      --accent: #C490FF;          /* Electric Violet / Purple Core (8.5:1 ratio) */
       --accent-glow: rgba(196, 144, 255, 0.45);
       --accent-glow-subtle: rgba(196, 144, 255, 0.15);
+      --mono: 'JetBrains Mono', 'Fira Code', ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+      --sans: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", sans-serif;
     }
 
     *, *::before, *::after { box-sizing: border-box; }
@@ -699,12 +693,6 @@
     </nav>
 
     <div class="nav-actions">
-      <div class="theme-pill" id="engineBadge" title="Configured in src/background.config.js">
-        <span id="engineBadgeText">⚡ Constellation</span>
-      </div>
-      <button class="theme-pill" id="paletteToggleBtn" title="Switch Accent Palette (Gold ↔ Neon Purple)">
-        <span>● Palette</span>
-      </button>
       <a href="https://github.com/shrihari808" target="_blank" rel="noopener" class="btn-cta">
         <span>GitHub ↗</span>
       </a>

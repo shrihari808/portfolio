@@ -7,12 +7,8 @@ import { loadActiveBackground } from './background-loader.js';
 (async function initApp() {
   'use strict';
 
-  // --- Palette & Theme State ---
-  const palettes = ['#F2D27A', '#C490FF'];
-  const themeNames = ['', 'purple'];
-  let palIdx = 0;
-  let currentAccent = palettes[palIdx];
-
+  // --- Constant Electric Purple Accent ---
+  const currentAccent = '#C490FF';
   const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
   // --- Mount Active Background ---
@@ -25,28 +21,10 @@ import { loadActiveBackground } from './background-loader.js';
         accentColor: currentAccent,
         reducedMotion: prefersReducedMotion
       });
-
-      // Update navbar engine indicator badge
-      const engineBadgeText = document.getElementById('engineBadgeText');
-      if (engineBadgeText && activeBg) {
-        engineBadgeText.textContent = activeBg.label;
-      }
     } catch (err) {
       console.error('[Background] Failed to load active background:', err);
     }
   }
-
-  // --- Palette Toggle Handler ---
-  const paletteToggleBtn = document.getElementById('paletteToggleBtn');
-  paletteToggleBtn?.addEventListener('click', () => {
-    palIdx = (palIdx + 1) % palettes.length;
-    currentAccent = palettes[palIdx];
-    document.body.setAttribute('data-theme', themeNames[palIdx]);
-
-    if (activeBg && activeBg.instance && typeof activeBg.instance.updatePalette === 'function') {
-      activeBg.instance.updatePalette(currentAccent);
-    }
-  });
 
   // --- GSAP Orchestration & Horizontal Pinned Scroll ---
   if (typeof gsap !== 'undefined' && typeof ScrollTrigger !== 'undefined' && !prefersReducedMotion) {

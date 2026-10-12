@@ -15,7 +15,7 @@ export function initBackground(container, options = {}) {
   canvas.style.pointerEvents = 'none';
   container.appendChild(canvas);
 
-  let currentAccent = options.accentColor || '#E6C879';
+  let currentAccent = options.accentColor || '#C490FF';
   const rgb = hexToRgb(currentAccent);
 
   const scene = new THREE.Scene();
