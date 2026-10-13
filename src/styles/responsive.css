@@ -127,13 +127,13 @@
   .exp-card,
   .work-card {
     position: sticky !important;
-    top: clamp(66px, 9.5vh, 76px) !important;
+    top: var(--stack-top, 66px) !important;
     width: 100% !important;
     max-width: 100% !important;
     height: auto !important;
     min-height: auto !important;
     max-height: none !important;
-    margin-bottom: clamp(100px, 18vh, 160px) !important;
+    margin-bottom: clamp(90px, 16vh, 140px) !important;
     overflow: visible !important;
     scrollbar-width: none !important;
     display: flex !important;
@@ -142,12 +142,29 @@
     padding: clamp(18px, 2.6vh, 24px) clamp(16px, 4vw, 22px) !important;
     box-sizing: border-box !important;
     border-radius: 20px !important;
-    box-shadow: 0 -12px 36px rgba(0, 0, 0, 0.85) !important;
+    box-shadow: 0 0 0 1px rgba(255, 255, 255, 0.08), 0 -10px 28px -6px rgba(0, 0, 0, 0.8), 0 16px 40px rgba(0, 0, 0, 0.6) !important;
     border: 1px solid var(--border-focus) !important;
-    transform-origin: 50% 12% !important;
+    transform-origin: 50% 0% !important;
     will-change: transform, filter;
     background: #0B0F1C !important;
     transition: filter 0.15s ease;
+  }
+
+  .exp-card:nth-child(1),
+  .work-card:nth-child(1) {
+    --stack-top: 66px !important;
+  }
+  .exp-card:nth-child(2),
+  .work-card:nth-child(2) {
+    --stack-top: 82px !important;
+  }
+  .exp-card:nth-child(3),
+  .work-card:nth-child(3) {
+    --stack-top: 98px !important;
+  }
+  .exp-card:nth-child(4),
+  .work-card:nth-child(4) {
+    --stack-top: 114px !important;
   }
 
   .border-glow-inner {
@@ -161,7 +178,7 @@
 
   .exp-card:last-child,
   .work-card:last-child {
-    margin-bottom: 36px !important;
+    margin-bottom: clamp(80px, 14vh, 120px) !important;
   }
 
   .exp-card::-webkit-scrollbar,
