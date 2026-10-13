@@ -21,20 +21,15 @@
 
 .exp-pinned-header,
 .works-pinned-header {
-  position: sticky;
-  top: 64px;
-  z-index: 25;
-  background: rgba(7, 9, 20, 0.92);
-  backdrop-filter: blur(16px);
-  -webkit-backdrop-filter: blur(16px);
-  padding: 14px 4px;
-  margin-bottom: clamp(20px, 3vh, 32px);
+  position: relative;
+  padding: 0 0 clamp(16px, 2.4vh, 24px);
+  margin-bottom: clamp(28px, 4vh, 44px);
   border-bottom: 1px solid rgba(255, 255, 255, 0.08);
   display: flex;
   justify-content: space-between;
-  align-items: center;
+  align-items: flex-end;
   flex-wrap: wrap;
-  gap: 14px;
+  gap: 16px;
   width: 100%;
   box-sizing: border-box;
 }
@@ -100,7 +95,7 @@
 /* ============================================================= Experience Card: React Bits ScrollStack Card */
 .exp-card {
   position: sticky;
-  top: clamp(96px, 13vh, 124px);
+  top: clamp(80px, 10vh, 96px);
   width: 100%;
   max-width: 820px;
   box-sizing: border-box;

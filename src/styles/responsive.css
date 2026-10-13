@@ -46,22 +46,22 @@
     overflow: visible !important;
   }
 
-  /* Sticky Section Header Bar: Stays pinned below nav while cards stack */
+  /* Section Header: Scrolls naturally so cards have full viewport space */
   .exp-pinned-header,
   .works-pinned-header {
-    position: sticky !important;
-    top: 52px !important;
-    z-index: 20 !important;
-    background: rgba(7, 9, 20, 0.94) !important;
-    backdrop-filter: blur(16px) !important;
-    -webkit-backdrop-filter: blur(16px) !important;
-    padding: 10px 4px !important;
-    margin-bottom: 14px !important;
+    position: relative !important;
+    top: auto !important;
+    z-index: 5 !important;
+    background: transparent !important;
+    backdrop-filter: none !important;
+    -webkit-backdrop-filter: none !important;
+    padding: 0 0 14px !important;
+    margin-bottom: 16px !important;
     display: flex !important;
-    flex-direction: row !important;
-    justify-content: space-between !important;
-    align-items: center !important;
+    flex-direction: column !important;
+    align-items: flex-start !important;
     border-bottom: 1px solid rgba(255, 255, 255, 0.08) !important;
+    gap: 8px !important;
   }
 
   .sec-tag {
@@ -71,24 +71,30 @@
   }
 
   .sec-title {
-    font-size: 17px !important;
+    font-size: 18px !important;
     font-weight: 600 !important;
-    line-height: 1.2 !important;
+    line-height: 1.25 !important;
   }
 
   .sec-desc {
-    display: none !important;
+    display: block !important;
+    font-size: 13px !important;
+    line-height: 1.55 !important;
+    color: var(--text-muted) !important;
+    margin-bottom: 6px !important;
   }
 
   .exp-scroll-indicator {
-    width: auto !important;
+    width: 100% !important;
     display: flex !important;
     align-items: center !important;
+    justify-content: space-between !important;
     gap: 8px !important;
+    margin-top: 4px !important;
   }
 
   .exp-pin-progress {
-    width: 76px !important;
+    width: 80px !important;
     height: 3px !important;
     flex-shrink: 0 !important;
   }
@@ -117,11 +123,11 @@
     overflow: visible !important;
   }
 
-  /* React Bits Sticky Card: Native compositor sticky pinning with ZERO pin-spacer jitter */
+  /* React Bits Sticky Card: Sticks right below floating 52px nav */
   .exp-card,
   .work-card {
     position: sticky !important;
-    top: clamp(98px, 14vh, 114px) !important;
+    top: clamp(66px, 9.5vh, 76px) !important;
     width: 100% !important;
     max-width: 100% !important;
     height: auto !important;

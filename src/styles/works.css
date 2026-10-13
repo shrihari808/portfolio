@@ -1,7 +1,7 @@
 /* ============================================================= Work Card: React Bits ScrollStack Card */
 .work-card {
   position: sticky;
-  top: clamp(96px, 13vh, 124px);
+  top: clamp(80px, 10vh, 96px);
   width: 100%;
   max-width: 820px;
   box-sizing: border-box;

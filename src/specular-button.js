@@ -241,6 +241,21 @@ export function initSpecularButton(button, userOptions = {}) {
   button.style.setProperty('--sb-blur', `${blur}px`);
   button.style.setProperty('--sb-text-color', textColor);
 
+  // On touch / mobile screens (where mouse hover proximity does not exist), bypass WebGL
+  // allocation to preserve the browser's strict WebGL context limit (8-16) exclusively
+  // for the 3D Three.js canvas, preventing 3D background eviction.
+  const isTouchDevice = (typeof window !== 'undefined') && (
+    window.matchMedia?.('(hover: none) and (pointer: coarse)').matches ||
+    window.innerWidth < 768
+  );
+
+  if (isTouchDevice) {
+    canvas.style.display = 'none';
+    return {
+      destroy() {}
+    };
+  }
+
   const gl = canvas.getContext('webgl2', {
     alpha: true,
     premultipliedAlpha: true,
@@ -251,6 +266,7 @@ export function initSpecularButton(button, userOptions = {}) {
 
   if (!gl) {
     // Graceful fallback for environments without WebGL2
+    canvas.style.display = 'none';
     return null;
   }
 
