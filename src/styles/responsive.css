@@ -178,7 +178,7 @@
 
   .exp-card:last-child,
   .work-card:last-child {
-    margin-bottom: clamp(80px, 14vh, 120px) !important;
+    margin-bottom: clamp(180px, 26vh, 260px) !important;
   }
 
   .exp-card::-webkit-scrollbar,

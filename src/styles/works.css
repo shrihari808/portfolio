@@ -31,7 +31,7 @@
 .work-card:nth-child(4) { --stack-top: 146px; }
 
 .work-card:last-child {
-  margin-bottom: clamp(100px, 16vh, 160px);
+  margin-bottom: clamp(280px, 36vh, 400px);
 }
 
 .work-card::-webkit-scrollbar {
