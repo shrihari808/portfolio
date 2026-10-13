@@ -1,0 +1,37 @@
+/* ============================================================= Tech Arsenal Table */
+.arsenal-box {
+  border: 1px solid var(--border); border-radius: 14px;
+  background: var(--bg-card); overflow: hidden;
+  opacity: 1; visibility: visible;
+  box-shadow: 0 12px 32px rgba(0, 0, 0, 0.4);
+}
+.arsenal-row {
+  display: grid; grid-template-columns: 240px 1fr;
+  padding: 22px 28px; border-bottom: 1px solid var(--border);
+  align-items: center; gap: 20px; transition: background 0.2s;
+}
+.arsenal-row:last-child { border-bottom: none; }
+.arsenal-row:hover { background: rgba(255, 255, 255, 0.03); }
+.arsenal-domain {
+  font-size: 14px; font-weight: 600; color: #FFFFFF;
+  display: flex; align-items: center; gap: 10px;
+}
+.arsenal-domain::before {
+  content: ""; width: 7px; height: 7px; border-radius: 50%;
+  background: var(--accent); display: inline-block;
+  box-shadow: 0 0 8px var(--accent-glow);
+}
+.arsenal-techs {
+  display: flex; flex-wrap: wrap; gap: 8px;
+}
+.tech-item {
+  font-family: var(--mono); font-size: 11.5px; font-weight: 500;
+  padding: 4px 11px; border-radius: 6px;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  color: #E2E8F0; transition: all 0.2s;
+}
+.tech-item:hover {
+  border-color: var(--accent); color: var(--accent);
+  background: var(--accent-glow-subtle);
+}

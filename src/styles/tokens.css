@@ -1,0 +1,35 @@
+/* ============================================================= Design Tokens (Electric Purple Palette) */
+:root {
+  --bg: #070914;
+  --bg-elevated: #0E1222;
+  --bg-card: rgba(11, 15, 28, 0.94);
+  --bg-card-inner: rgba(18, 24, 44, 0.72);
+  --border: #232B42;
+  --border-focus: #3D4B75;
+  --border-light: rgba(255, 255, 255, 0.12);
+  --text: #F8FAFC;            /* Ultra-crisp slate-50 (19.5:1 ratio) */
+  --text-dim: #CBD5E1;        /* Slate-300: High-contrast legible body (13:1 ratio) */
+  --text-muted: #94A3B8;      /* Slate-400: High-contrast metadata/subtitles (7.8:1 ratio) */
+  --accent: #C490FF;          /* Electric Violet / Purple Core (8.5:1 ratio) */
+  --accent-glow: rgba(196, 144, 255, 0.45);
+  --accent-glow-subtle: rgba(196, 144, 255, 0.15);
+  --mono: 'JetBrains Mono', 'Fira Code', ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+  --sans: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", sans-serif;
+}
+
+*, *::before, *::after { box-sizing: border-box; }
+html { -webkit-text-size-adjust: 100%; }
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--text-dim);
+  font-family: var(--sans);
+  font-weight: 400;
+  line-height: 1.65;
+  overflow-x: clip;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* Selection */
+::selection { background: var(--accent); color: var(--bg); }

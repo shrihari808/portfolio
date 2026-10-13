@@ -1,0 +1,315 @@
+/* ============================================================= Responsive Media Queries */
+@media (max-width: 960px) {
+  .telemetry-grid { grid-template-columns: repeat(2, 1fr); }
+  .cred-grid { grid-template-columns: 1fr; }
+  .contact-card-grid { grid-template-columns: 1fr; }
+  .arsenal-row { grid-template-columns: 1fr; gap: 10px; }
+  .nav-links { display: none; }
+  .exp-card, .work-card { width: 100% !important; max-width: 720px !important; }
+}
+
+/* Mobile Viewport (< 769px): React Bits Native Sticky <ScrollStack /> Architecture */
+@media (max-width: 768px) {
+  .desktop-hint { display: none !important; }
+  .mobile-hint { display: none !important; }
+
+  body {
+    overflow-x: clip !important;
+  }
+
+  .nav {
+    height: 52px !important;
+    padding: 0 16px !important;
+  }
+
+  .page-container {
+    padding: 0 14px !important;
+    overflow: visible !important;
+  }
+
+  #experience.exp-pinned-section,
+  #works.works-pinned-section {
+    padding: 24px 0 48px !important;
+    position: relative !important;
+    overflow: visible !important;
+  }
+
+  .exp-pinned-inner,
+  .works-pinned-inner {
+    height: auto !important;
+    min-height: 0 !important;
+    max-height: none !important;
+    display: flex !important;
+    flex-direction: column !important;
+    padding: 0 !important;
+    box-sizing: border-box !important;
+    overflow: visible !important;
+  }
+
+  /* Sticky Section Header Bar: Stays pinned below nav while cards stack */
+  .exp-pinned-header,
+  .works-pinned-header {
+    position: sticky !important;
+    top: 52px !important;
+    z-index: 20 !important;
+    background: rgba(7, 9, 20, 0.94) !important;
+    backdrop-filter: blur(16px) !important;
+    -webkit-backdrop-filter: blur(16px) !important;
+    padding: 10px 4px !important;
+    margin-bottom: 14px !important;
+    display: flex !important;
+    flex-direction: row !important;
+    justify-content: space-between !important;
+    align-items: center !important;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.08) !important;
+  }
+
+  .sec-tag {
+    font-size: 10.5px !important;
+    margin-bottom: 2px !important;
+    display: block !important;
+  }
+
+  .sec-title {
+    font-size: 17px !important;
+    font-weight: 600 !important;
+    line-height: 1.2 !important;
+  }
+
+  .sec-desc {
+    display: none !important;
+  }
+
+  .exp-scroll-indicator {
+    width: auto !important;
+    display: flex !important;
+    align-items: center !important;
+    gap: 8px !important;
+  }
+
+  .exp-pin-progress {
+    width: 76px !important;
+    height: 3px !important;
+    flex-shrink: 0 !important;
+  }
+
+  .exp-horizontal-viewport,
+  .works-horizontal-viewport {
+    width: 100% !important;
+    height: auto !important;
+    position: relative !important;
+    overflow: visible !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    box-sizing: border-box !important;
+  }
+
+  .exp-horizontal-track,
+  .works-horizontal-track {
+    display: flex !important;
+    flex-direction: column !important;
+    position: relative !important;
+    width: 100% !important;
+    height: auto !important;
+    padding: 0 !important;
+    gap: 0 !important;
+    transform: none !important;
+    overflow: visible !important;
+  }
+
+  /* React Bits Sticky Card: Native compositor sticky pinning with ZERO pin-spacer jitter */
+  .exp-card,
+  .work-card {
+    position: sticky !important;
+    top: clamp(98px, 14vh, 114px) !important;
+    width: 100% !important;
+    max-width: 100% !important;
+    height: auto !important;
+    min-height: auto !important;
+    max-height: none !important;
+    margin-bottom: clamp(100px, 18vh, 160px) !important;
+    overflow: visible !important;
+    scrollbar-width: none !important;
+    display: flex !important;
+    flex-direction: column !important;
+    justify-content: space-between !important;
+    padding: clamp(18px, 2.6vh, 24px) clamp(16px, 4vw, 22px) !important;
+    box-sizing: border-box !important;
+    border-radius: 20px !important;
+    box-shadow: 0 -12px 36px rgba(0, 0, 0, 0.85) !important;
+    border: 1px solid var(--border-focus) !important;
+    transform-origin: 50% 12% !important;
+    will-change: transform, filter;
+    background: #0B0F1C !important;
+    transition: filter 0.15s ease;
+  }
+
+  .border-glow-inner {
+    height: auto !important;
+    display: flex !important;
+    flex-direction: column !important;
+    justify-content: space-between !important;
+    overflow: visible !important;
+    touch-action: pan-y !important;
+  }
+
+  .exp-card:last-child,
+  .work-card:last-child {
+    margin-bottom: 36px !important;
+  }
+
+  .exp-card::-webkit-scrollbar,
+  .work-card::-webkit-scrollbar {
+    display: none !important;
+  }
+
+  /* Experience Card: Highly Legible Typography & Tight Content Density */
+  .exp-card-top-tag {
+    margin-bottom: 8px !important;
+  }
+  .exp-num-badge {
+    font-size: 11px !important;
+  }
+  .exp-badge-current {
+    font-size: 10px !important;
+    padding: 2px 8px !important;
+  }
+  .exp-header {
+    flex-direction: column !important;
+    align-items: flex-start !important;
+    gap: 4px !important;
+    margin-bottom: 12px !important;
+    padding-bottom: 10px !important;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.08) !important;
+  }
+  .exp-role {
+    font-size: clamp(17px, 4.4vw, 19.5px) !important;
+    font-weight: 600 !important;
+    line-height: 1.25 !important;
+  }
+  .exp-company {
+    font-size: clamp(17px, 4.4vw, 19.5px) !important;
+  }
+  .exp-meta {
+    text-align: left !important;
+    font-size: 12px !important;
+    display: flex !important;
+    align-items: center !important;
+    gap: 8px !important;
+  }
+  .exp-meta .location {
+    display: inline !important;
+    margin-top: 0 !important;
+  }
+  .exp-points {
+    display: flex !important;
+    flex-direction: column !important;
+    gap: 12px !important;
+    margin: 0 !important;
+    padding: 0 !important;
+  }
+  .exp-points li {
+    font-size: clamp(13px, 3.4vw, 14.5px) !important;
+    line-height: 1.58 !important;
+    color: #E2E8F0 !important;
+    padding-left: 16px !important;
+  }
+  .exp-points li::before {
+    font-size: 16px !important;
+    line-height: 1.2 !important;
+  }
+  .exp-points strong {
+    color: #FFFFFF !important;
+  }
+  .exp-stack {
+    display: flex !important;
+    flex-wrap: wrap !important;
+    gap: 6px !important;
+    margin-top: auto !important;
+    padding-top: 12px !important;
+    border-top: 1px solid rgba(255, 255, 255, 0.08) !important;
+  }
+
+  /* Works Card: Highly Legible Typography & Tight Content Density */
+  .work-meta-row {
+    margin-bottom: 8px !important;
+  }
+  .work-tag {
+    font-size: 11px !important;
+  }
+  .work-date {
+    font-size: 11.5px !important;
+  }
+  .work-card h3 {
+    font-size: clamp(17px, 4.4vw, 19.5px) !important;
+    font-weight: 600 !important;
+    margin-bottom: 8px !important;
+    line-height: 1.25 !important;
+  }
+  .work-desc {
+    display: block !important;
+    font-size: clamp(12.5px, 3.2vw, 13.5px) !important;
+    line-height: 1.5 !important;
+    color: #CBD5E1 !important;
+    margin-bottom: 10px !important;
+  }
+  .work-bullets {
+    display: flex !important;
+    flex-direction: column !important;
+    gap: 10px !important;
+    margin: 0 0 10px 0 !important;
+    padding: 0 !important;
+  }
+  .work-bullets li {
+    font-size: clamp(13px, 3.3vw, 14px) !important;
+    line-height: 1.55 !important;
+    color: #E2E8F0 !important;
+    padding-left: 14px !important;
+  }
+  .work-bullets li::before {
+    font-size: 14px !important;
+  }
+  .work-footer {
+    display: flex !important;
+    flex-direction: column !important;
+    gap: 10px !important;
+    margin-top: auto !important;
+    padding-top: 12px !important;
+    border-top: 1px solid rgba(255, 255, 255, 0.08) !important;
+  }
+  .work-links {
+    display: flex !important;
+    gap: 8px !important;
+    flex-wrap: wrap !important;
+  }
+  .work-link-btn {
+    font-size: 11.5px !important;
+    padding: 6px 14px !important;
+    border-radius: 14px !important;
+  }
+  .work-stack {
+    display: flex !important;
+    flex-wrap: wrap !important;
+    gap: 6px !important;
+  }
+  .work-pill {
+    font-size: 11px !important;
+    padding: 4px 9px !important;
+    border-radius: 6px !important;
+  }
+}
+
+@media (max-width: 600px) {
+  .telemetry-grid { grid-template-columns: 1fr; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .exp-pinned-inner, .works-pinned-inner { height: auto !important; min-height: 0 !important; }
+  .exp-card, .work-card {
+    position: relative !important;
+    top: auto !important;
+    transform: none !important;
+    filter: none !important;
+    margin-bottom: 24px !important;
+  }
+}

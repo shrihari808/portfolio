@@ -1,0 +1,74 @@
+/* ============================================================= Modern Contact Cards */
+.contact-card-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 20px;
+}
+.contact-channel-card {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  padding: clamp(24px, 2.5vw, 32px);
+  text-decoration: none;
+  color: var(--text);
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  min-height: 160px;
+  position: relative;
+  overflow: hidden;
+  box-shadow: 0 12px 32px rgba(0, 0, 0, 0.4);
+  transition: all 0.25s ease;
+}
+.contact-channel-card::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(circle at 85% 15%, var(--accent-glow), transparent 60%);
+  opacity: 0;
+  transition: opacity 0.3s ease;
+  pointer-events: none;
+}
+.contact-channel-card:hover {
+  border-color: var(--accent);
+  transform: translateY(-3px);
+  box-shadow: 0 16px 40px rgba(0, 0, 0, 0.5);
+}
+.contact-channel-card:hover::before {
+  opacity: 0.14;
+}
+.contact-card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 14px;
+}
+.contact-badge {
+  font-family: var(--mono);
+  font-size: 11px;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--accent);
+  font-weight: 600;
+}
+.contact-arrow {
+  color: #94A3B8;
+  font-size: 18px;
+  transition: transform 0.2s, color 0.2s;
+}
+.contact-channel-card:hover .contact-arrow {
+  color: var(--accent);
+  transform: translate(2px, -2px);
+}
+.contact-card-title {
+  font-size: clamp(17px, 1.6vw, 21px);
+  font-weight: 500;
+  color: #FFFFFF;
+  margin-bottom: 8px;
+}
+.contact-card-sub {
+  font-size: 13.5px;
+  color: #CBD5E1;
+  line-height: 1.6;
+  margin: 0;
+}

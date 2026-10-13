@@ -1,0 +1,39 @@
+/* ==========================================================================
+   Shrihari Engineering Portfolio — Modular Style Architecture
+   ========================================================================== */
+
+/* 1. Design tokens, CSS custom properties, and base resets */
+@import "./tokens.css";
+
+/* 2. Global layout, page container, background canvas layer, and footer */
+@import "./layout.css";
+
+/* 3. Header, fixed navigation bar, and navigation actions */
+@import "./nav.css";
+
+/* 4. React Bits: SpecularButton WebGL shaders & portfolio button adapters */
+@import "./specular-button.css";
+
+/* 5. Hero section, typographic hierarchy, and engineering telemetry stats */
+@import "./hero.css";
+
+/* 6. React Bits: BorderGlow conic masks & dynamic edge highlights */
+@import "./border-glow.css";
+
+/* 7. Professional Experience section, card layout, and timeline details */
+@import "./experience.css";
+
+/* 8. Projects & Research section, work cards, badges, and tech stacks */
+@import "./works.css";
+
+/* 9. Technical Arsenal categorized grid & proficiency tags */
+@import "./arsenal.css";
+
+/* 10. Education foundation & professional accreditations grid */
+@import "./credentials.css";
+
+/* 11. Contact channels and social connect cards */
+@import "./contact.css";
+
+/* 12. Media queries, tablet adjustments, and mobile <ScrollStack /> architecture */
+@import "./responsive.css";
