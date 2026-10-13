@@ -1,7 +1,7 @@
 /* ============================================================= Work Card: React Bits ScrollStack Card */
 .work-card {
   position: sticky;
-  top: var(--stack-top, 80px);
+  top: var(--stack-top, 96px);
   width: 100%;
   max-width: 820px;
   box-sizing: border-box;
@@ -16,7 +16,7 @@
   visibility: visible;
   overflow: visible !important;
   max-height: none !important;
-  min-height: auto !important;
+  min-height: clamp(440px, 52vh, 480px) !important;
   scrollbar-width: none !important;
   box-shadow: 0 0 0 1px rgba(255, 255, 255, 0.08), 0 -12px 32px -8px rgba(0, 0, 0, 0.75), 0 20px 48px -12px rgba(0, 0, 0, 0.85);
   transform-origin: 50% 0% !important;
@@ -25,10 +25,10 @@
   margin: 0 auto clamp(140px, 22vh, 220px);
 }
 
-.work-card:nth-child(1) { --stack-top: 80px; }
-.work-card:nth-child(2) { --stack-top: 102px; }
-.work-card:nth-child(3) { --stack-top: 124px; }
-.work-card:nth-child(4) { --stack-top: 146px; }
+.work-card:nth-child(1) { --stack-top: 96px; }
+.work-card:nth-child(2) { --stack-top: 118px; }
+.work-card:nth-child(3) { --stack-top: 140px; }
+.work-card:nth-child(4) { --stack-top: 162px; }
 
 .work-card:last-child {
   margin-bottom: clamp(280px, 36vh, 400px);

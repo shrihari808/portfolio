@@ -51,7 +51,7 @@ import { initAllBorderGlowCards } from './border-glow.js';
       const isMobile = window.innerWidth <= 768;
       return {
         isMobile,
-        baseTop: isMobile ? 66 : 80,
+        baseTop: isMobile ? 72 : 96,
         stackOffset: isMobile ? 16 : 22,
         itemScale: isMobile ? 0.035 : 0.045,
         baseScale: isMobile ? 0.88 : 0.85,
@@ -60,13 +60,22 @@ import { initAllBorderGlowCards } from './border-glow.js';
     }
 
     function applyLayout() {
-      const { baseTop, stackOffset } = getLayout();
+      const { baseTop, stackOffset, isMobile } = getLayout();
+      const numCards = cards.length;
       cards.forEach((card, i) => {
         const topVal = baseTop + i * stackOffset;
+        const extraBottom = (numCards - 1 - i) * stackOffset;
         card.style.top = `${topVal}px`;
         card.style.setProperty('--stack-top', `${topVal}px`);
         card.style.zIndex = `${i + 1}`;
         card.style.transformOrigin = '50% 0%';
+
+        if (i < numCards - 1) {
+          const stepGap = isMobile ? 'clamp(90px, 16vh, 140px)' : 'clamp(140px, 22vh, 200px)';
+          card.style.marginBottom = `calc(${stepGap} + ${extraBottom}px)`;
+        } else {
+          card.style.marginBottom = isMobile ? 'clamp(180px, 26vh, 260px)' : 'clamp(280px, 36vh, 400px)';
+        }
       });
     }
 
@@ -139,6 +148,7 @@ import { initAllBorderGlowCards } from './border-glow.js';
         card.style.filter = '';
         card.style.zIndex = '';
         card.style.top = '';
+        card.style.marginBottom = '';
       });
       if (progressBar) progressBar.style.width = '0%';
     };

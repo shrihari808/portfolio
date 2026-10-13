@@ -127,11 +127,11 @@
   .exp-card,
   .work-card {
     position: sticky !important;
-    top: var(--stack-top, 66px) !important;
+    top: var(--stack-top, 72px) !important;
     width: 100% !important;
     max-width: 100% !important;
     height: auto !important;
-    min-height: auto !important;
+    min-height: clamp(390px, 50vh, 440px) !important;
     max-height: none !important;
     margin-bottom: clamp(90px, 16vh, 140px) !important;
     overflow: visible !important;
@@ -152,23 +152,23 @@
 
   .exp-card:nth-child(1),
   .work-card:nth-child(1) {
-    --stack-top: 66px !important;
+    --stack-top: 72px !important;
   }
   .exp-card:nth-child(2),
   .work-card:nth-child(2) {
-    --stack-top: 82px !important;
+    --stack-top: 88px !important;
   }
   .exp-card:nth-child(3),
   .work-card:nth-child(3) {
-    --stack-top: 98px !important;
+    --stack-top: 104px !important;
   }
   .exp-card:nth-child(4),
   .work-card:nth-child(4) {
-    --stack-top: 114px !important;
+    --stack-top: 120px !important;
   }
 
   .border-glow-inner {
-    height: auto !important;
+    height: 100% !important;
     display: flex !important;
     flex-direction: column !important;
     justify-content: space-between !important;
