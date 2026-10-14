@@ -2,7 +2,7 @@
   "name": "shrihari-portfolio",
   "version": "1.0.0",
   "private": true,
-  "description": "Personal engineering portfolio showcasing full-stack systems, distributed architecture, and Three.js / WebGL experiences.",
+  "description": "Portfolio of Shrihari Kulkarni: SDE, Systems Architect, and AI Developer showcasing low-latency architectures, RAG pipelines, and interactive Three.js/WebGL experiences.",
   "type": "module",
   "scripts": {
     "dev": "vite",
@@ -13,17 +13,16 @@
     "portfolio",
     "threejs",
     "webgl",
-    "kage",
-    "full-stack",
-    "systems-architect"
+    "systems-architect",
+    "software-engineer",
+    "full-stack"
   ],
-  "author": "Shrihari",
+  "author": "Shrihari Kulkarni",
   "license": "MIT",
   "devDependencies": {
     "vite": "^6.0.0"
   },
   "dependencies": {
-    "gsap": "^3.15.0",
     "three": "^0.170.0"
   }
 }

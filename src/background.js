@@ -1,10 +1,10 @@
 /**
- * src/backgrounds/structure-flow/orbital-sphere.js
+ * src/background.js
  * 3D rotating spherical point-cloud lattice and concentric orbital rings in Three.js.
  * Enhanced for mobile viewport stability, aspect ratio framing, and hardware acceleration.
  */
 import * as THREE from 'three';
-import { hexToRgb } from '../../core/color-utils.js';
+import { hexToRgb } from './core/color-utils.js';
 
 export function initBackground(container, options = {}) {
   const canvas = document.createElement('canvas');

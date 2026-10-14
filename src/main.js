@@ -1,12 +1,12 @@
 /**
  * src/main.js
  * Application entry point for Shrihari Engineering Portfolio
- * Orchestrates GSAP horizontal scroll on desktop (>= 769px),
- * vertical card deck stacking on mobile (< 769px) inspired by fancy.design,
- * and Three.js background lifecycle.
+ * Orchestrates universal React Bits <ScrollStack /> sticky card stacking,
+ * Three.js orbital sphere background lifecycle, SpecularButton WebGL shaders,
+ * and BorderGlow interactive proximity effects.
  */
 import './styles/main.css';
-import { loadActiveBackground } from './background-loader.js';
+import { initBackground } from './background.js';
 import { initAllSpecularButtons } from './specular-button.js';
 import { initAllBorderGlowCards } from './border-glow.js';
 
@@ -17,18 +17,18 @@ import { initAllBorderGlowCards } from './border-glow.js';
   const currentAccent = '#C490FF';
   const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
-  // --- Mount Active Background ---
+  // --- Mount Background ---
   const bgContainer = document.getElementById('bg-container');
   let activeBg = null;
 
   if (bgContainer) {
     try {
-      activeBg = await loadActiveBackground(bgContainer, {
+      activeBg = initBackground(bgContainer, {
         accentColor: currentAccent,
         reducedMotion: prefersReducedMotion
       });
     } catch (err) {
-      console.error('[Background] Failed to load active background:', err);
+      console.error('[Background] Failed to load background:', err);
     }
   }
 
