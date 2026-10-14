@@ -11,23 +11,23 @@
 
 ---
 
-## ⚡ Overview
+## Overview
 
 This repository contains the source code for the personal engineering portfolio of **Shrihari Kulkarni**, Software Development Engineer (SDE) at Invendis and Systems Architect based in Bangalore, India.
 
 Built with performance, tactile interaction, and clean typography at its core, the site showcases real-world distributed architectures, low-latency microservices, retrieval-augmented generation (RAG) engines, and published sequence telemetry research.
 
-### ✨ Visual & Interaction Engineering Highlights
+### Visual & Interaction Engineering Highlights
 
-- **🪐 Three.js Orbital Sphere Background**: Custom 800-point spherical point-cloud lattice, dual concentric orbital rings, floating ambient particles, throttled resize handling to eliminate mobile WebGL framebuffer thrashing, and fine-pointer parallax tracking.
-- **✨ React Bits SpecularButton**: WebGL2 fragment and vertex shaders computing directional specular edge illumination, physics-based pointer tracking, and variable glow lobes.
-- **🔮 BorderGlow Proximity Cards**: Multi-layered directional HSL mesh gradients reacting dynamically to cursor distance and viewport coordinates.
-- **📚 Universal `<ScrollStack />`**: Native CSS `position: sticky` paired with pure `requestAnimationFrame` cover-based depth scaling and exponential dimming, creating card stacking with top-peek silhouettes across desktop and mobile.
-- **🟣 Electric Purple Design System**: Calibrated dark aesthetic (`#070914`, `#0E1222`, `#C490FF`), strict JetBrains Mono typography, zero framework bloat, and full `prefers-reduced-motion` compliance.
+- **Three.js Orbital Sphere Background**: Custom 800-point spherical point-cloud lattice, dual concentric orbital rings, floating ambient particles, throttled resize handling to eliminate mobile WebGL framebuffer thrashing, and fine-pointer parallax tracking.
+- **React Bits SpecularButton**: WebGL2 fragment and vertex shaders computing directional specular edge illumination, physics-based pointer tracking, and variable glow lobes.
+- **BorderGlow Proximity Cards**: Multi-layered directional HSL mesh gradients reacting dynamically to cursor distance and viewport coordinates.
+- **Universal `<ScrollStack />`**: Native CSS `position: sticky` paired with pure `requestAnimationFrame` cover-based depth scaling and exponential dimming, creating card stacking with top-peek silhouettes across desktop and mobile.
+- **Electric Purple Design System**: Calibrated dark aesthetic (`#070914`, `#0E1222`, `#C490FF`), strict JetBrains Mono typography, zero framework bloat, and full `prefers-reduced-motion` compliance.
 
 ---
 
-## 📊 Engineering Telemetry Highlights
+## Engineering Telemetry Highlights
 
 | Metric | Target Achieved | Architectural Context |
 | :--- | :--- | :--- |
@@ -38,7 +38,7 @@ Built with performance, tactile interaction, and clean typography at its core, t
 
 ---
 
-## 🛠️ Tech Stack & Architecture
+## Tech Stack & Architecture
 
 ### Frontend & Graphics Runtime
 - **Vite 6** — Lightning-fast ES module dev server & optimized rollup production bundler.
@@ -56,7 +56,7 @@ Built with performance, tactile interaction, and clean typography at its core, t
 
 ---
 
-## 📁 Repository Structure
+## Repository Structure
 
 ```text
 portfolioweb/
@@ -95,7 +95,7 @@ portfolioweb/
 
 ---
 
-## 🚀 Getting Started
+## Getting Started
 
 ### Prerequisites
 - [Node.js](https://nodejs.org/) (version 18.0 or higher recommended)
@@ -139,7 +139,7 @@ npm run preview
 
 ---
 
-## 🌐 Deployment
+## Deployment
 
 The repository is configured for zero-configuration continuous deployment via **Vercel** (`vercel.json`):
 
@@ -151,13 +151,13 @@ The repository is configured for zero-configuration continuous deployment via **
 
 ---
 
-## 📄 License
+## License
 
 This project is open-source software licensed under the [MIT License](LICENSE).
 
 ---
 
-## 👤 Author
+## Author
 
 **Shrihari Kulkarni**
 - GitHub: [@shrihari808](https://github.com/shrihari808)
