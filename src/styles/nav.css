@@ -21,6 +21,37 @@
   text-shadow: 0 0 10px var(--accent-glow);
 }
 
+.nav-links a:focus-visible {
+  outline: 2px solid var(--accent); outline-offset: 4px; border-radius: 4px;
+}
+
 .nav-actions {
   display: flex; align-items: center; gap: 10px;
 }
+
+/* Mobile menu toggle (shown below 960px, see responsive.css) */
+.nav-toggle {
+  display: none; align-items: center; gap: 10px;
+  height: 34px; padding: 0 14px; border-radius: 999px;
+  border: 1px solid var(--border-focus); background: rgba(14, 18, 34, 0.9);
+  color: #CBD5E1; cursor: pointer;
+  font-family: var(--mono); font-size: 11px; font-weight: 600; letter-spacing: 0.14em; text-transform: uppercase;
+  -webkit-tap-highlight-color: transparent;
+}
+.nav-toggle:focus-visible {
+  outline: 2px solid var(--accent); outline-offset: 3px;
+}
+.nav-toggle-icon {
+  position: relative; display: inline-block; width: 14px; height: 10px;
+}
+.nav-toggle-icon::before,
+.nav-toggle-icon::after {
+  content: ""; position: absolute; left: 0; right: 0; height: 1.5px; border-radius: 2px;
+  background: currentColor;
+  transition: top 0.25s ease, transform 0.25s ease;
+}
+.nav-toggle-icon::before { top: 1px; }
+.nav-toggle-icon::after { top: 7.5px; }
+.nav.is-open .nav-toggle { color: var(--accent); border-color: var(--accent); }
+.nav.is-open .nav-toggle-icon::before { top: 4.25px; transform: rotate(45deg); }
+.nav.is-open .nav-toggle-icon::after { top: 4.25px; transform: rotate(-45deg); }

@@ -25,6 +25,25 @@ h1, h2, h3, h4 { margin: 0; font-weight: 500; letter-spacing: -0.02em; }
   max-width: 65ch;
   margin-bottom: 36px;
   font-weight: 400;
+  text-shadow: 0 1px 14px rgb(7 9 20 / 90%);
+}
+
+/* Soft dark glow behind text blocks keeps copy legible over the orbital sphere */
+.hero-copy,
+.sec-header,
+.stack-header > div {
+  position: relative;
+  isolation: isolate;
+}
+.hero-copy::before,
+.sec-header::before,
+.stack-header > div::before {
+  content: "";
+  position: absolute;
+  inset: -32px -48px;
+  z-index: -1;
+  pointer-events: none;
+  background: radial-gradient(closest-side, rgb(7 9 20 / 78%), transparent);
 }
 
 .hero-actions {
@@ -70,4 +89,5 @@ h1, h2, h3, h4 { margin: 0; font-weight: 500; letter-spacing: -0.02em; }
 }
 .sec-desc {
   font-size: 15px; color: var(--text-dim); margin-top: 8px; max-width: 65ch; line-height: 1.6;
+  text-shadow: 0 1px 14px rgb(7 9 20 / 90%);
 }

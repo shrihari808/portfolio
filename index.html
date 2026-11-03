@@ -5,6 +5,24 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
   <title>Shrihari Kulkarni — Systems Architect &amp; Software Development Engineer</title>
   <meta name="description" content="Portfolio of Shrihari Kulkarni: SDE at Invendis, AI Developer, and Systems Architect specializing in low-latency .NET/C# services, enterprise RAG pipelines, and high-throughput data systems.">
+  <link rel="canonical" href="https://shrihari-kulkarni.vercel.app/">
+  <meta name="theme-color" content="#070914">
+
+  <!-- Social previews: Open Graph & Twitter -->
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="Shrihari Kulkarni">
+  <meta property="og:title" content="Shrihari Kulkarni — Systems Architect &amp; Software Development Engineer">
+  <meta property="og:description" content="Backend engineer building low-latency .NET/C# services, enterprise RAG pipelines, and high-throughput data systems.">
+  <meta property="og:url" content="https://shrihari-kulkarni.vercel.app/">
+  <meta property="og:image" content="https://shrihari-kulkarni.vercel.app/og-image.png">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:image:alt" content="Shrihari Kulkarni — Software Development Engineer &amp; Systems Architect">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Shrihari Kulkarni — Systems Architect &amp; Software Development Engineer">
+  <meta name="twitter:description" content="Backend engineer building low-latency .NET/C# services, enterprise RAG pipelines, and high-throughput data systems.">
+  <meta name="twitter:image" content="https://shrihari-kulkarni.vercel.app/og-image.png">
+
   <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%23070914'/%3E%3Ccircle cx='16' cy='16' r='6' fill='%23C490FF'/%3E%3Cpath d='M8 16h16M16 8v16' stroke='%23F2F4FB' stroke-width='1.5' stroke-linecap='round'/%3E%3C/svg%3E">
   
   <!-- Typography: JetBrains Mono -->
@@ -24,7 +42,12 @@
 
   <!-- Header Navigation -->
   <header class="nav" id="topNav">
-    <nav class="nav-links">
+    <button type="button" class="nav-toggle" id="navToggle" aria-expanded="false" aria-controls="navMenu">
+      <span class="nav-toggle-icon" aria-hidden="true"></span>
+      <span class="nav-toggle-label">Menu</span>
+    </button>
+
+    <nav class="nav-links" id="navMenu" aria-label="Sections">
       <a href="#experience">Experience</a>
       <a href="#works">Projects &amp; Research</a>
       <a href="#arsenal">Arsenal</a>
@@ -33,6 +56,10 @@
     </nav>
 
     <div class="nav-actions">
+      <a href="/cv/Shrihari_Kulkarni_CV.pdf" target="_blank" rel="noopener" class="specular-button specular-button--sm btn-secondary" data-radius="999" data-tint="#ffffff" data-tint-opacity="0.05" data-line-color="#c084fc" data-base-color="#2e1065" data-glow="1.1">
+        <canvas class="specular-button__light" aria-hidden="true"></canvas>
+        <span class="specular-button__label">Résumé ↓</span>
+      </a>
       <a href="https://github.com/shrihari808" target="_blank" rel="noopener" class="specular-button specular-button--sm btn-cta" data-radius="999" data-tint="#00f5ff" data-tint-opacity="0.12" data-line-color="#00f5ff" data-base-color="#0b2b3a" data-glow="1.2">
         <canvas class="specular-button__light" aria-hidden="true"></canvas>
         <span class="specular-button__label">GitHub ↗</span>
@@ -44,32 +71,38 @@
 
     <!-- ========================================================= Hero Section -->
     <section id="hero">
-      <div class="status-badge">
-        <span>SDE @ INVENDIS · MAR 2026 – PRESENT · BANGALORE, IN</span>
-      </div>
+      <div class="hero-copy">
+        <div class="status-badge">
+          <span>SDE @ INVENDIS · MAR 2026 – PRESENT · BANGALORE, IN</span>
+        </div>
 
-      <h1 class="hero-title">
-        Shrihari Kulkarni
-      </h1>
-      <span class="hero-role-tag">Software Development Engineer &amp; Systems Architect</span>
+        <h1 class="hero-title">
+          Shrihari Kulkarni
+        </h1>
+        <span class="hero-role-tag">Software Development Engineer &amp; Systems Architect</span>
 
-      <p class="hero-lead">
-        Building high-throughput backend services, low-latency APIs, and enterprise AI pipelines. Experienced in architecting lightweight multi-agent RAG systems, optimizing .NET/MySQL query engines, and published research in deep sequence modeling.
-      </p>
+        <p class="hero-lead">
+          Building high-throughput backend services, low-latency APIs, and enterprise AI pipelines. Experienced in architecting lightweight multi-agent RAG systems, optimizing .NET/MySQL query engines, and published research in deep sequence modeling.
+        </p>
 
-      <div class="hero-actions">
-        <a href="#experience" class="specular-button specular-button--md btn-cta" data-radius="999" data-tint="#00f5ff" data-tint-opacity="0.14" data-line-color="#00f5ff" data-base-color="#0b2b3a" data-glow="1.3">
-          <canvas class="specular-button__light" aria-hidden="true"></canvas>
-          <span class="specular-button__label">Experience Track ↓</span>
-        </a>
-        <a href="#works" class="specular-button specular-button--md btn-secondary" data-radius="999" data-tint="#ffffff" data-tint-opacity="0.05" data-line-color="#38bdf8" data-base-color="#1e293b" data-glow="1.0">
-          <canvas class="specular-button__light" aria-hidden="true"></canvas>
-          <span class="specular-button__label">Projects &amp; Research ↓</span>
-        </a>
-        <a href="#contact" class="specular-button specular-button--md theme-pill" data-radius="999" data-tint="#c084fc" data-tint-opacity="0.08" data-line-color="#c084fc" data-base-color="#2e1065" data-glow="1.1">
-          <canvas class="specular-button__light" aria-hidden="true"></canvas>
-          <span class="specular-button__label">Establish Connection →</span>
-        </a>
+        <div class="hero-actions">
+          <a href="#experience" class="specular-button specular-button--md btn-cta" data-radius="999" data-tint="#00f5ff" data-tint-opacity="0.14" data-line-color="#00f5ff" data-base-color="#0b2b3a" data-glow="1.3">
+            <canvas class="specular-button__light" aria-hidden="true"></canvas>
+            <span class="specular-button__label">Experience ↓</span>
+          </a>
+          <a href="#works" class="specular-button specular-button--md btn-secondary" data-radius="999" data-tint="#ffffff" data-tint-opacity="0.05" data-line-color="#38bdf8" data-base-color="#1e293b" data-glow="1.0">
+            <canvas class="specular-button__light" aria-hidden="true"></canvas>
+            <span class="specular-button__label">Projects &amp; Research ↓</span>
+          </a>
+          <a href="#contact" class="specular-button specular-button--md theme-pill" data-radius="999" data-tint="#c084fc" data-tint-opacity="0.08" data-line-color="#c084fc" data-base-color="#2e1065" data-glow="1.1">
+            <canvas class="specular-button__light" aria-hidden="true"></canvas>
+            <span class="specular-button__label">Get in Touch →</span>
+          </a>
+          <a href="/cv/Shrihari_Kulkarni_CV.pdf" target="_blank" rel="noopener" class="specular-button specular-button--md btn-secondary" data-radius="999" data-tint="#ffffff" data-tint-opacity="0.05" data-line-color="#c084fc" data-base-color="#2e1065" data-glow="1.0">
+            <canvas class="specular-button__light" aria-hidden="true"></canvas>
+            <span class="specular-button__label">Download CV ↓</span>
+          </a>
+        </div>
       </div>
 
       <!-- Telemetry Counters: Real Engineering Data from CV -->
@@ -97,25 +130,23 @@
       </div>
     </section>
 
-    <!-- ========================================================= Section: Experience (Pinned Horizontal Scroll) -->
-    <section id="experience" class="exp-pinned-section">
-      <div class="exp-pinned-inner">
-        <div class="exp-pinned-header">
+    <!-- ========================================================= Section: Experience (ScrollStack) -->
+    <section id="experience" class="stack-section">
+      <div class="stack-inner">
+        <div class="stack-header">
           <div>
-            <span class="sec-tag">01 / TRACK RECORD</span>
+            <span class="sec-tag">01 / EXPERIENCE</span>
             <h2 class="sec-title">Professional Experience</h2>
             <p class="sec-desc" style="margin-bottom: 0;">Production engineering impact across enterprise systems, distributed pipelines, and AI infrastructure.</p>
           </div>
 
-          <div class="exp-scroll-indicator">
-            <div class="exp-pin-progress">
-              <div class="exp-pin-progress-bar" id="expProgressBar"></div>
-            </div>
+          <div class="stack-progress" aria-hidden="true">
+            <div class="stack-progress-bar" id="expProgressBar"></div>
           </div>
         </div>
 
-        <div class="exp-horizontal-viewport" id="expHorizontalViewport">
-          <div class="exp-horizontal-track" id="expHorizontalTrack">
+        <div class="stack-viewport">
+          <div class="stack-track" id="expStack">
             <!-- Card 1: Invendis -->
             <article class="border-glow-card exp-card" data-glow-color="188 95 65" data-border-radius="20" data-colors="#00f5ff,#38bdf8,#c084fc">
               <span class="edge-light" aria-hidden="true"></span>
@@ -250,25 +281,23 @@
       </div>
     </section>
 
-    <!-- ========================================================= Section: Projects & Research (Pinned Horizontal Scroll) -->
-    <section id="works" class="works-pinned-section">
-      <div class="works-pinned-inner">
-        <div class="works-pinned-header">
+    <!-- ========================================================= Section: Projects & Research (ScrollStack) -->
+    <section id="works" class="stack-section">
+      <div class="stack-inner">
+        <div class="stack-header">
           <div>
-            <span class="sec-tag">02 / DEPLOYMENTS</span>
+            <span class="sec-tag">02 / PROJECTS</span>
             <h2 class="sec-title">Projects &amp; Published Research</h2>
             <p class="sec-desc" style="margin-bottom: 0;">Peer-to-peer systems, constrained RAG engines, distributed AutoML packages, and published sequence telemetry.</p>
           </div>
 
-          <div class="exp-scroll-indicator">
-            <div class="exp-pin-progress">
-              <div class="exp-pin-progress-bar" id="worksProgressBar"></div>
-            </div>
+          <div class="stack-progress" aria-hidden="true">
+            <div class="stack-progress-bar" id="worksProgressBar"></div>
           </div>
         </div>
 
-        <div class="works-horizontal-viewport" id="worksHorizontalViewport">
-          <div class="works-horizontal-track" id="worksHorizontalTrack">
+        <div class="stack-viewport">
+          <div class="stack-track" id="worksStack">
             <!-- Project 1: FLint -->
             <article class="border-glow-card work-card" data-glow-color="265 90 75" data-border-radius="20" data-colors="#a855f7,#c084fc,#00f5ff">
               <span class="edge-light" aria-hidden="true"></span>
@@ -430,8 +459,9 @@
     <!-- ========================================================= Section: Tech Arsenal -->
     <section id="arsenal">
       <div class="sec-header">
-        <h2 class="sec-title">Technical Stack &amp; Primitives</h2>
-        <p class="sec-desc">Comprehensive breakdown of programming languages, frameworks, cloud primitives, and developer tooling.</p>
+        <span class="sec-tag">03 / SKILLS</span>
+        <h2 class="sec-title">Technical Skills</h2>
+        <p class="sec-desc">Languages, frameworks, and tools I use day to day.</p>
       </div>
 
       <div class="arsenal-box">
@@ -505,7 +535,7 @@
         </div>
 
         <div class="arsenal-row">
-          <div class="arsenal-domain">Broad Domain Mastery</div>
+          <div class="arsenal-domain">Domains</div>
           <div class="arsenal-techs">
             <span class="tech-item">Distributed Backends</span>
             <span class="tech-item">Machine Learning</span>
@@ -522,7 +552,7 @@
     <!-- ========================================================= Section: Education & Certifications -->
     <section id="credentials">
       <div class="sec-header">
-        <span class="sec-tag">03 / CREDENTIALS</span>
+        <span class="sec-tag">04 / CREDENTIALS</span>
         <h2 class="sec-title">Education &amp; Certifications</h2>
         <p class="sec-desc">Academic foundation in computer systems and professional cloud &amp; AI specializations.</p>
       </div>
@@ -580,41 +610,41 @@
     <!-- ========================================================= Section: Contact -->
     <section id="contact">
       <div class="sec-header">
-        <span class="sec-tag">05 / DIRECT CHANNELS</span>
-        <h2 class="sec-title">Establish Connection</h2>
-        <p class="sec-desc">Available for high-impact backend engineering, distributed systems, and AI infrastructure opportunities.</p>
+        <span class="sec-tag">05 / CONTACT</span>
+        <h2 class="sec-title">Get in Touch</h2>
+        <p class="sec-desc">Open to backend, distributed systems, and AI infrastructure roles.</p>
       </div>
 
       <div class="contact-card-grid">
-        <a href="mailto:kshrihari0611@gmail.com" class="border-glow-card contact-channel-card" data-glow-color="188 95 65" data-border-radius="16" data-colors="#00f5ff,#38bdf8,#c084fc">
+        <a href="mailto:kshrihari0611@gmail.com" class="border-glow-card contact-channel-card" draggable="false" data-glow-color="188 95 65" data-border-radius="16" data-colors="#00f5ff,#38bdf8,#c084fc">
           <span class="edge-light" aria-hidden="true"></span>
           <div class="border-glow-inner">
             <div class="contact-card-header">
-              <span class="contact-badge">DIRECT INBOX</span>
+              <span class="contact-badge">EMAIL</span>
               <span class="contact-arrow">↗</span>
             </div>
             <div class="contact-card-title">kshrihari0611@gmail.com</div>
-            <p class="contact-card-sub">Primary communication socket for engineering roles, technical collaboration, and systems architecture discussions.</p>
+            <p class="contact-card-sub">Best way to reach me about engineering roles, collaborations, or system design.</p>
           </div>
         </a>
 
-        <a href="https://linkedin.com/in/kshrihari0611" target="_blank" rel="noopener" class="border-glow-card contact-channel-card" data-glow-color="205 95 70" data-border-radius="16" data-colors="#38bdf8,#00f5ff,#818cf8">
+        <a href="https://linkedin.com/in/kshrihari0611" target="_blank" rel="noopener" class="border-glow-card contact-channel-card" draggable="false" data-glow-color="205 95 70" data-border-radius="16" data-colors="#38bdf8,#00f5ff,#818cf8">
           <span class="edge-light" aria-hidden="true"></span>
           <div class="border-glow-inner">
             <div class="contact-card-header">
-              <span class="contact-badge">PROFESSIONAL NETWORK</span>
+              <span class="contact-badge">LINKEDIN</span>
               <span class="contact-arrow">↗</span>
             </div>
             <div class="contact-card-title">LinkedIn Profile</div>
-            <p class="contact-card-sub">Connect on LinkedIn (kshrihari0611) for career history, background verification, and direct messaging.</p>
+            <p class="contact-card-sub">Work history, recommendations, and direct messages.</p>
           </div>
         </a>
 
-        <a href="https://github.com/shrihari808" target="_blank" rel="noopener" class="border-glow-card contact-channel-card" data-glow-color="265 90 75" data-border-radius="16" data-colors="#a855f7,#c084fc,#00f5ff">
+        <a href="https://github.com/shrihari808" target="_blank" rel="noopener" class="border-glow-card contact-channel-card" draggable="false" data-glow-color="265 90 75" data-border-radius="16" data-colors="#a855f7,#c084fc,#00f5ff">
           <span class="edge-light" aria-hidden="true"></span>
           <div class="border-glow-inner">
             <div class="contact-card-header">
-              <span class="contact-badge">OPEN SOURCE CODE</span>
+              <span class="contact-badge">GITHUB</span>
               <span class="contact-arrow">↗</span>
             </div>
             <div class="contact-card-title">github.com/shrihari808</div>
@@ -622,15 +652,15 @@
           </div>
         </a>
 
-        <a href="https://leetcode.com/u/kshrihari0611/" target="_blank" rel="noopener" class="border-glow-card contact-channel-card" data-glow-color="40 85 75" data-border-radius="16" data-colors="#38bdf8,#00f5ff,#f472b6">
+        <a href="https://leetcode.com/u/kshrihari0611/" target="_blank" rel="noopener" class="border-glow-card contact-channel-card" draggable="false" data-glow-color="40 85 75" data-border-radius="16" data-colors="#38bdf8,#00f5ff,#f472b6">
           <span class="edge-light" aria-hidden="true"></span>
           <div class="border-glow-inner">
             <div class="contact-card-header">
-              <span class="contact-badge">ALGORITHMIC BENCHMARKS</span>
+              <span class="contact-badge">LEETCODE</span>
               <span class="contact-arrow">↗</span>
             </div>
             <div class="contact-card-title">LeetCode Solutions</div>
-            <p class="contact-card-sub">Data structures, advanced algorithm problem solving, and computational graph benchmarks.</p>
+            <p class="contact-card-sub">Data structures and algorithms practice.</p>
           </div>
         </a>
       </div>

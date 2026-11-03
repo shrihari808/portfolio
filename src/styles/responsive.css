@@ -4,321 +4,226 @@
   .cred-grid { grid-template-columns: 1fr; }
   .contact-card-grid { grid-template-columns: 1fr; }
   .arsenal-row { grid-template-columns: 1fr; gap: 10px; }
-  .nav-links { display: none; }
-  .exp-card, .work-card { width: 100% !important; max-width: 720px !important; }
+  .exp-card, .work-card { max-width: 720px; }
+
+  /* Mobile menu: section links collapse into a dropdown panel under the header */
+  .nav-toggle { display: inline-flex; }
+  .nav-links {
+    position: absolute; top: calc(100% + 8px); left: 12px; right: 12px;
+    flex-direction: column; align-items: stretch; gap: 2px;
+    padding: 8px; border-radius: 16px;
+    background: rgba(11, 15, 28, 0.97);
+    border: 1px solid var(--border);
+    box-shadow: 0 24px 48px -12px rgba(0, 0, 0, 0.8);
+    opacity: 0; visibility: hidden; pointer-events: none;
+    transform: translateY(-8px);
+    transition: opacity 0.2s ease, transform 0.2s ease, visibility 0s linear 0.2s;
+  }
+  .nav.is-open .nav-links {
+    opacity: 1; visibility: visible; pointer-events: auto;
+    transform: none;
+    transition: opacity 0.2s ease, transform 0.2s ease;
+  }
+  .nav-links a {
+    padding: 14px 12px; border-radius: 10px; font-size: 13px;
+  }
+  .nav-links a:hover { background: rgba(255, 255, 255, 0.04); }
 }
 
 /* Mobile Viewport (< 769px): React Bits Native Sticky <ScrollStack /> Architecture */
 @media (max-width: 768px) {
-  .desktop-hint { display: none !important; }
-  .mobile-hint { display: none !important; }
-
-  body {
-    overflow-x: clip !important;
-  }
-
   .nav {
-    height: 52px !important;
-    padding: 0 16px !important;
+    height: 52px;
+    padding: 0 16px;
   }
 
   .page-container {
-    padding: 0 14px !important;
-    overflow: visible !important;
+    padding: 0 14px;
   }
 
-  #experience.exp-pinned-section,
-  #works.works-pinned-section {
-    padding: 24px 0 48px !important;
-    position: relative !important;
-    overflow: visible !important;
-  }
-
-  .exp-pinned-inner,
-  .works-pinned-inner {
-    height: auto !important;
-    min-height: 0 !important;
-    max-height: none !important;
-    display: flex !important;
-    flex-direction: column !important;
-    padding: 0 !important;
-    box-sizing: border-box !important;
-    overflow: visible !important;
+  .stack-section {
+    padding: 24px 0 48px;
   }
 
   /* Section Header: Scrolls naturally so cards have full viewport space */
-  .exp-pinned-header,
-  .works-pinned-header {
-    position: relative !important;
-    top: auto !important;
-    z-index: 5 !important;
-    background: transparent !important;
-    backdrop-filter: none !important;
-    -webkit-backdrop-filter: none !important;
-    padding: 0 0 14px !important;
-    margin-bottom: 16px !important;
-    display: flex !important;
-    flex-direction: column !important;
-    align-items: flex-start !important;
-    border-bottom: 1px solid rgba(255, 255, 255, 0.08) !important;
-    gap: 8px !important;
+  .stack-header {
+    padding: 0 0 14px;
+    margin-bottom: 16px;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 8px;
   }
 
   .sec-tag {
-    font-size: 10.5px !important;
-    margin-bottom: 2px !important;
-    display: block !important;
+    font-size: 10.5px;
+    margin-bottom: 2px;
   }
 
   .sec-title {
-    font-size: 18px !important;
-    font-weight: 600 !important;
-    line-height: 1.25 !important;
+    font-size: 18px;
+    font-weight: 600;
+    line-height: 1.25;
   }
 
   .sec-desc {
-    display: block !important;
-    font-size: 13px !important;
-    line-height: 1.55 !important;
-    color: var(--text-muted) !important;
-    margin-bottom: 6px !important;
+    font-size: 13px;
+    line-height: 1.55;
+    color: var(--text-muted);
+    margin-bottom: 6px;
   }
 
-  .exp-scroll-indicator {
-    width: 100% !important;
-    display: flex !important;
-    align-items: center !important;
-    justify-content: space-between !important;
-    gap: 8px !important;
-    margin-top: 4px !important;
+  .stack-progress {
+    width: 80px;
+    margin-top: 4px;
   }
 
-  .exp-pin-progress {
-    width: 80px !important;
-    height: 3px !important;
-    flex-shrink: 0 !important;
-  }
-
-  .exp-horizontal-viewport,
-  .works-horizontal-viewport {
-    width: 100% !important;
-    height: auto !important;
-    position: relative !important;
-    overflow: visible !important;
-    margin: 0 !important;
-    padding: 0 !important;
-    box-sizing: border-box !important;
-  }
-
-  .exp-horizontal-track,
-  .works-horizontal-track {
-    display: flex !important;
-    flex-direction: column !important;
-    position: relative !important;
-    width: 100% !important;
-    height: auto !important;
-    padding: 0 !important;
-    gap: 0 !important;
-    transform: none !important;
-    overflow: visible !important;
-  }
-
-  /* React Bits Sticky Card: Sticks right below floating 52px nav */
+  /* ScrollStack card: sticky offsets, heights and margins come from initScrollStack() */
   .exp-card,
   .work-card {
-    position: sticky !important;
-    top: var(--stack-top, 72px) !important;
-    width: 100% !important;
-    max-width: 100% !important;
-    height: auto !important;
-    min-height: clamp(390px, 50vh, 440px) !important;
-    max-height: none !important;
-    margin-bottom: clamp(90px, 16vh, 140px) !important;
-    overflow: visible !important;
-    scrollbar-width: none !important;
-    display: flex !important;
-    flex-direction: column !important;
-    justify-content: space-between !important;
-    padding: clamp(18px, 2.6vh, 24px) clamp(16px, 4vw, 22px) !important;
-    box-sizing: border-box !important;
-    border-radius: 20px !important;
-    box-shadow: 0 0 0 1px rgba(255, 255, 255, 0.08), 0 -10px 28px -6px rgba(0, 0, 0, 0.8), 0 16px 40px rgba(0, 0, 0, 0.6) !important;
-    border: 1px solid var(--border-focus) !important;
-    transform-origin: 50% 0% !important;
-    will-change: transform, filter;
-    background: #0B0F1C !important;
-    transition: filter 0.15s ease;
-  }
-
-  .exp-card:nth-child(1),
-  .work-card:nth-child(1) {
-    --stack-top: 72px !important;
-  }
-  .exp-card:nth-child(2),
-  .work-card:nth-child(2) {
-    --stack-top: 88px !important;
-  }
-  .exp-card:nth-child(3),
-  .work-card:nth-child(3) {
-    --stack-top: 104px !important;
-  }
-  .exp-card:nth-child(4),
-  .work-card:nth-child(4) {
-    --stack-top: 120px !important;
+    max-width: 100%;
+    padding: clamp(18px, 2.6vh, 24px) clamp(16px, 4vw, 22px);
+    box-shadow: 0 0 0 1px rgba(255, 255, 255, 0.08), 0 -10px 28px -6px rgba(0, 0, 0, 0.8), 0 16px 40px rgba(0, 0, 0, 0.6);
+    border: 1px solid var(--border-focus);
+    margin-bottom: clamp(90px, 16vh, 140px);
   }
 
   .border-glow-inner {
-    height: 100% !important;
-    display: flex !important;
-    flex-direction: column !important;
-    justify-content: space-between !important;
-    overflow: visible !important;
-    touch-action: pan-y !important;
-  }
-
-  .exp-card:last-child,
-  .work-card:last-child {
-    margin-bottom: clamp(180px, 26vh, 260px) !important;
-  }
-
-  .exp-card::-webkit-scrollbar,
-  .work-card::-webkit-scrollbar {
-    display: none !important;
+    touch-action: pan-y;
   }
 
   /* Experience Card: Highly Legible Typography & Tight Content Density */
   .exp-card-top-tag {
-    margin-bottom: 8px !important;
+    margin-bottom: 8px;
   }
   .exp-num-badge {
-    font-size: 11px !important;
+    font-size: 11px;
   }
   .exp-badge-current {
-    font-size: 10px !important;
-    padding: 2px 8px !important;
+    font-size: 10px;
+    padding: 2px 8px;
   }
   .exp-header {
-    flex-direction: column !important;
-    align-items: flex-start !important;
-    gap: 4px !important;
-    margin-bottom: 12px !important;
-    padding-bottom: 10px !important;
-    border-bottom: 1px solid rgba(255, 255, 255, 0.08) !important;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 4px;
+    margin-bottom: 12px;
+    padding-bottom: 10px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.08);
   }
   .exp-role {
-    font-size: clamp(17px, 4.4vw, 19.5px) !important;
-    font-weight: 600 !important;
-    line-height: 1.25 !important;
+    font-size: clamp(17px, 4.4vw, 19.5px);
+    font-weight: 600;
+    line-height: 1.25;
   }
   .exp-company {
-    font-size: clamp(17px, 4.4vw, 19.5px) !important;
+    font-size: clamp(17px, 4.4vw, 19.5px);
   }
   .exp-meta {
-    text-align: left !important;
-    font-size: 12px !important;
-    display: flex !important;
-    align-items: center !important;
-    gap: 8px !important;
+    text-align: left;
+    font-size: 12px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
   }
   .exp-meta .location {
-    display: inline !important;
-    margin-top: 0 !important;
+    display: inline;
+    margin-top: 0;
   }
   .exp-points {
-    display: flex !important;
-    flex-direction: column !important;
-    gap: 12px !important;
-    margin: 0 !important;
-    padding: 0 !important;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    margin: 0;
+    padding: 0;
   }
   .exp-points li {
-    font-size: clamp(13px, 3.4vw, 14.5px) !important;
-    line-height: 1.58 !important;
-    color: #E2E8F0 !important;
-    padding-left: 16px !important;
+    font-size: clamp(13px, 3.4vw, 14.5px);
+    line-height: 1.58;
+    color: #E2E8F0;
+    padding-left: 16px;
   }
   .exp-points li::before {
-    font-size: 16px !important;
-    line-height: 1.2 !important;
+    font-size: 16px;
+    line-height: 1.2;
   }
   .exp-points strong {
-    color: #FFFFFF !important;
+    color: #FFFFFF;
   }
   .exp-stack {
-    display: flex !important;
-    flex-wrap: wrap !important;
-    gap: 6px !important;
-    margin-top: auto !important;
-    padding-top: 12px !important;
-    border-top: 1px solid rgba(255, 255, 255, 0.08) !important;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+    margin-top: auto;
+    padding-top: 12px;
+    border-top: 1px solid rgba(255, 255, 255, 0.08);
   }
 
   /* Works Card: Highly Legible Typography & Tight Content Density */
   .work-meta-row {
-    margin-bottom: 8px !important;
+    margin-bottom: 8px;
   }
   .work-tag {
-    font-size: 11px !important;
+    font-size: 11px;
   }
   .work-date {
-    font-size: 11.5px !important;
+    font-size: 11.5px;
   }
   .work-card h3 {
-    font-size: clamp(17px, 4.4vw, 19.5px) !important;
-    font-weight: 600 !important;
-    margin-bottom: 8px !important;
-    line-height: 1.25 !important;
+    font-size: clamp(17px, 4.4vw, 19.5px);
+    font-weight: 600;
+    margin-bottom: 8px;
+    line-height: 1.25;
   }
   .work-desc {
-    display: block !important;
-    font-size: clamp(12.5px, 3.2vw, 13.5px) !important;
-    line-height: 1.5 !important;
-    color: #CBD5E1 !important;
-    margin-bottom: 10px !important;
+    display: block;
+    font-size: clamp(12.5px, 3.2vw, 13.5px);
+    line-height: 1.5;
+    color: #CBD5E1;
+    margin-bottom: 10px;
   }
   .work-bullets {
-    display: flex !important;
-    flex-direction: column !important;
-    gap: 10px !important;
-    margin: 0 0 10px 0 !important;
-    padding: 0 !important;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin: 0 0 10px 0;
+    padding: 0;
   }
   .work-bullets li {
-    font-size: clamp(13px, 3.3vw, 14px) !important;
-    line-height: 1.55 !important;
-    color: #E2E8F0 !important;
-    padding-left: 14px !important;
+    font-size: clamp(13px, 3.3vw, 14px);
+    line-height: 1.55;
+    color: #E2E8F0;
+    padding-left: 14px;
   }
   .work-bullets li::before {
-    font-size: 14px !important;
+    font-size: 14px;
   }
   .work-footer {
-    display: flex !important;
-    flex-direction: column !important;
-    gap: 10px !important;
-    margin-top: auto !important;
-    padding-top: 12px !important;
-    border-top: 1px solid rgba(255, 255, 255, 0.08) !important;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin-top: auto;
+    padding-top: 12px;
+    border-top: 1px solid rgba(255, 255, 255, 0.08);
   }
   .work-links {
-    display: flex !important;
-    gap: 8px !important;
-    flex-wrap: wrap !important;
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
   }
   .work-link-btn {
-    font-size: 11.5px !important;
-    padding: 6px 14px !important;
-    border-radius: 14px !important;
+    font-size: 11.5px;
+    padding: 6px 14px;
+    border-radius: 14px;
   }
   .work-stack {
-    display: flex !important;
-    flex-wrap: wrap !important;
-    gap: 6px !important;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
   }
   .work-pill {
-    font-size: 11px !important;
-    padding: 4px 9px !important;
-    border-radius: 6px !important;
+    font-size: 11px;
+    padding: 4px 9px;
+    border-radius: 6px;
   }
 }
 
@@ -327,12 +232,10 @@
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .exp-pinned-inner, .works-pinned-inner { height: auto !important; min-height: 0 !important; }
   .exp-card, .work-card {
     position: relative !important;
     top: auto !important;
     transform: none !important;
-    filter: none !important;
     margin-bottom: 24px !important;
   }
 }

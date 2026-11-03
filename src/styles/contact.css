@@ -19,23 +19,28 @@
   overflow: hidden;
   box-shadow: 0 12px 32px rgba(0, 0, 0, 0.4);
   transition: all 0.25s ease;
-}
-.contact-channel-card::before {
-  content: '';
-  position: absolute;
-  inset: 0;
-  background: radial-gradient(circle at 85% 15%, var(--accent-glow), transparent 60%);
-  opacity: 0;
-  transition: opacity 0.3s ease;
-  pointer-events: none;
+  /* Text stays selectable/copyable even though the whole card is a link */
+  cursor: pointer;
+  user-select: text;
+  -webkit-user-select: text;
+  -webkit-user-drag: none;
 }
 .contact-channel-card:hover {
   border-color: var(--accent);
   transform: translateY(-3px);
   box-shadow: 0 16px 40px rgba(0, 0, 0, 0.5);
 }
-.contact-channel-card:hover::before {
-  opacity: 0.14;
+/* Hover accent wash on the card's own background (::before belongs to BorderGlow's mesh border) */
+.contact-channel-card:hover {
+  background-image: radial-gradient(circle at 85% 15%, rgb(196 144 255 / 6%), transparent 60%);
+}
+.contact-channel-card:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 3px;
+}
+.contact-card-title,
+.contact-card-sub {
+  cursor: text;
 }
 .contact-card-header {
   display: flex;
