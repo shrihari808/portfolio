@@ -7,7 +7,7 @@
 [![WebGL2](https://img.shields.io/badge/Shaders-WebGL2-990000?style=flat-square&logo=webgl&logoColor=white)](https://www.khronos.org/webgl/)
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue?style=flat-square)](LICENSE)
 [![GitHub](https://img.shields.io/badge/GitHub-shrihari808-181717?style=flat-square&logo=github)](https://github.com/shrihari808)
-[![LinkedIn](https://img.shields.io/badge/LinkedIn-shrihari808-0A66C2?style=flat-square&logo=linkedin)](https://linkedin.com/in/shrihari808)
+[![LinkedIn](https://img.shields.io/badge/LinkedIn-kshrihari0611-0A66C2?style=flat-square&logo=linkedin)](https://linkedin.com/in/kshrihari0611)
 
 ---
 
@@ -19,11 +19,13 @@ Built with performance, tactile interaction, and clean typography at its core, t
 
 ### Visual & Interaction Engineering Highlights
 
-- **Three.js Orbital Sphere Background**: Custom 800-point spherical point-cloud lattice, dual concentric orbital rings, floating ambient particles, throttled resize handling to eliminate mobile WebGL framebuffer thrashing, and fine-pointer parallax tracking.
-- **React Bits SpecularButton**: WebGL2 fragment and vertex shaders computing directional specular edge illumination, physics-based pointer tracking, and variable glow lobes.
+- **Three.js Orbital Sphere Background**: Custom 800-point spherical point-cloud lattice with shader-masked round points, dual concentric orbital rings, floating ambient particles, throttled resize handling to eliminate mobile WebGL framebuffer thrashing, and fine-pointer parallax tracking. A soft dark glow behind text blocks keeps copy legible over it.
+- **React Bits SpecularButton**: WebGL2 fragment and vertex shaders computing directional specular edge illumination, physics-based pointer tracking, and variable glow lobes. Every button renders through **one shared WebGL2 context** and copies its light into its own 2D canvas, so the page uses 2 WebGL contexts in total instead of one per button.
 - **BorderGlow Proximity Cards**: Multi-layered directional HSL mesh gradients reacting dynamically to cursor distance and viewport coordinates.
-- **Universal `<ScrollStack />`**: Native CSS `position: sticky` paired with pure `requestAnimationFrame` cover-based depth scaling and exponential dimming, creating card stacking with top-peek silhouettes across desktop and mobile.
-- **Electric Purple Design System**: Calibrated dark aesthetic (`#070914`, `#0E1222`, `#C490FF`), strict JetBrains Mono typography, zero framework bloat, and full `prefers-reduced-motion` compliance.
+- **Universal `<ScrollStack />`**: Native CSS `position: sticky` paired with pure `requestAnimationFrame` cover-based depth scaling and opacity-overlay dimming, creating card stacking with top-peek silhouettes across desktop and mobile. Cards share a uniform height and a common release point, so the finished stack holds briefly and then leaves as one.
+- **Specular CSS Rim**: Stack cards carry a 1px conic-gradient border highlight (key + back lobe) that rests at the top-left and follows BorderGlow's cursor angle on hover. No extra JS or WebGL.
+- **Electric Purple Design System**: Calibrated dark aesthetic (`#070914`, `#0E1222`, `#C490FF`), JetBrains Mono for labels and metadata with a system sans-serif for body text, zero framework bloat, and full `prefers-reduced-motion` compliance.
+- **Mobile Navigation & Sharing**: Menu-button dropdown below 960px, a résumé download, and Open Graph / Twitter preview tags with a generated 1200×630 preview image.
 
 ---
 
@@ -45,7 +47,7 @@ Built with performance, tactile interaction, and clean typography at its core, t
 - **Three.js (r170)** — Scene graph, perspective projection, point-cloud particles, and procedural geometry rendering.
 - **WebGL2** — Custom GLSL vertex and fragment shaders for physics-driven specular edge lighting.
 - **Modular CSS3** — Native CSS variables (design tokens), sticky stacking architecture, and media-query responsive breakouts. No heavy UI framework overhead.
-- **JetBrains Mono** — Editorial monospace typography loaded via Google Fonts.
+- **Typography** — JetBrains Mono (via Google Fonts) for labels, tags and metadata; the system sans-serif stack for headings and body text.
 
 ### Backend & Systems Experience Featured
 - **Languages**: C#, Go, Python, C++, TypeScript, SQL
@@ -62,14 +64,22 @@ Built with performance, tactile interaction, and clean typography at its core, t
 portfolioweb/
 ├── index.html                   # Semantic HTML5 entry point & content architecture
 ├── package.json                 # Project scripts, metadata, and dependencies
-├── vite.config.js               # Vite build configuration (port 3000, sourcemaps)
+├── vite.config.js               # Vite build configuration (port 3000, no production sourcemaps)
 ├── vercel.json                  # Automated Vercel CI/CD deployment configuration
 ├── .gitignore                   # Ignored files (node_modules, dist, etc.)
+├── LICENSE                      # MIT License
+│
+├── public/                      # Static files copied as-is to the site root
+│   ├── og-image.png             # 1200×630 social preview image (Open Graph / Twitter)
+│   └── cv/                      # Résumé PDF: Shrihari_Kulkarni_CV.pdf (served at /cv/...)
+│
+├── scripts/
+│   └── og/og-image.html         # Source for og-image.png (render with headless Edge/Chrome)
 │
 ├── src/
-│   ├── main.js                  # Application entry point: initializes background, shaders & scroll stack
+│   ├── main.js                  # Entry point: background, shaders, ScrollStack, mobile menu & contact cards
 │   ├── background.js            # Three.js 3D rotating orbital sphere, concentric rings & particle field
-│   ├── specular-button.js       # React Bits SpecularButton (WebGL2 hardware-accelerated edge shader)
+│   ├── specular-button.js       # React Bits SpecularButton (one shared WebGL2 context for all buttons)
 │   ├── border-glow.js           # React Bits BorderGlow (HSL directional proximity mesh gradients)
 │   │
 │   ├── core/
@@ -79,16 +89,16 @@ portfolioweb/
 │       ├── main.css             # Root stylesheet aggregating all modules
 │       ├── tokens.css           # Design tokens: palette, typography, radii, elevation
 │       ├── layout.css           # Container widths, background canvas stacking & resets
-│       ├── nav.css              # Sticky navigation header & pill buttons
-│       ├── hero.css             # Hero typographic hierarchy, status pill & telemetry grid
-│       ├── experience.css       # Experience timeline cards & ScrollStack container
+│       ├── nav.css              # Fixed navigation header, pill buttons & mobile menu toggle
+│       ├── hero.css             # Hero typography, text glow, status pill & telemetry grid
+│       ├── experience.css       # Shared ScrollStack section/card styles, specular rim & experience cards
 │       ├── works.css            # Selected projects & research cards
 │       ├── arsenal.css          # Technical skills grid & categories
 │       ├── credentials.css      # Education & published research cards
 │       ├── contact.css          # Direct contact channels & connection links
 │       ├── specular-button.css  # Canvas container & sizing rules for specular buttons
 │       ├── border-glow.css      # Gradient overlays & proximity border glow styling
-│       └── responsive.css       # Mobile (< 768px) and tablet adaptations
+│       └── responsive.css       # Tablet (< 960px, mobile menu) and mobile (< 768px) adaptations
 │
 └── dist/                        # Production build output (generated on npm run build)
 ```
@@ -161,5 +171,5 @@ This project is open-source software licensed under the [MIT License](LICENSE).
 
 **Shrihari Kulkarni**
 - GitHub: [@shrihari808](https://github.com/shrihari808)
-- LinkedIn: [shrihari808](https://linkedin.com/in/shrihari808)
+- LinkedIn: [kshrihari0611](https://linkedin.com/in/kshrihari0611)
 - Location: Bangalore, India
