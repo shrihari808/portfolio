@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<!--
+  Open Graph / Twitter preview card (1200x630) for the portfolio.
+  Regenerate public/og-image.png after editing (Windows, from the repo root):
+    "C:\Program Files (x86)\Microsoft\Edge\Application\msedge.exe" --headless=new --hide-scrollbars ^
+      --window-size=1200,630 --screenshot="%CD%\public\og-image.png" "file:///%CD:\=/%/scripts/og/og-image.html"
+-->
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>OG Image</title>
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@500;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg: #070914;
+      --bg-elevated: #0E1222;
+      --border: #232B42;
+      --border-focus: #3D4B75;
+      --text: #F8FAFC;
+      --text-dim: #CBD5E1;
+      --text-muted: #94A3B8;
+      --accent: #C490FF;
+      --mono: 'JetBrains Mono', ui-monospace, Consolas, monospace;
+      --sans: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", sans-serif;
+    }
+    * { box-sizing: border-box; margin: 0; }
+    html, body { width: 1200px; height: 630px; overflow: hidden; }
+    body {
+      position: relative;
+      background: radial-gradient(ellipse at 70% 40%, var(--bg-elevated) 0%, var(--bg) 70%);
+      color: var(--text);
+      font-family: var(--sans);
+      -webkit-font-smoothing: antialiased;
+    }
+    #sphere { position: absolute; right: -40px; top: 15px; width: 600px; height: 600px; }
+    .vignette {
+      position: absolute; inset: 0;
+      background: linear-gradient(90deg, var(--bg) 0%, rgb(7 9 20 / 85%) 40%, transparent 75%);
+    }
+    .content {
+      position: absolute; left: 80px; top: 78px; right: 80px; bottom: 64px;
+      display: flex; flex-direction: column;
+    }
+    .badge {
+      align-self: flex-start;
+      padding: 8px 18px; border-radius: 100px;
+      border: 1px solid var(--border-focus); background: rgb(14 18 34 / 95%);
+      font-family: var(--mono); font-size: 15px; font-weight: 500; letter-spacing: 0.16em;
+      color: var(--text-dim);
+    }
+    h1 {
+      margin-top: 34px;
+      font-size: 84px; font-weight: 500; letter-spacing: -0.03em; line-height: 1.02;
+    }
+    .role {
+      margin-top: 18px;
+      font-family: var(--mono); font-size: 21px; font-weight: 600; letter-spacing: 0.16em;
+      text-transform: uppercase; color: var(--accent);
+    }
+    .stats { margin-top: auto; display: flex; gap: 18px; }
+    .stat {
+      width: 220px; padding: 18px 22px; border-radius: 14px;
+      background: rgb(14 18 34 / 92%); border: 1px solid var(--border);
+    }
+    .stat-val {
+      font-family: var(--mono); font-size: 34px; font-weight: 600; color: var(--accent);
+      text-shadow: 0 0 20px rgb(196 144 255 / 45%);
+    }
+    .stat-lbl {
+      margin-top: 4px;
+      font-size: 14px; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; color: var(--text);
+    }
+    .url {
+      position: absolute; right: 80px; bottom: 76px;
+      font-family: var(--mono); font-size: 17px; color: var(--text-muted); letter-spacing: 0.04em;
+    }
+  </style>
+</head>
+<body>
+  <svg id="sphere" viewBox="-300 -300 600 600" aria-hidden="true"></svg>
+  <div class="vignette"></div>
+
+  <div class="content">
+    <div class="badge">SDE @ INVENDIS · BANGALORE, IN</div>
+    <h1>Shrihari Kulkarni</h1>
+    <div class="role">Software Development Engineer &amp; Systems Architect</div>
+    <div class="stats">
+      <div class="stat"><div class="stat-val">77%</div><div class="stat-lbl">Query latency cut</div></div>
+      <div class="stat"><div class="stat-val">80%</div><div class="stat-lbl">LLM overhead cut</div></div>
+      <div class="stat"><div class="stat-val">&lt;512MB</div><div class="stat-lbl">RAG footprint</div></div>
+    </div>
+  </div>
+  <div class="url">shrihari-kulkarni.vercel.app</div>
+
+  <script>
+    // Same Fibonacci point sphere and orbital rings as src/background.js, projected flat
+    const svg = document.getElementById('sphere');
+    const NS = 'http://www.w3.org/2000/svg';
+    const N = 800, R = 210, tilt = 0.5, spin = 0.6;
+    for (let i = 0; i < N; i++) {
+      const phi = Math.acos(1 - 2 * (i + 0.5) / N);
+      const theta = Math.PI * (1 + Math.sqrt(5)) * i;
+      let x = R * Math.sin(phi) * Math.cos(theta + spin);
+      let y = R * Math.sin(phi) * Math.sin(theta + spin);
+      let z = R * Math.cos(phi);
+      [y, z] = [y * Math.cos(tilt) - z * Math.sin(tilt), y * Math.sin(tilt) + z * Math.cos(tilt)];
+      const depth = (z + R) / (2 * R);
+      const dot = document.createElementNS(NS, 'circle');
+      dot.setAttribute('cx', x.toFixed(1));
+      dot.setAttribute('cy', y.toFixed(1));
+      dot.setAttribute('r', (1.2 + depth * 1.4).toFixed(2));
+      dot.setAttribute('fill', '#C490FF');
+      dot.setAttribute('opacity', (0.25 + depth * 0.55).toFixed(2));
+      svg.appendChild(dot);
+    }
+    [[64, -20], [-48, 35]].forEach(([rx, rot]) => {
+      const ring = document.createElementNS(NS, 'ellipse');
+      ring.setAttribute('rx', 272);
+      ring.setAttribute('ry', (272 * Math.cos(rx * Math.PI / 180)).toFixed(1));
+      ring.setAttribute('transform', `rotate(${rot})`);
+      ring.setAttribute('fill', 'none');
+      ring.setAttribute('stroke', '#C490FF');
+      ring.setAttribute('stroke-opacity', '0.35');
+      ring.setAttribute('stroke-width', '1.5');
+      svg.appendChild(ring);
+    });
+  </script>
+</body>
+</html>
