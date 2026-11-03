@@ -1,59 +1,9 @@
-/* ============================================================= Work Card: React Bits ScrollStack Card */
-.work-card {
-  position: sticky;
-  top: var(--stack-top, 96px);
-  width: 100%;
-  max-width: 820px;
-  box-sizing: border-box;
-  background: #0B0F1C;
-  border: 1px solid rgba(255, 255, 255, 0.12);
-  border-radius: 20px;
-  padding: clamp(24px, 2.8vw, 34px);
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  opacity: 1;
-  visibility: visible;
-  overflow: visible !important;
-  max-height: none !important;
-  min-height: clamp(440px, 52vh, 480px) !important;
-  scrollbar-width: none !important;
-  box-shadow: 0 0 0 1px rgba(255, 255, 255, 0.08), 0 -12px 32px -8px rgba(0, 0, 0, 0.75), 0 20px 48px -12px rgba(0, 0, 0, 0.85);
-  transform-origin: 50% 0% !important;
-  will-change: transform, filter;
-  transition: border-color 0.25s, box-shadow 0.25s, filter 0.15s;
-  margin: 0 auto clamp(140px, 22vh, 220px);
-}
+/* ============================================================= Work Card Content */
+/* Card shell, stacking and hover border live with the shared ScrollStack card rules in experience.css */
 
-.work-card:nth-child(1) { --stack-top: 96px; }
-.work-card:nth-child(2) { --stack-top: 118px; }
-.work-card:nth-child(3) { --stack-top: 140px; }
-.work-card:nth-child(4) { --stack-top: 162px; }
-
-.work-card:last-child {
-  margin-bottom: clamp(280px, 36vh, 400px);
-}
-
-.work-card::-webkit-scrollbar {
-  display: none !important;
-}
-
-.work-card::before {
-  content: '';
-  position: absolute;
-  inset: 0;
-  opacity: 0;
-  background: radial-gradient(circle at 85% 15%, var(--accent-glow), transparent 60%);
-  transition: opacity 0.4s ease;
-  pointer-events: none;
-  border-radius: inherit;
-}
-
-.work-card:hover::before { opacity: 0.14; }
-
+/* Hover accent wash on the card's own background (::before belongs to BorderGlow's mesh border) */
 .work-card:hover {
-  border-color: var(--accent);
-  box-shadow: 0 0 0 1px rgba(196, 144, 255, 0.3), 0 -12px 32px -8px rgba(196, 144, 255, 0.2), 0 20px 48px -12px rgba(0, 0, 0, 0.85);
+  background-image: radial-gradient(circle at 85% 15%, rgb(196 144 255 / 6%), transparent 60%);
 }
 .work-meta-row {
   display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;

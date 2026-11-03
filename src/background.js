@@ -6,6 +6,22 @@
 import * as THREE from 'three';
 import { hexToRgb } from './core/color-utils.js';
 
+// Round, softly anti-aliased points: masks each point sprite to a circle in the fragment
+// shader, which is cheaper than uploading and sampling a sprite texture.
+function roundPoints(material) {
+  material.onBeforeCompile = (shader) => {
+    shader.fragmentShader = shader.fragmentShader.replace(
+      '#include <alphatest_fragment>',
+      `vec2 pc = gl_PointCoord - 0.5;
+      float r2 = dot(pc, pc);
+      if (r2 > 0.25) discard;
+      diffuseColor.a *= smoothstep(0.25, 0.16, r2);
+      #include <alphatest_fragment>`
+    );
+  };
+  return material;
+}
+
 export function initBackground(container, options = {}) {
   const canvas = document.createElement('canvas');
   canvas.style.position = 'fixed';
@@ -78,12 +94,12 @@ export function initBackground(container, options = {}) {
   }
   sphereGeo.setAttribute('position', new THREE.BufferAttribute(spherePos, 3));
 
-  const pointsMat = new THREE.PointsMaterial({
+  const pointsMat = roundPoints(new THREE.PointsMaterial({
     color: new THREE.Color(rgb.r / 255, rgb.g / 255, rgb.b / 255),
-    size: 2.8,
+    size: 3.2,
     transparent: true,
     opacity: 0.72
-  });
+  }));
   const spherePoints = new THREE.Points(sphereGeo, pointsMat);
   group.add(spherePoints);
 
@@ -114,12 +130,12 @@ export function initBackground(container, options = {}) {
     bgPos[i * 3 + 2] = (Math.random() - 0.5) * 500;
   }
   bgGeo.setAttribute('position', new THREE.BufferAttribute(bgPos, 3));
-  const bgMat = new THREE.PointsMaterial({
+  const bgMat = roundPoints(new THREE.PointsMaterial({
     color: new THREE.Color(rgb.r / 255, rgb.g / 255, rgb.b / 255),
-    size: 1.5,
+    size: 1.7,
     transparent: true,
     opacity: 0.28
-  });
+  }));
   const bgParticles = new THREE.Points(bgGeo, bgMat);
   scene.add(bgParticles);
 

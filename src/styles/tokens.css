@@ -20,15 +20,18 @@
 *, *::before, *::after { box-sizing: border-box; }
 html {
   -webkit-text-size-adjust: 100%;
-  scrollbar-width: none;
-  -ms-overflow-style: none;
+  scrollbar-width: thin;
+  scrollbar-color: var(--border-focus) var(--bg);
 }
-html::-webkit-scrollbar,
-body::-webkit-scrollbar {
-  display: none !important;
-  width: 0 !important;
-  height: 0 !important;
+/* Slim themed scrollbar (WebKit/Blink fallback for scrollbar-color) */
+::-webkit-scrollbar { width: 8px; height: 8px; }
+::-webkit-scrollbar-track { background: var(--bg); }
+::-webkit-scrollbar-thumb {
+  background: var(--border-focus);
+  border-radius: 8px;
+  border: 2px solid var(--bg);
 }
+::-webkit-scrollbar-thumb:hover { background: var(--accent); }
 body {
   margin: 0;
   background: var(--bg);
@@ -37,8 +40,6 @@ body {
   font-weight: 400;
   line-height: 1.65;
   overflow-x: clip;
-  scrollbar-width: none;
-  -ms-overflow-style: none;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }

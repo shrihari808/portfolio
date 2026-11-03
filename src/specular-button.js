@@ -164,6 +164,61 @@ const link = gl => {
   return null;
 };
 
+// One shared WebGL2 context renders the light for every button, which then copies its
+// pixels into its own 2D canvas. Browsers cap live WebGL contexts per page (~8-16), so a
+// context per button would compete with (and could evict) the Three.js background.
+const shared = { canvas: null, gl: null, program: null, uniforms: null, vao: null, lost: false, failed: false };
+const redrawers = new Set();
+
+const setupShared = () => {
+  const { gl } = shared;
+  const program = link(gl);
+  if (!program) return false;
+  const uniforms = {};
+  for (const name of UNIFORMS) uniforms[name] = gl.getUniformLocation(program, name);
+  const buffer = gl.createBuffer();
+  const vao = gl.createVertexArray();
+  gl.bindVertexArray(vao);
+  gl.bindBuffer(gl.ARRAY_BUFFER, buffer);
+  gl.bufferData(gl.ARRAY_BUFFER, new Float32Array([-1, -1, 3, -1, -1, 3]), gl.STATIC_DRAW);
+  gl.enableVertexAttribArray(0);
+  gl.vertexAttribPointer(0, 2, gl.FLOAT, false, 0, 0);
+  gl.bindVertexArray(null);
+  Object.assign(shared, { program, uniforms, vao });
+  return true;
+};
+
+const getShared = () => {
+  if (shared.failed) return null;
+  if (shared.gl) return shared.lost ? null : shared;
+
+  const canvas = document.createElement('canvas');
+  const gl = canvas.getContext('webgl2', {
+    alpha: true,
+    premultipliedAlpha: true,
+    antialias: false,
+    depth: false,
+    stencil: false
+  });
+  shared.canvas = canvas;
+  shared.gl = gl;
+  if (!gl || !setupShared()) {
+    shared.failed = true;
+    return null;
+  }
+
+  canvas.addEventListener('webglcontextlost', event => {
+    event.preventDefault();
+    shared.lost = true;
+  });
+  canvas.addEventListener('webglcontextrestored', () => {
+    shared.lost = false;
+    if (setupShared()) redrawers.forEach(redraw => redraw());
+    else shared.failed = true;
+  });
+  return shared;
+};
+
 const colorsMap = new Map();
 let probeCtx = null;
 const toRgb = value => {
@@ -241,9 +296,8 @@ export function initSpecularButton(button, userOptions = {}) {
   button.style.setProperty('--sb-blur', `${blur}px`);
   button.style.setProperty('--sb-text-color', textColor);
 
-  // On touch / mobile screens (where mouse hover proximity does not exist), bypass WebGL
-  // allocation to preserve the browser's strict WebGL context limit (8-16) exclusively
-  // for the 3D Three.js canvas, preventing 3D background eviction.
+  // On touch / mobile screens (where mouse hover proximity does not exist), skip the light
+  // entirely so small devices only pay for the 3D Three.js background.
   const isTouchDevice = (typeof window !== 'undefined') && (
     window.matchMedia?.('(hover: none) and (pointer: coarse)').matches ||
     window.innerWidth < 768
@@ -251,38 +305,16 @@ export function initSpecularButton(button, userOptions = {}) {
 
   if (isTouchDevice) {
     canvas.style.display = 'none';
-    return {
-      destroy() {}
-    };
+    return () => {};
   }
 
-  const gl = canvas.getContext('webgl2', {
-    alpha: true,
-    premultipliedAlpha: true,
-    antialias: false,
-    depth: false,
-    stencil: false
-  });
+  const ctx = getShared() ? canvas.getContext('2d') : null;
 
-  if (!gl) {
+  if (!ctx) {
     // Graceful fallback for environments without WebGL2
     canvas.style.display = 'none';
-    return null;
+    return () => {};
   }
-
-  const program = link(gl);
-  if (!program) return null;
-
-  const uniforms = {};
-  for (const name of UNIFORMS) uniforms[name] = gl.getUniformLocation(program, name);
-  const buffer = gl.createBuffer();
-  const vao = gl.createVertexArray();
-  gl.bindVertexArray(vao);
-  gl.bindBuffer(gl.ARRAY_BUFFER, buffer);
-  gl.bufferData(gl.ARRAY_BUFFER, new Float32Array([-1, -1, 3, -1, -1, 3]), gl.STATIC_DRAW);
-  gl.enableVertexAttribArray(0);
-  gl.vertexAttribPointer(0, 2, gl.FLOAT, false, 0, 0);
-  gl.bindVertexArray(null);
 
   const settings = {
     radius: Math.max(0, radius),
@@ -337,9 +369,15 @@ export function initSpecularButton(button, userOptions = {}) {
   };
 
   const draw = s => {
+    const renderer = getShared();
+    if (!renderer) return;
+    const { gl, program, uniforms, vao } = renderer;
     const { width, height } = view;
     const scaleX = canvas.width / (width + PAD * 2);
     const scaleY = canvas.height / (height + PAD * 2);
+    // The shared canvas only grows, so it fits the largest button drawn so far
+    if (renderer.canvas.width < canvas.width) renderer.canvas.width = canvas.width;
+    if (renderer.canvas.height < canvas.height) renderer.canvas.height = canvas.height;
     gl.viewport(0, 0, canvas.width, canvas.height);
     gl.clearColor(0, 0, 0, 0);
     gl.clear(gl.COLOR_BUFFER_BIT);
@@ -362,7 +400,20 @@ export function initSpecularButton(button, userOptions = {}) {
     gl.bindVertexArray(vao);
     gl.drawArrays(gl.TRIANGLES, 0, 3);
     gl.bindVertexArray(null);
+    // Copy this button's light into its own canvas. The viewport sits at the bottom-left of
+    // the shared buffer (WebGL's origin), which is the bottom strip in 2D canvas coordinates.
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    ctx.drawImage(
+      renderer.canvas,
+      0, renderer.canvas.height - canvas.height, canvas.width, canvas.height,
+      0, 0, canvas.width, canvas.height
+    );
   };
+
+  const redraw = () => {
+    if (state.ready) draw(settings);
+  };
+  redrawers.add(redraw);
 
   const frame = now => {
     raf = 0;
@@ -464,10 +515,8 @@ export function initSpecularButton(button, userOptions = {}) {
     window.removeEventListener('pointercancel', onPointerEnd);
     document.documentElement.removeEventListener('pointerleave', onPointerLeave);
     button.removeEventListener('pointerdown', onPointerDown);
-    gl.deleteBuffer(buffer);
-    gl.deleteVertexArray(vao);
-    gl.deleteProgram(program);
-    gl.getExtension('WEBGL_lose_context')?.loseContext();
+    redrawers.delete(redraw);
+    // The shared WebGL context stays alive for the remaining buttons
   };
 }
 
