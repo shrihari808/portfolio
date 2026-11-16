@@ -33,10 +33,10 @@ Built with performance, tactile interaction, and clean typography at its core, t
 
 | Metric | Target Achieved | Architectural Context |
 | :--- | :--- | :--- |
-| **77%** | Query Latency Reduction | Slashed response times from **6.5s → 1.5s** across 300+ MySQL tables in enterprise .NET reporting microservices |
-| **80%** | LLM Overhead Slashed | Enterprise LLM gateway with RBAC, semantic Redis caching, and intelligent token rate limiting |
-| **< 512MB** | RAG RAM Footprint | Lightweight multi-source live web RAG pipeline with automated query synthesis & time-decay reranking |
-| **100+** | Dynamic Report Schemas | Dynamic schema-mapped report composition engine with multi-tenant data isolation |
+| **77%** | Query Latency Reduction | Slashed response times from **6.5s → 1.5s** on 1,000+ row queries across 300+ MySQL tables using Dapper, composite indexes & in-memory JSON caching |
+| **80%** | LLM Overhead Slashed | Enterprise LLM gateway with semantic routing, RouteLLM tiering, RBAC & Redis caching |
+| **< 512MB** | RAG RAM Footprint | Multi-source FastAPI + LanceDB RAG achieving **100% Hit@5** & **0.9375 MRR** across 16 queries (<13 ms p95 reranking) |
+| **100+** | Dynamic Report Schemas | Multi-tenant ASP.NET Core & EF Core schema-mapped endpoints with JSON-driven column aliasing & JWT cookie auth |
 
 ---
 
@@ -50,11 +50,11 @@ Built with performance, tactile interaction, and clean typography at its core, t
 - **Typography** — JetBrains Mono (via Google Fonts) for labels, tags and metadata; the system sans-serif stack for headings and body text.
 
 ### Backend & Systems Experience Featured
-- **Languages**: C#, Go, Python, C++, TypeScript, SQL
-- **Frameworks & Runtimes**: ASP.NET Core, FastAPI, Node.js, gRPC, REST
-- **Distributed & Data**: Apache Kafka, Redis, MySQL, PostgreSQL, TimescaleDB
-- **AI & ML**: RAG Pipelines, LangChain, Qdrant, Ollama, PyTorch, Scikit-Learn
-- **Cloud & DevOps**: Docker, Linux/Unix, Git/CI/CD, Nginx, AWS, Vercel
+- **Languages**: Python, C#, TypeScript, SQL, C++, Java, Go, JavaScript
+- **Backend & APIs**: .NET Core, ASP.NET, Dapper, EF Core, FastAPI, Flask, Spring Boot, REST, WebSockets, Microservices
+- **AI & LLM Systems**: RAG Pipelines, LangChain, LangGraph, ChromaDB, LanceDB, RouteLLM, PyTorch, TensorFlow, Hugging Face, Scikit-Learn
+- **Databases & Observability**: PostgreSQL, MySQL, Redis, Grafana Tempo
+- **Cloud, DevOps & Testing**: AWS, Azure, Docker, Linux, CI/CD (GitHub Actions), PyTest, Playwright, Postman
 
 ---
 
