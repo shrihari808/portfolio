@@ -35,7 +35,7 @@ Built with performance, tactile interaction, and clean typography at its core, t
 | :--- | :--- | :--- |
 | **77%** | Query Latency Reduction | Slashed response times from **6.5s → 1.5s** on 1,000+ row queries across 300+ MySQL tables using Dapper, composite indexes & in-memory JSON caching |
 | **80%** | LLM Overhead Slashed | Enterprise LLM gateway with semantic routing, RouteLLM tiering, RBAC & Redis caching |
-| **< 512MB** | RAG RAM Footprint | Multi-source FastAPI + LanceDB RAG achieving **100% Hit@5** & **0.9375 MRR** across 16 queries (<13 ms p95 reranking) |
+| **< 512MB** | RAG RAM Footprint | Multi-source FastAPI + LanceDB RAG cutting p95 latency **62.4%** (**8.2s → 3.1s**), **5.6x** throughput, **97.8% Hit@10** across 55 queries & **100%** guardrail accuracy (<12 ms p95 reranking) |
 | **100+** | Dynamic Report Schemas | Multi-tenant ASP.NET Core & EF Core schema-mapped endpoints with JSON-driven column aliasing & JWT cookie auth |
 
 ---

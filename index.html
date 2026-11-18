@@ -82,7 +82,7 @@
         <span class="hero-role-tag">Backend &amp; Applied AI Engineer · Systems Architect</span>
 
         <p class="hero-lead">
-          Backend and Applied AI Engineer (1.5+ yrs) shipping high-throughput Python/FastAPI and .NET/C# services in production. Experienced in architecting evaluated multi-source RAG systems (100% Hit@5 across 16 queries), enterprise LLM gateways with semantic routing and Redis caching, optimizing .NET/MySQL query engines by 77% (6.5s → 1.5s), and published ML research (MDPI Sensors).
+          Backend and Applied AI Engineer (1.5+ yrs) shipping high-throughput Python/FastAPI and .NET/C# services in production. Experienced in architecting evaluated multi-source RAG systems (-62% p95 latency, 97.8% Hit@10 across 55 queries), enterprise LLM gateways with semantic routing and Redis caching, optimizing .NET/MySQL query engines by 77% (6.5s → 1.5s), and published ML research (MDPI Sensors).
         </p>
 
         <div class="hero-actions">
@@ -120,7 +120,7 @@
         <div class="telemetry-item">
           <div class="telemetry-val">&lt; 512MB</div>
           <div class="telemetry-lbl">RAG RAM Footprint</div>
-          <div class="telemetry-sub">100% Hit@5 &amp; 0.9375 MRR multi-source RAG (&lt;13 ms p95 reranking)</div>
+          <div class="telemetry-sub">62.4% lower p95 latency, 5.6x throughput &amp; 97.8% Hit@10 across 55 queries (&lt;12 ms rerank)</div>
         </div>
         <div class="telemetry-item">
           <div class="telemetry-val">100+</div>
@@ -352,11 +352,11 @@
                   </div>
                   <h3>MarketMind: Market Analytics RAG Engine</h3>
                   <p class="work-desc">
-                    Lightweight multi-source RAG engine in FastAPI and LanceDB with dynamic time-decay reranking, operating strictly under &lt;512MB RAM on live market data.
+                    Lightweight multi-source RAG engine in FastAPI and LanceDB with bounded-freshness reranking, httpx connection pooling, and TTL caching, operating strictly under &lt;512MB RAM on live market data.
                   </p>
                   <ul class="work-bullets">
-                    <li>Architected a multi-source RAG engine in <strong>FastAPI</strong> and <strong>LanceDB</strong> with dynamic time-decay reranking under <strong>&lt;512MB RAM</strong>, achieving <strong>100% Hit@5</strong> and <strong>0.9375 MRR</strong> across <strong>16 evaluation queries</strong> (<strong>98 financial articles</strong>, <strong>340 passages</strong>) with <strong>under 13 ms p95 reranking</strong>.</li>
-                    <li>Built a <strong>React and TypeScript SSE streaming</strong> market intelligence platform with <strong>sliding-window rate limiting</strong> and <strong>Trafilatura ingestion</strong> for real-time deep research, validated by <strong>38 passing PyTest tests</strong> and retrieval benchmarks (<strong>0.4631 BM25 Recall@5</strong>).</li>
+                    <li>Engineered a <strong>FastAPI</strong>, <strong>LanceDB</strong>, and <strong>React/TypeScript SSE</strong> RAG engine under <strong>&lt;512MB RAM</strong> with <strong>httpx pooling</strong>, <strong>3s tail timeouts</strong>, and <strong>AsyncTTLCache</strong>; cut <strong>Postman 3-VU p95 latency 62.4%</strong> (<strong>8.2s → 3.1s</strong>) and raised throughput <strong>5.6x</strong> (<strong>2.63 req/s</strong>, <strong>0% errors</strong> across 179 requests).</li>
+                    <li>Benchmarked two-stage <strong>BM25 + freshness reranking</strong> (<strong>&lt;12 ms p95</strong>) on <strong>55 stratified queries</strong> (<strong>157 articles</strong>, <strong>580 passages</strong>), achieving <strong>97.8% Hit@10</strong>, <strong>100% adversarial guardrail accuracy</strong> (55/55), <strong>82.9% Gemini-judge citation faithfulness</strong> (146 claims), and <strong>44 passing PyTest tests</strong>.</li>
                   </ul>
                 </div>
                 <div class="work-footer">
@@ -373,11 +373,13 @@
                   <div class="work-stack">
                     <span class="work-pill">FastAPI</span>
                     <span class="work-pill">LanceDB</span>
+                    <span class="work-pill">Gemini API</span>
                     <span class="work-pill">React</span>
                     <span class="work-pill">TypeScript</span>
                     <span class="work-pill">SSE Streaming</span>
                     <span class="work-pill">Trafilatura</span>
                     <span class="work-pill">PyTest</span>
+                    <span class="work-pill">Postman</span>
                   </div>
                 </div>
               </div>
@@ -511,6 +513,8 @@
             <span class="tech-item">ChromaDB</span>
             <span class="tech-item">LanceDB</span>
             <span class="tech-item">RouteLLM</span>
+            <span class="tech-item">Gemini API</span>
+            <span class="tech-item">LLM Evals</span>
             <span class="tech-item">PyTorch</span>
             <span class="tech-item">TensorFlow</span>
             <span class="tech-item">Hugging Face</span>
